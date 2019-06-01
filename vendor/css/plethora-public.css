@@ -1,0 +1,266 @@
+
+/* Global Components */
+
+.content-wrapper {
+    background-color: #f2f2f2;
+}
+
+.content-form {
+    margin-top:10px;
+    padding: 0px 3%;
+}
+
+.btn-primary {
+    background-color: #FEA30A;
+    border: 0;
+    border-radius: 10px !important;
+    padding: 10px 15px;
+}
+
+.btn-warning {
+    background-color: seagreen;
+    border: 0;
+    border-radius: 10px !important;
+    padding: 10px 15px;
+}
+
+.btn-warning:hover {
+    background-color:mediumseagreen;
+}
+
+.btn-primary:hover {
+    background-color:#ee9501;
+}
+
+.login-box-msg {
+    font-weight:300;
+    color: #c0c0c0;
+}
+
+.form-group.form-group-select {
+    position:relative;
+}
+
+.form-group.form-group-select > i {
+    position: absolute;
+    right: 5%;
+    top: 58%;
+    font-size:1.2em;
+    color:#FEA30A;
+    font-weight: bold;
+}
+
+select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 10px 10px 10px 10px;
+    background-size: 30px;
+    color: #555;
+    font-size: 14px;
+    height: 40px;
+}
+
+.form-control {
+    border-radius: 10px;
+    border-color: #ebebeb;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.form-control:focus {
+   border-color:#FEA30A;
+}
+
+.form-group label {
+    font-size: .9em;
+    font-weight: lighter;
+    padding-left: 5px;
+}
+
+.col-xs-6.form-col-header,
+.content-header.form-content-header {
+    padding-left:0px;
+    margin-left: -15px;
+}
+
+.help-block {
+    text-align: center;
+    color: #ff6666;
+    font-size:0.9em;
+}
+
+.alert-warning {
+    background-color: #FEA30A !important;
+    border:0 ;
+    /* box-shadow: none; */
+    border-radius: 10px;
+}
+
+.col-form-header {
+    margin-bottom: 10px;
+    margin-top:20px;
+}
+
+.col-form-header span {
+    font-size: 1.5em;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.dot-header{
+    width: 16px;
+    height: 16px;
+    background-color: #FEA30A;
+    border-radius: 100%;
+    display:inline-block;
+}
+
+/* Loader */
+
+.loading-modal {
+  position: relative;
+  top: 50%;
+  transform: translateY(-100%) !important;
+  padding-top:5%;
+  padding-bottom:5%;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #FEA30A;
+    width: 64px;
+    height: 64px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/*input[type='checkbox']{
+  width: 15px !important;
+  height: 15px !important;
+  margin: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance:none;
+  outline: 1px solid #FEA30A;
+  box-shadow: none;
+  font-size: 2em;
+  background-color: orange;
+}*/
+
+/* Login */
+
+.phr-login {
+    background-color:#f3f3f3;
+}
+
+.phr-login-header:not(b) {
+    font-weight:300;
+}
+
+.phr-login-header > b {
+    color: #FEA30A !important;
+}
+
+.login-box {
+    margin-bottom:0;
+}
+
+.login-box-body {
+    margin-bottom: 0;
+    padding: 60px 30px 10px;
+    box-shadow: 0 1px 14px rgba(0,0,0,0.09);
+}
+
+ /* Side bar */
+.sidebar-menu > li:not(.header) {
+    font-weight: 300;
+}
+
+.sidebar-menu > li:not(.header):hover {
+    background-color:#fdca71;
+}
+
+.sidebar-menu > li:not(.header) > a {
+    padding-left: 20px;
+}
+
+.sidebar-menu > li:not(.header):hover > a {
+    color:white;
+}
+
+.sidebar-menu > li > a:hover {
+    background-color: transparent !important;
+}
+
+.sidebar-menu > li > a > span {
+    font-weight: 300;
+    font-size: 1.1em;
+}
+
+.sidebar-menu >.header > hr {
+    height:10px;
+    margin: 0;
+}
+
+.sidebar-menu >.header {
+    padding:0;
+}
+
+.phr-list-header {
+    background-color:#4b4b4b !important;
+    padding:10% !important;
+}
+
+.user-panel{
+    padding-bottom:0;
+}
+
+.user-panel>.info {
+    position:static;
+}
+
+@media (min-width: 768px){
+.sidebar-mini.sidebar-collapse .sidebar-menu>li {
+    padding-left:0;
+}
+
+.form-dialog {
+    width:900px;
+}
+
+.loading-dialog {
+    width:200px;
+}
+
+/* Nav bar */
+
+.skin-blue-light .main-header .navbar {
+    background-color:#FEA30A;
+}
+
+.skin-blue-light .main-header .logo {
+    background-color:#ee9501;
+}
+
+.skin-blue-light .main-header .logo:hover {
+    background-color:#ee9501;
+}
+
+.skin-blue-light .main-header .navbar .sidebar-toggle:hover {
+    background-color:#FEA30A;
+}
