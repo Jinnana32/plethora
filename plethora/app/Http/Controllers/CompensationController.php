@@ -21,7 +21,6 @@ class CompensationController extends Controller
         $tax = $request->with_holding_tax;
         $nsp = $request->current_net_selling;
 
-        // Store request
         $com_id = DB::table("compensations")->insertGetId([
             "abode_id" => $abode_id,
             "agent_id" => $request->agent_id,
@@ -34,7 +33,12 @@ class CompensationController extends Controller
             "date_created" => Date("M-d-Y h:i:s")
         ]);
 
-        // Sharing
+        /*
+        =================================================
+                SHARING
+        =================================================
+        */
+
         $ps_holder = Genealogy::where("user_id", "=", $request->agent_id)->first()->username;;
         $ps_position = Genealogy::where("username", "=", $ps_holder)->first()->position;
 
@@ -86,6 +90,33 @@ class CompensationController extends Controller
                 "com_receive" => $com_receive,
                 "amount_release" => $shared_amount,
                 "balance" => $balance
+            ]);
+        }
+
+        /*
+        =================================================
+                SAVE RELEASING INFORMATION
+        =================================================
+        */
+
+        $comp_details = DB::table("compensation_details")->where("com_id", $com_id)->get();
+
+        // Save release details
+        $releasing_id = DB::table("releasing")->insertGetId([
+            "com_id" => $com_id,
+            "amount_released" => $amount_release,
+            "date_create" => Date("M d, Y h:i:s")
+        ]);
+
+        foreach($comp_details as $details){
+            $user = DB::table("personal_information")->where("user_id", $details->agent_id)->first();
+            // Distribute sharing
+            $s_amount = $this->distributeSharing($details->percent_sharing, $amount_release);
+            DB::table("releasing_details")->insert([
+                "releasing_id" => $releasing_id,
+                "agent_id" => $details->agent_id,
+                "agent_name" => $user->first_name . ' ' . $user->last_name,
+                "amount_received" => $s_amount
             ]);
         }
 
@@ -397,7 +428,7 @@ class CompensationController extends Controller
 
             DB::table("releasing_details")->insert([
                 "releasing_id" => $releasing_id,
-                "agent_id" => $compensation->agent_id,
+                "agent_id" => $details->agent_id,
                 "agent_name" => $user->first_name . ' ' . $user->last_name,
                 "amount_received" => $shared_amount
             ]);

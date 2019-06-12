@@ -25,10 +25,7 @@
     <div class="container">
       <div class="row">
 
-        <!-- Admin header -->
-        @include('public.layout.pub_agent_inner_nav')
-
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class = "col-md-12  col-form-header">
               <div class="dot-header"></div>
               <span>My Learnings</span>

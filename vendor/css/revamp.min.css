@@ -326,6 +326,10 @@
     padding:10% 0;
 }
 
+.phr-progress-card {
+    margin-bottom:2em;
+}
+
 .phr-profile-card {
     height:100%;
     background-color: #fff;

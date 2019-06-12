@@ -94,6 +94,8 @@ Route::group(['prefix' => '/v1/admin'], function() {
 
      Route::get("abode/details/{abode_id}", "GenericController@getAbodeDetails");
 
+     Route::get("geneology/{agent_id}/list", "GenericCOntroller@getGeneology");
+
 });
 
 /*

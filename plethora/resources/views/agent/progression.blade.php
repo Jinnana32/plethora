@@ -3,6 +3,67 @@
 <head>
       <!-- Admin header -->
       @include('landing.layouts.header')
+
+      <style>
+        .card-counter{
+    box-shadow: 2px 2px 10px #DADADA;
+    margin: 5px;
+    padding: 20px 10px;
+    background-color: #fff;
+    height: 100px;
+    border-radius: 5px;
+    transition: .3s linear all;
+  }
+
+  .card-counter:hover{
+    box-shadow: 4px 4px 20px #DADADA;
+    transition: .3s linear all;
+  }
+
+  .card-counter.primary{
+    background-color: #007bff;
+    color: #FFF;
+  }
+
+  .card-counter.danger{
+    background-color: #ef5350;
+    color: #FFF;
+  }
+
+  .card-counter.success{
+    background-color: #66bb6a;
+    color: #FFF;
+  }
+
+  .card-counter.info{
+    background-color: #26c6da;
+    color: #FFF;
+  }
+
+  .card-counter i{
+    font-size: 5em;
+    opacity: 0.2;
+  }
+
+  .card-counter .count-numbers{
+    position: absolute;
+    right: 35px;
+    top: 20px;
+    font-size: 32px;
+    display: block;
+  }
+
+  .card-counter .count-name{
+    position: absolute;
+    right: 35px;
+    top: 65px;
+    font-style: italic;
+    text-transform: capitalize;
+    opacity: 0.5;
+    display: block;
+    font-size: 18px;
+  }
+      </style>
 </head>
 
 <body id="page-top">
@@ -25,47 +86,114 @@
     <div class="container">
       <div class="row">
 
-        <!-- Admin header -->
-        @include('public.layout.pub_agent_inner_nav')
-
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="row">
 
+              <!-- Compensation -->
               <div class="col-md-12 phr-progress-card">
-                <div class="phr-profile-card">
-                    <div class = "col-md-12  col-form-header">
-                        <div class="dot-header"></div>
-                        <span>My genealogy</span>
-                      </div>
+                  <div class="phr-profile-card">
+                      <div class = "col-md-12  col-form-header">
+                          <div class="dot-header"></div>
+                          <span>Dashboard</span>
+                        </div>
 
-                      <table class = "table table-striped table-bordered" style = "font-size:0.7em;">
-                        <thead>
-                          <tr>
-                            <th>Upline</th>
-                            <th>Upline position</th>
-                            <th>My position</th>
-                            <th>Is Unit</th>
-                            <th>Unit Position</th>
-                            <th>Hierarchy</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Rodora X</td>
-                            <td>Broker</td>
-                            <td>Division Manager</td>
-                            <td>No</td>
-                            <td>N/A</td>
-                            <td>
-                              <a href="#">
-                                <button class = "btn btn-small btn-default">View hierarchy</button>
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
-              </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                              <div class="card-counter primary">
+                                <i class="fa fa-code-fork"></i>
+                                <span class="count-numbers">{{ $milestone->total_milestone }}</span>
+                                <span class="count-name">Milestone</span>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="card-counter success">
+                                <i class="fa fa-database"></i>
+                                <span class="count-numbers">{{ $earnings[0]->earning }}</span>
+                                <span class="count-name">Earnings</span>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card-counter danger">
+                                  <i class="fa fa-ticket"></i>
+                                  <span class="count-numbers">{{ sizeof($incentives) }}</span>
+                                  <span class="count-name">Incentives</span>
+                                </div>
+                              </div>
+
+                          </div>
+
+                  </div>
+                </div> <!-- Geneology -->
+
+                <!-- Compensation -->
+              <div class="col-md-6 phr-progress-card">
+                  <div class="phr-profile-card">
+                      <div class = "col-md-12  col-form-header">
+                          <div class="dot-header"></div>
+                          <span>Compensation details</span>
+                        </div>
+
+                        <table class = "table table-striped table-bordered" style = "font-size:0.7em;">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Project</th>
+                                <th>Commission</th>
+                                <th>Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>May 30, 2019</td>
+                                <td>Birch SouthPrime</td>
+                                <td>40,000</td>
+                                <td>10,000</td>
+                              </tr>
+                            </tbody>
+                        </table>
+
+                  </div>
+                </div> <!-- Geneology -->
+
+                <!-- Compensation -->
+              <div class="col-md-6 phr-progress-card">
+                  <div class="phr-profile-card">
+                      <div class = "col-md-12  col-form-header">
+                          <div class="dot-header"></div>
+                          <span>Incentives received</span>
+                        </div>
+
+                        <table class = "table table-striped table-bordered" style = "font-size:0.7em;">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Used</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>May 31, 2019</td>
+                                <td>Trip to palawan</td>
+                                <td>Yes</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                  </div>
+                </div> <!-- Geneology -->
+
+                <!-- Geneology -->
+              <div class="col-md-12 phr-progress-card">
+                  <div class="phr-profile-card">
+                      <div class = "col-md-12  col-form-header">
+                          <div class="dot-header"></div>
+                          <span>My Structure</span>
+                        </div>
+                        <div id="chart_div"></div>
+                  </div>
+                </div> <!-- Geneology -->
 
 
 
@@ -81,4 +209,54 @@
     @include('landing.layouts.footer')
 
 </body>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+  google.charts.load('current', {packages:["orgchart"]});
+  google.charts.setOnLoadCallback(getGeneology);
+
+  function drawChart(agents) {
+    var data = new google.visualization.DataTable();
+    var genTree = [];
+    data.addColumn('string', 'Name');
+    data.addColumn('string', 'Manager');
+    data.addColumn('string', 'ToolTip');
+    console.log(agents.length)
+
+    for(var x = 0; x < agents.length; x++){
+      var gen = [];
+      gen.push({
+        v: agents[x].username,
+        f: agents[x].username + '<div style="color:green; font-style:italic">' + agents[x].position + '</div>'
+      })
+      gen.push((agents[x].upline_name == null) ? "" : agents[x].upline_name)
+      gen.push(agents[x].position)
+      genTree.push(gen)
+    }
+
+    data.addRows(genTree);
+    var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+    chart.draw(data, {allowHtml:true});
+
+  }
+
+  function getGeneology(){
+      var user_id = "{{ $agent['id'] }}"
+      var url = "{{ url('') }}/api/v1/admin/geneology/" + user_id + "/list"
+      $.ajax({
+        type: "GET",
+        url: url,
+        data: {},
+        success: function(resp){
+          drawChart(resp)
+        },
+        error: function(err){
+          console.log(err)
+        }
+      })
+  }
+
+</script>
+
 </html>

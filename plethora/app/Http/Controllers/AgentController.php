@@ -21,15 +21,56 @@ class AgentController extends Controller
 
     public function listings(Request $request){
         $agent = $this->getAuthorizedUser();
-        $status = "listing";
         $tags = DB::table("abode_tags")->where("username", $agent["username"])->get();
         $abodes = array();
         foreach($tags as $tag){
-            $abode = Abode::where("id", $tag->abode_id)->first();
-            array_push($abodes, $abode);
+        $temp_abodes = DB::table("abodes")->where("archive", 1)->where("id", $tag->abode_id)->get();
+        foreach($temp_abodes as $abode){
+            $features = array();
+            $has_brand = 0;
+            $branding_image = "";
+            $developer_image = DB::table("developers")->where("id", $abode->dev_id)
+                                                      ->where("archive", 1)
+                                                      ->first()->image;
+
+            if($abode->branding != 0){
+                $has_brand = 1;
+                $branding_image = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                                  ->where("archive", 1)
+                                                                  ->first()->image;
+            }
+            $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                     ->where("archive", 1)
+                                                     ->first()->category;
+            $location = DB::table("abode_location")->where("id", $abode->location)
+                                                   ->where("archive", 1)
+                                                   ->first()->location;
+            $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+            foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first()->display_name;
+                array_push($features, array(
+                    "feature" => $temp_feature,
+                    "value" => $feature->value
+                ));
+            }
+
+            array_push($abodes, array(
+                "current" => $abode,
+                "category" => $category,
+                "location" => $location,
+                "features" => $features,
+                "dev_image" => $developer_image,
+                "has_brand" => $has_brand,
+                "branding_image" => $branding_image
+            ));
+        }
         }
 
-        return view('agent.listings', compact("agent", "status", "abodes"));
+        return view('agent.listings', compact("agent", "abodes"));
     }
 
     public function findList(){
@@ -82,8 +123,12 @@ class AgentController extends Controller
 
     public function progression(Request $request){
         $agent = $this->getAuthorizedUser();
-        $status = "progress";
-        return view('agent.progression', compact("agent", "status"));
+
+        $milestone = DB::table("milestones")->where("agent_id", $agent["id"])->first();
+        $earnings = DB::select("SELECT SUM(`amount_received`) as earning FROM releasing_details WHERE agent_id = '{$agent["id"]}'");
+        $incentives = DB::select("SELECT incentives.category, incentives.description, incentive_details.create_date FROM incentives INNER JOIN incentive_details ON incentives.id = incentive_details.incentive_id WHERE incentive_details.agent_id = '{$agent["id"]}'");
+
+        return view('agent.progression', compact("agent", "milestone", "earnings", "incentives"));
     }
 
     // Under progression
@@ -97,6 +142,7 @@ class AgentController extends Controller
         $user = Auth::user();
         $info = PersonalInformation::where("user_id", $user->id)->first();
         $agent = array(
+            "id" => $info->user_id,
             "username" => $user->username,
             "name" => $info["first_name"] . " " . $info["last_name"],
             "address" => $info["permanent_address"],
@@ -149,7 +195,7 @@ class AgentController extends Controller
                 redirect()->back()->withInput($request->only('username'))->withErrors(["unauthorized" => "You account credentials are incorrect."]);
             }else{
                 $agent_id = $user->id;
-                return redirect()->route("listings", [$agent_id]);
+                return redirect()->route("progression", [$agent_id]);
             }
         }
 

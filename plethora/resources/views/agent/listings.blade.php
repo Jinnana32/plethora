@@ -21,14 +21,11 @@
  <!-- Header -->
  @include('public.layout.pub_agent_masthead')
 
- <section style = "background-color:#f3f3f3;padding-top:40px;padding-bottom:40px;" id="gallery">
+ <section style = "background-color:#f3f3f3;padding-bottom:10em;" id="gallery">
        <div class="container">
          <div class="row">
 
-           <!-- Admin header -->
-           @include('public.layout.pub_agent_inner_nav')
-
-           <div class="col-md-9">
+           <div class="col-md-12">
                <div class = "col-md-12  col-form-header">
                  <div class="dot-header"></div>
                  <span>My listings</span>
@@ -40,82 +37,43 @@
                </div>
 
                <div class="col-md-12">
-                   <div class="listings-container list-layout">
-                       @foreach ($abodes as $abode)
-
-                       <div class="listing-item">
-
-                               <a href="#" class="listing-img-container" style="height: 326px;">
-                                   <div class="listing-img-content">
-                                       <span class="listing-price">₱ {{ $abode["monthly_payment"] }} / Month</span>
-                                   </div>
-                                   <div class="listing-carousel gay owl-carousel owl-theme" style="opacity: 1; display: block;">
-                                       <div class="owl-wrapper-outer"><div class="owl-wrapper" style="width: 552px; left: 0px; display: block; transition: all 0ms ease 0s; transform: translate3d(0px, 0px, 0px);"><div class="owl-item" style="width: 276px;"><div><img src="{{ str_replace("/public", "", url("")) }}/storage/app/public/abode/{{ $abode["image"] }}" height="250px" style="height: 326px;"></div></div></div></div>
-                                   <div class="owl-controls clickable" style="display: none;"><div class="owl-pagination"><div class="owl-page active"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev"></div><div class="owl-next"></div></div></div></div>
-                               </a>
-
-                               <div class="listing-content col-md-12">
-                                   <div class="listing-title">
-                                       <h4><a href="#">{{ $abode["project_name"] }}</a></h4>
-                                       <b> {{ Illuminate\Support\Facades\DB::table("abode_categories")->where("id", $abode["category"])->first()["category"] }}</b> (Category)<br>
-                                       <i class="fa fa-map-marker"></i>
-                                       {{ $abode["location"] }} <br>
-                                       <span><i class="fa fa-calendar-o"></i> Mar. 15, 2017</span> <br>
-                                       <span><i class="fa fa-home"></i> {{ $abode["model_unit"] }} {{ $abode["unit_id"] }}</span>
-                                       <a class="details button border" href="{{ url("abode") }}/{{ $abode["id"] }}" target="_blank" style="right:0px; top: 38%;">Details</a>
-                                       <a class="details button border" href="{{ url("agent") }}/{{ $abode["id"] }}/untags/{{ $agent["username"] }}" style="right:0px; top: 70%;">Untag me</a>
-                                   </div>
-
-                                   <ul class="listing-features" style="padding: 10px 0px 24px 20px;">
-
-                                       <li title="Lot Area">
-                                               <span>
-                                                   <i class="fa fa-map"></i>
-                                                   2000 sqm
-                                               </span>
-                                           </li>
-                                       <li>
-                                           <span>
-                                               <img src="{{ url("vendor/img/listing.png") }}" width="20" style="margin-right: 10px;margin-top: -3px">
-                                               5
-                                           </span>
-                                           </li>
-                                           <li>
-                                               <span>
-                                                   <img src="{{ url("vendor/img/listing-2.png") }}" width="20" style="margin-right: 10px;margin-top: -3px">
-                                                   5
-                                               </span>
-
-                                           </li>
-                                       <li>
-                                           <span>
-                                                   <i class="fa fa-eye"></i>
-                                               1261
-                                           </span>
-                                       </li>
-
-                                   </ul>
-
-                                   <div class="listing-footer gay">
-                                       <!-- span data-toggle="tooltip" style="margin-top: 15px; display:block; cursor: pointer;" onclick="setRate(3198)" data-placement="top" title="Save Listing" id="titleFave">
-                                           <i id="star3198" class="fa fa-star-o"></i> Save
-                                       </span -->
-                                   </div>
-
-                               </div>
-
-                           </div>
-
-                       @endforeach
-
-               </div>
+                    <div class="phr-property-wrap">
+                            @foreach ($abodes as $abode)
+                                <div class="phr-property-item">
+                                    <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode["dev_image"] }}" />
+                                    @if ($abode["has_brand"] != 0)
+                                        <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
+                                    @endif
+                                    @if ($abode["current"]->image != "")
+                                    <img src="{{ url("") }}/plethora/storage/app/public/abode/{{ $abode["current"]->image }}">
+                                    @else
+                                    <img src="{{ url("") }}/vendor/img/temp_image.png">
+                                    @endif
+                                        <div class = "phr-twin-header">
+                                            <a href = "{{ url("abode") }}/{{ $abode["current"]->id }}"><h2 class = "twin-left">{{ $abode["current"]->display_name }}</h2></a>
+                                            <h2 class = "twin-right">{{ $abode["current"]->date }}</h2>
+                                        </div>
+                                        <div class = "clearfix"></div>
+                                        <p class = "phr-monthly">{{ $abode["current"]->monthly_payment }}/monthly</p>
+                                        <p class = "phr-category">({{ $abode["category"] }})</p>
+                                        <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->address }}</p>
+                                        <ul>
+                                            @foreach ($abode["features"] as $feature)
+                                                <li>{{ $feature["feature"] }}: {{ $feature["value"] }}</li>
+                                            @endforeach
+                                        </ul>
+                                </div>
+                            @endforeach
+                    </div>
                </div>
 
            </div>
 
          </div>
        </div>
+       <div style="clear:both;"></div>
 </section>
+
 
 
     <!-- Admin header -->

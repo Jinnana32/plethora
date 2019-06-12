@@ -29,14 +29,7 @@
             <div class="container">
               <div class="row">
 
-                <!-- Admin header -->
-                <div class="col-md-3">
-                        <div class = "phr-card">
-                            <a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/listings"><button class = "btn btn-{{ $status == "listing" ? "primary" : "default" }} btn-block">Back to Listings</button></a>
-                        </div>
-                </div>
-
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class = "col-md-12  col-form-header">
                       <div class="dot-header"></div>
                       <span>Find listings</span>

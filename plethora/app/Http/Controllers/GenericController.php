@@ -192,4 +192,98 @@ class GenericController extends Controller
         return response()->json($abode, 200);
     }
 
+    public function getGeneology(Request $request){
+
+        $master_tree = [];
+
+        $initial_gen = DB::table("genealogies")->where("user_id", $request->agent_id)->first();
+
+        // Getting Uplines
+        $uplines = $this->getUpperAgents($initial_gen->upline_id);
+
+        // Getting downlines
+        $downlines = $this->getLowerAgents($initial_gen->user_id);
+
+        // Merging the 2
+        $treeView = array_merge($uplines, $downlines);
+
+        // Add the agent to the tree
+        array_push($treeView, $initial_gen);
+
+        for($x = 0; $x < sizeof($treeView); $x++){
+            $temp_obj = (object) [
+                "id" => $treeView[$x]->id,
+                "user_id" => $treeView[$x]->user_id,
+                "username" =>  $this->getFullname($treeView[$x]->user_id),
+                "upline_id" => $treeView[$x]->upline_id,
+                "unit_pos" =>  $treeView[$x]->unit_pos,
+                "position" =>  $treeView[$x]->position,
+                "upline_name" => $this->getFullname($treeView[$x]->upline_id)
+            ];
+            array_push($master_tree, $temp_obj);
+        }
+
+        return response()->json($master_tree, 200);
+    }
+
+    public function getUplineName($upline_id){
+       $upline = DB::table("genealogies")->where("user_id", $upline_id)->first();
+       if($upline != null){
+            return $upline->username;
+       }
+       return null;
+    }
+
+    public function getFullname($user_id){
+        if($user_id != null){
+            $infos = PersonalInformation::where("user_id" , $user_id)->first();
+            return $infos->first_name . " " . $infos->last_name;
+        }
+
+        return "";
+    }
+
+    public function getUpperAgents($upline_id){
+
+        $hasUpline = true;
+        $uplines = [];
+
+        while($hasUpline){
+
+            $upline = DB::table("genealogies")->where("user_id", $upline_id)->first();
+
+            if($upline->upline_id == null){
+                $hasUpline = false;
+            }
+
+            array_push($uplines, $upline);
+        }
+
+        return $uplines;
+    }
+
+    public function getLowerAgents($agent_id){
+
+        $downlines = [];
+        $temp_downlines = DB::table("genealogies")->where("upline_id", $agent_id)->get();
+
+        if(sizeof($temp_downlines) > 0){
+            foreach($temp_downlines as $downline){
+                array_push($downlines, $downline);
+            }
+        }
+
+        /*while(true){
+
+            if(sizeof($temp_downlines) > 1){
+
+            }else{
+               break;
+            }
+            break;
+        }*/
+
+        return $downlines;
+    }
+
 }
