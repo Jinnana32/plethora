@@ -3,7 +3,7 @@
             <div class="row">
               <div class="col-md-1 sub-mast-back" style = "font-size:2rem;">
               </div>
-              <div class="col-md-3 sub-mast-text" style = "margin-top:-30px;">
+              <div class="col-md-3 sub-mast-text phr-agent-image-wrapper" style = "margin-top:-30px;">
                   <img class = "phr-agent-image" src = "{{ $agent['image'] }}" />
               </div>
               <div class="col-md-8 sub-mast-text sub-mast-info">

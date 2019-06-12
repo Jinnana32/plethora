@@ -139,4 +139,15 @@
               copyTextToClipboard($(this).attr("name"));
               console.log("Copied to clipboard");
             })
+
+        $(document).ready(function(){
+            $(".phr-menu-item").click(function(){
+                var mobileHead = $(".phr-head-mobile")
+                if(mobileHead.hasClass("mobileOpen")){
+                    mobileHead.removeClass("mobileOpen")
+                }else{
+                    mobileHead.addClass("mobileOpen")
+                }
+            })
+        })
       </script>

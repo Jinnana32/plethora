@@ -128,7 +128,7 @@
                 </div> <!-- Geneology -->
 
                 <!-- Compensation -->
-              <div class="col-md-6 phr-progress-card">
+              <div class="col-md-8 phr-progress-card">
                   <div class="phr-profile-card">
                       <div class = "col-md-12  col-form-header">
                           <div class="dot-header"></div>
@@ -142,15 +142,19 @@
                                 <th>Project</th>
                                 <th>Commission</th>
                                 <th>Balance</th>
+                                <th>Status</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>May 30, 2019</td>
-                                <td>Birch SouthPrime</td>
-                                <td>40,000</td>
-                                <td>10,000</td>
-                              </tr>
+                              @foreach ($compensations as $compensation)
+                                <tr>
+                                    <td>{{ $compensation->date_created }}</td>
+                                    <td>{{ $compensation->developer_name }} {{ $compensation->project_name }}</td>
+                                    <td>{{ $compensation->com_receive }}</td>
+                                    <td>{{ $compensation->balance }}</td>
+                                    <td>{{ $compensation->status }}</td>
+                                </tr>
+                              @endforeach
                             </tbody>
                         </table>
 
@@ -158,7 +162,7 @@
                 </div> <!-- Geneology -->
 
                 <!-- Compensation -->
-              <div class="col-md-6 phr-progress-card">
+              <div class="col-md-4 phr-progress-card">
                   <div class="phr-profile-card">
                       <div class = "col-md-12  col-form-header">
                           <div class="dot-header"></div>
@@ -169,16 +173,18 @@
                             <thead>
                               <tr>
                                 <th>Date</th>
+                                <th>Category</th>
                                 <th>Description</th>
-                                <th>Used</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>May 31, 2019</td>
-                                <td>Trip to palawan</td>
-                                <td>Yes</td>
-                              </tr>
+                              @foreach ($incentives as $incentive)
+                                  <tr>
+                                      <td>{{ $incentive->create_date }}</td>
+                                      <td>{{ $incentive->category }}</td>
+                                      <td>{{ $incentive->description }}</td>
+                                  </tr>
+                              @endforeach
                             </tbody>
                         </table>
                   </div>

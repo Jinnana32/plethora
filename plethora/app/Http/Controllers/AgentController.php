@@ -127,8 +127,21 @@ class AgentController extends Controller
         $milestone = DB::table("milestones")->where("agent_id", $agent["id"])->first();
         $earnings = DB::select("SELECT SUM(`amount_received`) as earning FROM releasing_details WHERE agent_id = '{$agent["id"]}'");
         $incentives = DB::select("SELECT incentives.category, incentives.description, incentive_details.create_date FROM incentives INNER JOIN incentive_details ON incentives.id = incentive_details.incentive_id WHERE incentive_details.agent_id = '{$agent["id"]}'");
+        $compensations = DB::select("SELECT
+        compensations.id,
+        developers.name as developer_name,
+        abodes.display_name as project_name,
+        compensations.date_created,
+        compensation_details.com_receive,
+        compensation_details.balance,
+        compensations.status,
+        IF(compensations.agent_id = '{$agent["id"]}', 'Yes', 'No') as type FROM developers INNER JOIN abodes ON developers.id = abodes.dev_id INNER JOIN compensations ON compensations.abode_id = abodes.id INNER JOIN compensation_details ON compensation_details.com_id = compensations.id WHERE compensation_details.agent_id = '{$agent['id']}'");
 
-        return view('agent.progression', compact("agent", "milestone", "earnings", "incentives"));
+        return view('agent.progression', compact("agent", "milestone", "earnings", "incentives", "compensations"));
+    }
+
+    public function getCompensations($agent_id){
+
     }
 
     // Under progression

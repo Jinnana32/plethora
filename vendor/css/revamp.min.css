@@ -13,6 +13,10 @@
     width:100%;
 }
 
+.phr-menu-item {
+    display:none;
+}
+
 .phr-header-nav {
     height:100%;
     margin:0;
@@ -397,4 +401,91 @@
 
 .team-member p {
     color: #505050 !important;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    .phr-header {
+        text-align: center;
+        position: relative;
+    }
+
+    .phr-menu-item {
+        display: block;
+        position: absolute;
+        font-size: 2em;
+        left: 0.3em;
+        top: 50%;
+        margin-top: -1em;
+        border:none;
+    }
+
+    .phr-header > img {
+        width:50%;
+    }
+
+    .phr-header-nav {
+        height:100%;
+        margin:0;
+        padding-top: 1em;
+    }
+
+    .phr-header-nav li {
+        margin-right:3%;
+        line-height: 60px;
+        list-style: none;
+        display:block;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size:0.8em;
+    }
+
+    .phr-header-nav li a{
+        color: #fff;
+    }
+
+    .phr-head-mobile {
+        background:#404040;
+        height: 0;
+        overflow: hidden;
+        transition: height 1s ease-out;
+    }
+
+    .phr-head-mobile.mobileOpen{
+        height: auto;
+    }
+
+    .phr-header-sign {
+        text-align: center;
+        padding-top: 1em;
+        padding-bottom: 2em;
+    }
+
+    .btn-phr-logout {
+        width: 50%;
+        display:inline-block;
+    }
+
+    .phr-agent-image-wrapper {
+        width: 100%;
+        margin-left:0;
+        text-align: center;
+    }
+
+    .sub-mast-info {
+        margin-top:1em;
+        margin-left:0;
+        padding: 0 5em 0 5em;
+    }
+
+    .phr-footer-item {
+        width: 50%;
+    }
+
+    /* ABODE */
+    .phr-property-item {
+        width: 100%;
+    }
+
 }
