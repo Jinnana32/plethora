@@ -25,7 +25,7 @@
     </div>
     </div>
 
-    <div class="row" style = "margin-top:2%;">
+    <div class="row" style = "margin-top:10%;">
         <div class="col-md-4">
                 <div class="phr-search-form" style = "top:0;">
                         <h2>Search properties:</h2>
@@ -73,6 +73,7 @@
                         </form>
                     </div>
         </div>
+
         <div class="col-md-7">
             <div class="container">
                     <div class="phr-property-wrap">
@@ -84,17 +85,17 @@
                         @else
                         @foreach ($abodes as $abode)
                             <div class="phr-property-item phr-catalog-item">
-                                <img class = "phr-catalog-developer" src = "{{ str_replace("/public", "", url("")) }}/storage/app/public/developers/{{ $abode["dev_image"] }}" />
+                                <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode["dev_image"] }}" />
                                 @if ($abode["has_brand"] != 0)
-                                    <img class = "phr-catalog-branding" src = "{{ str_replace("/public", "", url("")) }}/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
+                                    <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
                                 @endif
                                 @if ($abode["current"]->image != "")
-                                <img src="{{ str_replace("/public", "", url("")) }}/storage/app/public/abode/{{ $abode["current"]->image }}">
+                                <img src="{{ url("") }}/plethora/storage/app/public/abode/{{ $abode["current"]->image }}">
                                 @else
                                 <img src="http://localhost/plethora/public/vendor/img/temp_image.png">
                                 @endif
                                     <div class = "phr-twin-header">
-                                        <h2 class = "twin-left">{{ $abode["current"]->project_name }}</h2>
+                                        <h2 class = "twin-left">{{ $abode["current"]->display_name }}</h2>
                                         <h2 class = "twin-right">{{ $abode["current"]->date }}</h2>
                                     </div>
                                     <div class = "clearfix"></div>
@@ -107,6 +108,7 @@
                                         @endforeach
                                     </ul>
                             </div>
+                            <div style = "clear:both;"></div>
                         @endforeach
                         @endif
 
@@ -114,6 +116,8 @@
         </div>
     </div>
     </div>
+
+    <div style = "clear:both;margin-top:10em;"></div>
 
     <!-- Admin header -->
     @include('landing.layouts.footer')

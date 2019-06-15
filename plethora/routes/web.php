@@ -4,38 +4,33 @@
 /* Public routes */
 Route::get('/', 'PublicController@showLandingPage');
 
+/* Abode */
 Route::get("/catalog", 'PublicController@showCatalog');
 Route::get("/catalog/search/{category}/{location}/{developer}", "PublicController@showSearchCatalog");
-
 Route::get("/developers", 'PublicController@showDevelopers');
-Route::get("/agent/find", 'PublicController@showFindAgents');
-
-Route::get('/agent/{agent_name}', 'PublicController@showAgent');
-Route::get('/agents', 'PublicController@showAgents');
-
 Route::get('/abode', 'PublicController@showAbodes');
 Route::get('/abode/{abode_id}', 'PublicController@showAbodeDetail');
 
-
-Route::get('register', function(){
-    return view("public.pub_register");
-})->name("register");
+/* Agent */
+Route::get("/agent/find", 'PublicController@showFindAgents');
+Route::get('/agent/{agent_name}', 'PublicController@showAgent');
+Route::get('/agents', 'PublicController@showAgents');
+Route::post('/agent/edit/info', 'AgentController@editInfo')->name("edit_info.submit");
+Route::get('register', function(){ return view("public.pub_register"); })->name("register");
 Route::get('/register/{agent_name}', 'PublicController@showAgentReferralLink');
-
-Route::get('login', function(){
-    return view("landing.login");
-})->name("login");
-
+Route::get('login', function(){ return view("landing.login"); })->name("login");
 Route::post('login', 'AgentController@login')->name("login.submit");
 Route::post('register', 'UserController@quickRegister')->name("register.submit");
+Route::get('logout', 'UserController@logouts')->name('phradmin.logout');
+
+/* Inbox */
+Route::post('/inbox/message', 'InboxController@addInboxMessage')->name("inbox.message.submit");
 
 /* Login routes */
 Route::group(['middleware' => ['guest'], 'prefix' => 'phradmin'], function() {
     Route::get('/login', 'UserController@showLogin')->name("phradmin.login");
     Route::post('/login', 'UserController@login')->name("phradmin.login.submit");
 });
-
-Route::get('logout', 'UserController@logouts')->name('phradmin.logout');
 
 /* Admin routes */
 Route::group(['middleware' => ['auth'], 'prefix' => 'phradmin'], function() {
@@ -156,5 +151,8 @@ Route::group(['middleware' => ['agent_auth'], 'prefix' => 'agent'], function() {
     Route::get('/{abode_id}/untags/{username}', 'AgentController@untagAgent')->name('UntagAgent');
 
     Route::get('/{agent_id}/progression/genealogy', 'AgentController@genealogy')->name('genealogy');
+
+
+    Route::post('/profile/image/update', 'AgentController@updateAgentImage')->name("phradmin.update_profile_image.submit");
 
 });

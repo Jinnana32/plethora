@@ -208,8 +208,9 @@ class PublicController extends Controller
     public function showAbodeDetail($abode_id){
         $abode = Abode::find($abode_id);
         $developer = DB::table('developers')->where("id", $abode->dev_id)->first();
+        $images = DB::table("abode_images")->where("abode_id", $abode->id)->get();
 
-        return view('public.pub_abode_detail', compact('abode', 'developer'));
+        return view('public.pub_abode_detail', compact('abode', 'developer', "images"));
     }
 
     public function showAbodes(){

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\StatusCode;
-use App\RespHandler;
+use App\Logging;
 use Illuminate\Support\Facades\DB;
 use App\Models\Inbox;
 use Illuminate\Http\Request;
@@ -39,6 +39,32 @@ class InboxController extends Controller
         $inbox->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function addInboxMessage(Request $request){
+        $agent_name = DB::table("abode_tags", $request->abode_id)->first()->username;
+        $agent = DB::table("users")->where("username", $agent_name)->first();
+        $agent_info = DB::table("personal_information")->where("user_id", $agent->id)->first();
+
+        DB::table("inboxes")->insert([
+            "agent_id" => $agent->id,
+            "client_name" => $request->name,
+            "mobile_number" => $request->mobile_number,
+            "email_address" => $request->email_address,
+            "message" => $request->message,
+            "date_created" => Date("M-d-Y h:i:s")
+        ]);
+
+        $logMessage = "Agent " .
+                      $agent_info->first_name . " " . $agent_info->last_name .
+                      " received an inquiry from " . $request->name .
+                      " with mobile number of " . $request->mobile_number .
+                      " and email of " . $request->email_address .
+                      " at " . Date("M-d-Y h:i:s");
+
+        Logging::saveInquiry($logMessage);
+
+        return redirect()->back()->withSuccess('Your inquiry was sent.');
     }
 
     public function timeIn(Request $request){

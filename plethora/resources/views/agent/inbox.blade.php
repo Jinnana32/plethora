@@ -21,7 +21,7 @@
  <!-- Header -->
  @include('public.layout.pub_agent_masthead')
 
- <section style = "background-color:#f3f3f3;padding-top:40px;padding-bottom:40px;" id="gallery">
+ <section style = "background-color:#f3f3f3;padding-top:40px;padding-bottom:30em;" id="gallery">
     <div class="container">
       <div class="row">
 
@@ -30,7 +30,26 @@
               <div class="dot-header"></div>
               <span>My inbox</span>
             </div>
-            <hr/>
+
+            <table class="table" role="grid">
+                <thead>
+                <tr role="row">
+                    <th class="sorting_asc">Date</th>
+                    <th class="sorting">Name</th>
+                    <th class="sorting">Email</th>
+                    <th class="sorting">Message</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr role="row" class="odd">
+                        <td class="sorting_1">October 12, 2019</td>
+                        <td>tj coyoca</td>
+                        <td>tjcoyoca17@gmail.com</td>
+                        <td>Hi cer mike sa diin ni pwedi makita</td>
+                    </tr>
+                </tbody>
+                </table>
+
         </div>
 
       </div>
@@ -40,6 +59,7 @@
 
     <!-- Admin header -->
     @include('landing.layouts.footer')
+
 
 </body>
 </html>

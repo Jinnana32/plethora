@@ -25,12 +25,82 @@
     <div class="container">
       <div class="row">
 
+
+
+          <div class="col-md-12" style = "margin-top:3em;">
+              <div class = "col-md-12  col-form-header">
+                <div class="dot-header"></div>
+                <span>Trainings</span>
+              </div>
+              <hr/>
+
+              <div class = "row">
+
+                @foreach ($trainings as $training)
+                 <div class="col-md-6 phr-progress-card">
+                    <div class="phr-profile-card">
+                        <div class = "col-md-12  col-form-header" style = "padding-left: 0; font-size: 0.8em;">
+                            <span>{{ $training->header }}</span>
+                        </div>
+
+                        <table class = "table">
+                          <tbody>
+                              <tr>
+                                  <td><Strong>What:</strong></td>
+                                  <td>{{ $training->content }}</td>
+                                </tr>
+                            <tr>
+                                <td><Strong>Time:</strong></td>
+                                <td>{{ $training->time}} A.M</td>
+                            </tr>
+                            <tr>
+                              <td><Strong>Date:</strong></td>
+                              <td>{{ $training->date }}</td>
+                            </tr>
+                            <tr>
+                                <td><Strong>Where:</strong></td>
+                                <td>{{ $training->venue . ", " . $training->place }}</td>
+                              </tr>
+                          </tbody>
+                        </table>
+
+                    </div>
+                  </div>
+                @endforeach
+
+              </div>
+
+          </div>
+
         <div class="col-md-12">
             <div class = "col-md-12  col-form-header">
               <div class="dot-header"></div>
-              <span>My Learnings</span>
+              <span>Webinars</span>
             </div>
             <hr/>
+
+            <div class = "row">
+
+              <style>
+                .phr-webinar-item {
+                  margin-bottom: 6em;
+                }
+                .phr-webinar-item > iframe {
+                  width: 100%;
+                  height: 100%;
+                }
+              </style>
+
+              @foreach ($webinars as $webinar)
+              <div class = "col-md-4 phr-webinar-item">
+                  <h4>{{ $webinar->title }}</h4>
+                  <p>{{ $webinar->content_description }}</p>
+                  <iframe src="{{ $webinar->youtube_link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              @endforeach
+
+            </div>
+
         </div>
 
       </div>
@@ -39,6 +109,5 @@
 
     <!-- Admin header -->
     @include('landing.layouts.footer')
-
 </body>
 </html>

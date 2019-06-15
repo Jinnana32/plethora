@@ -42,7 +42,20 @@ class GenealogyController extends Controller
     public function getAgentPosition($pos){
 
         $genealogy = array();
-        $positions = Genealogy::all();
+
+
+        switch($pos){
+            case "broker":
+                $positions = DB::table("genealogies")->where("position", "company")->get();
+            break;
+            case "division":
+                $positions = DB::table("genealogies")->where("position", "broker")->get();
+            break;
+            case "unit":
+                $positions = DB::table("genealogies")->where("position", "broker")
+                                                     ->orWhere("position", "division")->get();
+            break;
+        }
 
         foreach($positions as $position){
             $user = DB::table("personal_information")->where("user_id", $position->user_id)->first();

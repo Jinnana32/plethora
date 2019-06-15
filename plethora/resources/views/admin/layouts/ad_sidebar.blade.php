@@ -63,6 +63,7 @@
                             </span>
                           </a>
                           <ul class="treeview-menu" style="display: none;">
+                            <li><a href="{{ url("phradmin/agents/create") }}"><i class="fa fa-user"></i> Add Agent</a></li>
                             <li><a href="{{ url("phradmin/agents") }}"><i class="fa fa-circle-o"></i> Approved</a></li>
                             <li><a href="{{ url("phradmin/pending_agents") }}"><i class="fa fa-circle-o"></i> Pending</a></li>
                           </ul>

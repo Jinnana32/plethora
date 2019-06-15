@@ -39,12 +39,6 @@
     <section class="content">
             <div class="row">
 
-            <div class="col-xs-4 col-xs-offset-8" style = "text-align:right;padding-right:2%;">
-                <a href = "{{ url("phradmin/agents/create") }}"><button class = "btn btn-warning">
-                    Create new Agents <i class="fa fa-plus"></i>
-                </button></a>
-            </div>
-
             <div class="col-xs-12">
                     <table id="example2" class="table" role="grid" aria-describedby="example2_info">
                             <thead>

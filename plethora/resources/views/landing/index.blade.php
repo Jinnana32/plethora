@@ -75,7 +75,7 @@
 
             @foreach ($developers as $developer)
             <div class="carousel-item" id = "{{ $developer->id }}">
-                <img src="{{ str_replace("/public", "", url("")) }}/storage/app/public/developers/{{ $developer->image }}" class="img-responsive">
+                <img src="{{ url("") }}/plethora/storage/app/public/developers/{{ $developer->image }}" class="img-responsive">
                 <div class="phr-fade-block">
                     <h2>{{ $developer->name }}</h2>
                 </div>
@@ -92,12 +92,12 @@
         <div class="phr-property-wrap">
                 @foreach ($abodes as $abode)
                     <div class="phr-property-item">
-                        <img class = "phr-catalog-developer" src = "{{ str_replace("/public", "", url("")) }}/storage/app/public/developers/{{ $abode["dev_image"] }}" />
+                        <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode["dev_image"] }}" />
                         @if ($abode["has_brand"] != 0)
-                            <img class = "phr-catalog-branding" src = "{{ str_replace("/public", "", url("")) }}/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
+                            <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
                         @endif
                         @if ($abode["current"]->image != "")
-                        <img src="{{ str_replace("/public", "", url("")) }}/storage/app/public/abode/{{ $abode["current"]->image }}">
+                        <img src="{{ url("") }}/plethora/storage/app/public/abode/{{ $abode["current"]->image }}">
                         @else
                         <img src="http://localhost/plethora/public/vendor/img/temp_image.png">
                         @endif
@@ -121,7 +121,7 @@
     </div>
 
     <div style = "clear:both;"></div>
-    <div class = "container text-center" style = "margin-top:10%;"><a href="{{ url("catalog") }}"><button class = "btn btn-primary">View All</button></a></div>
+    <div class = "container text-center" style = "margin-top:20%;"><a href="{{ url("catalog") }}"><button class = "btn btn-primary">View All</button></a></div>
 
     <style>
             .phr-dev-wrap {
@@ -161,10 +161,10 @@
     <div class="container text-center phr-properties">
             <h2>Our Locations</h2>
             <div class="phr-line"></div>
-            <div class="row" style = "margin-top:2%;">
+            <div class="row" style = "margin-top:5%;">
                     @foreach ($locations as $location)
                         <div class="phr-dev-wrap location_click" id = "{{ $location->id }}">
-                            <img src="{{ str_replace("/public", "", url("")) }}/storage/app/public/developers/{{ $location->image }}" class="img-responsive">
+                            <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $location->image }}" class="img-responsive">
                             <div class="phr-fade-block">
                                 <h2>{{ $location->location }}</h2>
                             </div>

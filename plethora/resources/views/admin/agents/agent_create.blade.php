@@ -226,18 +226,21 @@
             var phrPositionChange = $("#phrPositionChange");
             var phrUplines = $("#phrUplines");
 
+
             // Executes on load to fetch current data
             renderPositions()
 
-            /*phrPositionChange.on('change', function(){
+            phrPositionChange.on('change', function(){
                 renderPositions()
-            })*/
+            })
 
             function renderPositions(){
                 var pos = phrPositionChange.val()
                 var url = "{{ url('/api/v1/agent/genealogy/position/{pos}') }}".replace("{pos}", pos)
                 PhrService.get(url, {}, function(resp){
                    hideLoading()
+
+                   console.log(resp)
                    var options = ""
                    var genealogy = resp.genealogy
                    for(var x = 0; x < genealogy.length; x++){

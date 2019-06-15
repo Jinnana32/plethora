@@ -135,7 +135,7 @@
                           <span>Compensation details</span>
                         </div>
 
-                        <table class = "table table-striped table-bordered" style = "font-size:0.7em;">
+                        <table class = "table" style = "font-size:0.7em;">
                             <thead>
                               <tr>
                                 <th>Date</th>
@@ -169,7 +169,7 @@
                           <span>Incentives received</span>
                         </div>
 
-                        <table class = "table table-striped table-bordered" style = "font-size:0.7em;">
+                        <table class = "table" style = "font-size:0.7em;">
                             <thead>
                               <tr>
                                 <th>Date</th>

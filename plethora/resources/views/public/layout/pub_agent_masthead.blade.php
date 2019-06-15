@@ -4,7 +4,10 @@
               <div class="col-md-1 sub-mast-back" style = "font-size:2rem;">
               </div>
               <div class="col-md-3 sub-mast-text phr-agent-image-wrapper" style = "margin-top:-30px;">
-                  <img class = "phr-agent-image" src = "{{ $agent['image'] }}" />
+                  <div class = "phr-profile-image-edit">
+                    <img class = "phr-agent-image" src = "{{ url("") }}/plethora/storage/app/public/agents/{{ $agent['image'] }}" />
+                    <button class = "phr-profile-image" data-toggle="modal" data-target="#edit_profile_image"><i class = "fa fa-edit"></i></button>
+                  </div>
               </div>
               <div class="col-md-8 sub-mast-text sub-mast-info">
                   <p><h2 class = "edit-name">{{ $agent["name"] }}</h2></p>
@@ -20,3 +23,40 @@
             </div>
           </div>
 </header>
+
+<div class="modal" tabindex="-1" role="dialog" id = "edit_profile_image">
+  <form action="{{ route("phradmin.update_profile_image.submit") }}" method = "POST" enctype="multipart/form-data">
+      {{ csrf_field() }}
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Your Profile</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form action="">
+                  <div class="row">
+                      <div class = "col-md-12  col-form-header">
+                              <div class="dot-header"></div>
+                              <span>Edit image</span>
+                      </div>
+
+                      <div class="col-md-12">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">Upload image</label>
+                                  <input type="file" id="exampleInputEmail1" name = "agent_image"/>
+                                  <input type="hidden" id="user_id" value = "{{ Auth::user()->id }}" name = "user_id"/>
+                              </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary">Continue</button>
+          </div>
+          </div>
+      </div>
+  </form>
+</div>

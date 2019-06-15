@@ -7,6 +7,8 @@ use App\Models\Genealogy;
 use App\Models\PersonalInformation;
 use App\Models\User;
 use App\Models\Abode;
+use App\Logging;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -100,7 +102,10 @@ class AgentController extends Controller
         $agent = $this->getAuthorizedUser();
         $status = "learning";
 
-        return view('agent.learnings', compact("agent", "status"));
+        $trainings = DB::table("trainings")->get();
+        $webinars = DB::table("webinars")->get();
+
+        return view('agent.learnings', compact("agent", "status", "trainings", "webinars"));
     }
 
     public function businessCard(Request $request){
@@ -208,6 +213,13 @@ class AgentController extends Controller
                 redirect()->back()->withInput($request->only('username'))->withErrors(["unauthorized" => "You account credentials are incorrect."]);
             }else{
                 $agent_id = $user->id;
+
+                // Logger
+                $info = PersonalInformation::where("user_id", $agent_id)->first();
+                $logMessage = "Agent " . $info->first_name . " " . $info->last_name .
+                "log's into the system at " . Date("M-d-Y h:i:s");
+                Logging::saveLogin($logMessage);
+
                 return redirect()->route("progression", [$agent_id]);
             }
         }
@@ -215,5 +227,52 @@ class AgentController extends Controller
         return redirect()->back()->withInput($request->only('username'))->withErrors(["unauthorized" => "You account credentials are incorrect."]);
     }
 
+    public function editInfo(Request $request){
+
+        // Update username and password
+        DB::table("users")->where("id", $request->agent_id)->update([
+            "username" => $request->username,
+            "password" => Hash::make($request->password)
+        ]);
+
+        // Update infos
+        DB::table("personal_information")->where("user_id", $request->agent_id)->update([
+            "permanent_address" => $request->address,
+            "email_address" => $request->email,
+            "contact_number" => $request->contact,
+            "referral_link" => $request->referral_link
+        ]);
+
+        return redirect()->back()->with('success', 'You have updated your account');
+    }
+
+    public function updateAgentImage(Request $request){
+
+        // If request has file update with file
+        if($request->hasFile("agent_image")){
+            // Get file details
+            $fileExtension = $request->file('agent_image')->getClientOriginalExtension();
+            $filenameWithExt = $request->file('agent_image')->getClientOriginalName();
+            $fileName = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $fileNameStore = $fileName . "_" . time() . "." . $fileExtension;
+
+            // Upload image
+            if($request->file('agent_image')->storeAs('public/agents', $fileNameStore)){
+
+                // Add developer
+                DB::table("personal_information")->where("user_id", $request->user_id)
+                                       ->update(
+                    [
+                        "image" => $fileNameStore
+                    ]
+                );
+
+                return redirect()->back()->with('success', 'Developer ' . $request->dev_name . ' was successfully updated!');
+            }else{
+                return redirect()->back()->withErrors(["error_upload" => "Error moving file to uploads"]);
+            }
+        }
+
+    }
 
 }

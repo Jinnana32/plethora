@@ -9,6 +9,7 @@ use App\Models\PersonalInformation;
 use App\Models\Genealogy;
 use App\RespHandler;
 use App\StatusCode;
+use App\Logging;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -77,11 +78,12 @@ class UserController extends Controller
                         return redirect(route('phradmin.agents'));
                     break;
                 }
-
             }else{
 
+                $info = PersonalInformation::where("user_id", $user->id)->first();
+
                 $agent = array(
-                    "info" => PersonalInformation::where("user_id", $user->id)->first()
+                    "info" => $info
                 );
 
                 return redirect(route('agent'))->with(compact("agent"));
