@@ -93,8 +93,8 @@ Route::group(['prefix' => '/v1/admin'], function() {
      Route::post('compensation', 'CompensationController@store');
 
      Route::get("abode/details/{abode_id}", "GenericController@getAbodeDetails");
+     Route::get("/geneology/{agent_id}/list", "GenericCOntroller@getGeneology");
 
-     Route::get("geneology/{agent_id}/list", "GenericCOntroller@getGeneology");
 
 });
 

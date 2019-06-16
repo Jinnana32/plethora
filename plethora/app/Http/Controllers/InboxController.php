@@ -42,29 +42,47 @@ class InboxController extends Controller
     }
 
     public function addInboxMessage(Request $request){
-        $agent_name = DB::table("abode_tags", $request->abode_id)->first()->username;
-        $agent = DB::table("users")->where("username", $agent_name)->first();
-        $agent_info = DB::table("personal_information")->where("user_id", $agent->id)->first();
+        $agent_names = DB::table("abode_tags", $request->abode_id)->get();
 
-        DB::table("inboxes")->insert([
-            "agent_id" => $agent->id,
-            "client_name" => $request->name,
-            "mobile_number" => $request->mobile_number,
-            "email_address" => $request->email_address,
-            "message" => $request->message,
-            "date_created" => Date("M-d-Y h:i:s")
-        ]);
-
-        $logMessage = "Agent " .
-                      $agent_info->first_name . " " . $agent_info->last_name .
-                      " received an inquiry from " . $request->name .
-                      " with mobile number of " . $request->mobile_number .
-                      " and email of " . $request->email_address .
-                      " at " . Date("M-d-Y h:i:s");
-
-        Logging::saveInquiry($logMessage);
+        foreach($agent_names as $agent_name){
+            $agents = DB::table("users")->where("username", $agent_name->username)->get();
+            foreach($agents as $agent){
+                $agent_info = DB::table("personal_information")->where("user_id", $agent->id)->first();
+                DB::table("inboxes")->insert([
+                    "agent_id" => $agent->id,
+                    "client_name" => $request->name,
+                    "mobile_number" => $request->mobile_number,
+                    "email_address" => $request->email_address,
+                    "message" => $request->message,
+                    "date_created" => Date("M-d-Y h:i:s")
+                ]);
+                $logMessage = $agent_info->first_name . " " . $agent_info->last_name .
+                " received an inquiry from " . $request->name .
+                " with mobile number of " . $request->mobile_number .
+                " and email of " . $request->email_address .
+                " at " . Date("M-d-Y h:i:s");
+                Logging::saveInquiry($logMessage);
+            }
+        }
 
         return redirect()->back()->withSuccess('Your inquiry was sent.');
+    }
+
+    public function addInquireMessage(Request $request){
+        $users = DB::table("users")->where("access_level", "admin")->where("type", 1)->get();
+        foreach($users as $user){
+            DB::table("inboxes")->insert([
+                "agent_id" => $user->id,
+                "client_name" => $request->name,
+                "mobile_number" => $request->contact,
+                "email_address" => $request->email,
+                "address" => $request->address,
+                "message" => $request->message,
+                "date_created" => Date("M-d-Y h:i:s")
+            ]);
+        }
+
+        return redirect()->back()->with('inquire', 'Your inquiry was sent.');
     }
 
     public function timeIn(Request $request){

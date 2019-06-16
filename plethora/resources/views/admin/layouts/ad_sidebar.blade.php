@@ -92,6 +92,12 @@
                                 <i class="fa fa-stack-overflow"></i> <span>Incentives</span>
                               </a>
                           </li>
+
+                          <li>
+                              <a href="{{ url("phradmin/track/logging") }}">
+                                <i class="fa fa-stack-overflow"></i> <span>Logs</span>
+                              </a>
+                          </li>
                           @endif
 
                         @if (Auth::user()->type == 1)

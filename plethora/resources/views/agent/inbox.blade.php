@@ -36,17 +36,21 @@
                 <tr role="row">
                     <th class="sorting_asc">Date</th>
                     <th class="sorting">Name</th>
-                    <th class="sorting">Email</th>
                     <th class="sorting">Message</th>
+                    <th class="sorting">Email</th>
+                    <th class="sorting">Contact</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr role="row" class="odd">
-                        <td class="sorting_1">October 12, 2019</td>
-                        <td>tj coyoca</td>
-                        <td>tjcoyoca17@gmail.com</td>
-                        <td>Hi cer mike sa diin ni pwedi makita</td>
-                    </tr>
+                    @foreach ($inboxes as $inbox)
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">{{ $inbox->date_created }}</td>
+                            <td>{{ $inbox->client_name }}</td>
+                            <td>{{ $inbox->message }}</td>
+                            <td>{{ $inbox->email_address }}</td>
+                            <td>{{ $inbox->mobile_number }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
                 </table>
 

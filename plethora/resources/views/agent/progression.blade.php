@@ -101,7 +101,13 @@
                             <div class="col-md-4">
                               <div class="card-counter primary">
                                 <i class="fa fa-code-fork"></i>
-                                <span class="count-numbers">{{ $milestone->total_milestone }}</span>
+                                <span class="count-numbers">
+                                  @if ($milestone != null)
+                                  {{ $milestone->total_milestone }}
+                                  @else
+                                  0
+                                  @endif
+                                </span>
                                 <span class="count-name">Milestone</span>
                               </div>
                             </div>
@@ -109,7 +115,13 @@
                             <div class="col-md-4">
                               <div class="card-counter success">
                                 <i class="fa fa-database"></i>
-                                <span class="count-numbers">{{ $earnings[0]->earning }}</span>
+                                <span class="count-numbers">
+                                  @if($earnings[0]->earning != null)
+                                  {{ $earnings[0]->earning }}
+                                  @else
+                                  0
+                                  @endif
+                                </span>
                                 <span class="count-name">Earnings</span>
                               </div>
                             </div>
@@ -121,7 +133,6 @@
                                   <span class="count-name">Incentives</span>
                                 </div>
                               </div>
-
                           </div>
 
                   </div>
@@ -214,7 +225,6 @@
     <!-- Admin header -->
     @include('landing.layouts.footer')
 
-</body>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -255,14 +265,18 @@
         url: url,
         data: {},
         success: function(resp){
+          //console.log("shit")
           drawChart(resp)
         },
         error: function(err){
-          console.log(err)
+          console.log(err + " shit")
         }
       })
   }
 
 </script>
+
+</body>
+
 
 </html>

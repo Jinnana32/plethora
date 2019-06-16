@@ -33,6 +33,21 @@ class AdminController extends Controller
         return view("admin.dashboard")->with(compact("types", "user_info"));
     }
 
+    public function showLogs(){
+        $log_types = DB::table("log_types")->get();
+
+        $log_history = [];
+        $log_dates = DB::select("SELECT DISTINCT date_created FROM admin_logs ORDER BY date_created DESC");
+        foreach($log_dates as $log){
+            $logs = DB::table("admin_logs")->where("date_created", $log->date_created)->orderBy("id", "DESC")->get();
+            array_push($log_history, array(
+                "date" => $log->date_created,
+                "logs" => $logs
+            ));
+        }
+        return view("admin.track.logging.logs")->with(compact('log_history', 'log_types'));
+    }
+
     public function showAgents(){
 
         $agents = array();
@@ -275,7 +290,28 @@ class AdminController extends Controller
     }
 
     public function showWebinars(){
-        return view('admin.learnings.webinars');
+        $webinars = DB::table("webinars")->get();
+        return view('admin.learnings.webinars', compact("webinars"));
+    }
+
+    public function addWebinar(Request $request){
+
+
+
+        // Add developer
+        DB::table("webinars")->insert(
+            [
+                "title" => $request->title,
+                "content_description" => $request->description,
+                "youtube_link" => $this->convertToEmbed($request->yt_link)
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Webinar ' . $request->title . ' was successfully addded');
+    }
+
+    public function convertToEmbed($link){
+        return str_replace("watch?v=", "embed/", $link);
     }
 
     /* Settings */

@@ -56,7 +56,6 @@
                   <div class = "row">
 
                       <div class = "col-md-6">
-
                         <div class = "biz-card">
                             <div class = "biz-info-holder">
                                 <div class = "biz-left">
@@ -71,13 +70,19 @@
                                     </ul>
                                 </div>
                                 <div class = "biz-right">
-                                    <h4>Trish Jedrick Coyoca</h4>
-                                    <p>Broker</p>
+                                    <h4>{{ ucwords($agent["name"]) }}</h4>
+                                    <p>
+                                        @if ($agent["position"] == "division" || $agent["position"] == "unit")
+                                        {{ strtoupper($agent["position"] . " Manager") }}
+                                        @else
+                                        {{ strtoupper($agent["position"]) }}
+                                        @endif
+                                    </p>
 
-                                    <p class = "biz-first"><strong>4B-3223-BD3</strong> <br/> PRC license</p>
-                                    <p><strong>093131231241</strong> <br/> Contact</p>
-                                    <p><strong>https//facebook.com/tjcoyoca</strong> <br/> Facebook account</p>
-                                    <p><strong>tjcoyoca17@gmail.com</strong> <br/> Email Address</p>
+                                    <p class = "biz-first"><strong>{{ $agent["prc_license"] }}</strong> <br/> PRC license</p>
+                                    <p><strong>{{ $agent["contact"] }}</strong> <br/> Contact</p>
+                                    <p><strong>{{ $agent["facebook_account"] }}</strong> <br/> Facebook account</p>
+                                    <p><strong>{{ $agent["email"] }}</strong> <br/> Email Address</p>
                                     <p><strong>{{ url("") }}</strong> <br/> Website</p>
 
                                 </div>
@@ -91,11 +96,9 @@
                                 <li>MANILA</li>
                             </ul>
                         </div>
-
                       </div>
 
                       <div class = "col-md-6">
-
                             <div class = "biz-card">
                                 <div class = "biz-info-holder">
                                     <div class = "biz-left">
@@ -110,13 +113,19 @@
                                         </ul>
                                     </div>
                                     <div class = "biz-right">
-                                        <h4>Trish Jedrick Coyoca</h4>
-                                        <p>Broker</p>
+                                        <h4>{{ ucwords($agent["name"]) }}</h4>
+                                        <p>
+                                            @if ($agent["position"] == "division" || $agent["position"] == "unit")
+                                            {{ strtoupper($agent["position"] . " Manager") }}
+                                            @else
+                                            {{ strtoupper($agent["position"]) }}
+                                            @endif
+                                        </p>
 
-                                        <p class = "biz-first"><strong>4B-3223-BD3</strong> <br/> PRC license</p>
-                                        <p><strong>093131231241</strong> <br/> Contact</p>
-                                        <p><strong>https//facebook.com/tjcoyoca</strong> <br/> Facebook account</p>
-                                        <p><strong>tjcoyoca17@gmail.com</strong> <br/> Email Address</p>
+                                        <p class = "biz-first"><strong>{{ $agent["prc_license"] }}</strong> <br/> PRC license</p>
+                                        <p><strong>{{ $agent["contact"] }}</strong> <br/> Contact</p>
+                                        <p><strong>{{ $agent["facebook_account"] }}</strong> <br/> Facebook account</p>
+                                        <p><strong>{{ $agent["email"] }}</strong> <br/> Email Address</p>
                                         <p><strong>{{ url("") }}</strong> <br/> Website</p>
 
                                     </div>
@@ -130,9 +139,7 @@
                                     <li>MANILA</li>
                                 </ul>
                             </div>
-
                           </div>
-
                   </div>
                 </div>
 

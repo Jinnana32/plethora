@@ -81,7 +81,7 @@
                 <div class="col-md-7">
 
                         <div class="col-md-12 sub-mast-text sub-mast-info">
-                                <h2><img class = "phr-agent-image" src = "{{ $agent["image"] }}" /> {{ $agent["name"] }}</h2>
+                                <h2><img class = "phr-agent-image" src = "{{ url("") }}/plethora/storage/app/public/agents/{{ $agent["image"] }}" /> {{ $agent["name"] }}</h2>
                                 <p>{{ $agent["address"] }}</p>
                                 <p><i class = "fa fa-phone"></i> {{ $agent["contact"] }}</p>
                                 <p><i class = "fa fa-envelope"></i> {{ $agent["email"] }}</p>
@@ -120,13 +120,6 @@
                                     <label for="exampleInputEmail1">Password</label>
                                     <input type="password" class="form-control phr_password" id="exampleInputEmail1" name = "password" required/>
                                     <i class="fa fa-eye password_toggle" aria-hidden="true"></i>
-                            </div>
-                    </div>
-
-                    <div class="col-md-6" style="margin-top:1.2rem;">
-                            <div class="form-group">
-                                    <label for="exampleInputEmail1">Profile Image</label>
-                                    <input type="text" class="form-control phr_image" id="exampleInputEmail1" name = "image" required/>
                             </div>
                     </div>
 
@@ -289,7 +282,7 @@
                          success: function(resp){
                              resetField(create_agent_form)
                              hideLoading()
-                             showSuccess("Success", "You have been registered, you can now login to your account.");
+                             showSuccess("Success", "You have been registered and waiting for verification");
                          },
                          error: function(err){
                              serviceOperator(err)

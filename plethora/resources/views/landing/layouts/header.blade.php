@@ -17,6 +17,11 @@
 <!-- Custom Css -->
 <link rel="stylesheet" href="{{ url("vendor/css/revamp.min.css") }}"/>
 
+<style>
+.modal-backdrop {
+  opacity: 0.5;
+}
+</style>
 
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
@@ -93,47 +98,50 @@
   </div>
 
   <div class="lead-contact" style="display:none;">
+    <form action="{{ route('inbox.inquiry.submit') }}" method="POST">
+    {{ csrf_field() }}
     <div class="row">
 
         <div class="col-md-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">Message</label>
-                <textarea id="" cols="20" rows="2" class = "form-control lead_message"></textarea>
+                <textarea id="" cols="20" rows="2" class = "form-control lead_message" name = "message"></textarea>
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">Complete name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name = "first_name" required/>
+                <input type="text" class="form-control" id="exampleInputEmail1" name = "name" required/>
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">Address</label>
-                <textarea name="" id="" cols="20" rows="5" class = "form-control"></textarea>
+                <textarea name="" id="" cols="20" rows="5" class = "form-control" name = "address"></textarea>
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                     <label for="exampleInputEmail1">Contact number</label>
-                    <input type="number" class="form-control" id="exampleInputEmail1" name = "last_name" required/>
+                    <input type="number" class="form-control" id="exampleInputEmail1" name = "contact" required/>
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                     <label for="exampleInputEmail1">Facebook</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name = "last_name" required/>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name = "email" required/>
             </div>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
-                <button class="btn btn-primary btn-block" data-dismiss="modal">Submit</button>
+                <button class="btn btn-primary btn-block">Submit</button>
             </div>
         </div>
     </div>
+    </form>
   </div>

@@ -25,6 +25,7 @@ Route::get('logout', 'UserController@logouts')->name('phradmin.logout');
 
 /* Inbox */
 Route::post('/inbox/message', 'InboxController@addInboxMessage')->name("inbox.message.submit");
+Route::post('/inbox/inquire', 'InboxController@addInquireMessage')->name("inbox.inquiry.submit");
 
 /* Login routes */
 Route::group(['middleware' => ['guest'], 'prefix' => 'phradmin'], function() {
@@ -119,6 +120,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'phradmin'], function() {
     Route::post('track/incentives/add', 'IncentiveController@addIncentive')->name("phradmin.add_incentive.submit");
     Route::post('track/incentives/update', 'IncentiveController@updateIncentive')->name("phradmin.update_incentive.submit");
     Route::get('track/incentives/remove/{incentive_id}/{description}', 'IncentiveController@removeIncentive');
+    Route::get('track/logging', 'AdminController@showLogs');
 
     // Settings
     Route::get('settings/account', 'AdminController@showAccountSettings');
@@ -132,6 +134,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'phradmin'], function() {
     Route::post('learning/trainings/add', 'TrainingController@addTraining')->name("phradmin.add_training.submit");
 
     Route::get('learning/webinars', 'AdminController@showWebinars');
+    Route::post('learning/webinars/add', 'AdminController@addWebinar')->name("phradmin.add_webinar.submit");
+
+
 
 });
 

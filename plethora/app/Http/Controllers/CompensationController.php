@@ -63,22 +63,21 @@ class CompensationController extends Controller
                     ]);
                 }else{
                     DB::select("UPDATE milestones SET total_milestone = total_milestone + {$com_receive} WHERE agent_id = '{$request->agent_id}'");
+                }
 
-                    // Check if available for incentives
-                    $currentMilestone = DB::table("milestones")->where("agent_id", $request->agent_id)->first()->total_milestone;
-                    $incentives = DB::table("incentives")->where("archive", 1)->get();
+                // Check if available for incentives
+                $currentMilestone = DB::table("milestones")->where("agent_id", $request->agent_id)->first()->total_milestone;
+                $incentives = DB::table("incentives")->where("archive", 1)->get();
 
-                    foreach($incentives as $incentive){
-                        $milestoneThreshold = $incentive->milestone_income;
-                        if($currentMilestone > $milestoneThreshold){
-                            DB::table("incentive_details")->insert([
-                                "incentive_id" => $incentive->id,
-                                "agent_id" => $request->agent_id,
-                                "create_date" => Date("M/d/Y")
-                            ]);
-                        }
+                foreach($incentives as $incentive){
+                    $milestoneThreshold = $incentive->milestone_income;
+                    if($currentMilestone > $milestoneThreshold){
+                        DB::table("incentive_details")->insert([
+                            "incentive_id" => $incentive->id,
+                            "agent_id" => $request->agent_id,
+                            "create_date" => Date("M/d/Y")
+                        ]);
                     }
-
                 }
 
             }

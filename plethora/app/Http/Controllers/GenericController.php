@@ -247,16 +247,19 @@ class GenericController extends Controller
 
         $hasUpline = true;
         $uplines = [];
+        $up_id = $upline_id;
 
         while($hasUpline){
 
-            $upline = DB::table("genealogies")->where("user_id", $upline_id)->first();
+            $upline = DB::table("genealogies")->where("user_id", $up_id)->first();
 
             if($upline->upline_id == null){
                 $hasUpline = false;
             }
 
             array_push($uplines, $upline);
+            $up_id = $upline->upline_id;
+
         }
 
         return $uplines;

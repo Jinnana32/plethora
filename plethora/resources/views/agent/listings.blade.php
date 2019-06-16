@@ -50,7 +50,7 @@
                                     <img src="{{ url("") }}/vendor/img/temp_image.png">
                                     @endif
                                         <div class = "phr-twin-header">
-                                            <a href = "{{ url("abode") }}/{{ $abode["current"]->id }}"><h2 class = "twin-left">{{ $abode["current"]->display_name }}</h2></a>
+                                            <a href = "{{ url("abode") }}/{{ $abode["current"]->id }}" target = "_blank"><h2 class = "twin-left">{{ $abode["current"]->display_name }}</h2></a>
                                             <h2 class = "twin-right">{{ $abode["current"]->date }}</h2>
                                         </div>
                                         <div class = "clearfix"></div>

@@ -119,9 +119,10 @@
 
                     <div class = "col-md-12">
                             <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group form-group-select">
                                             <label for="exampleInputEmail1">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputEmail1" name = "password" required/>
+                                            <input type="password" class="form-control phr_password" id="exampleInputEmail1" name = "password" required/>
+                                            <i class="fa fa-eye password_toggle" aria-hidden="true" style = "top:30%"></i>
                                             @if($errors->has('username'))
                                             <span class = "help-block">
                                                 <strong>{{ $errors->first('password') }}</strong>
@@ -149,5 +150,6 @@
 
   <!-- Admin header -->
   @include('public.layout.pub_footer')
+
 </body>
 </html>

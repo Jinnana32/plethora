@@ -45,14 +45,16 @@
             @endif
 
         </div>
-        <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="password" name = "password">
+        <div class="form-group has-feedback form-group-select">
+            <input type="password" class="form-control phr_password" placeholder="password" name = "password">
+            <i class="fa fa-eye password_toggle" aria-hidden="true" style = "top:30%"></i>
             @if($errors->has('username'))
             <span class = "help-block">
                 <strong>{{ $errors->first('password') }}</strong>
             </span>
             @endif
         </div>
+
         <div class="row" style = "margin-top:30px;">
             <!-- /.col -->
             <div class="col-xs-12">
@@ -78,6 +80,18 @@
 
     <!-- Admin footer -->
     @include('admin.layouts.ad_footer')
+
+    <script>
+     var password_toggle = $(".password_toggle");
+                 password_toggle.click(function(){
+                     var phr_password = $(".phr_password");
+                     if(phr_password.attr("type") == "password"){
+                         phr_password.attr("type", "text")
+                     }else{
+                         phr_password.attr("type", "password")
+                     }
+                 })
+    </script>
 
 </body>
 

@@ -121,10 +121,10 @@ class UserController extends Controller
         if($request->company_position != ""){
             // if unit process first the unit position
             if($request->company_position == "unit"){
-                $lastest_pos = Genealogy::where("upline_id", $request->upline_id)->count() + 1;
+                $lastest_pos = DB::select("SELECT MAX(unit_pos) as lp FROM genealogies WHERE upline_id = '{$request->upline_id}'");
             }
 
-            $unit_pos = ($request->company_position == "unit" ? $lastest_pos: null);
+            $unit_pos = ($request->company_position == "unit" ? $lastest_pos[0]->lp + 1: null);
 
             $genealogy = [
                 "user_id" => $user->id,
@@ -161,6 +161,7 @@ class UserController extends Controller
             'facebook_account' => $request->facebook_account,
             'email_address' => $request->email_address,
             'contact_number' => $request->contact_number,
+            'prc_license' => $request->prc_license,
             'referral_link' => $request->username,
             'image' => $request->image,
         ];

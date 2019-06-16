@@ -9,8 +9,13 @@ $(document).ready(function(){
 
     function showLeadGen(){
         setTimeout(function(){
-               leadModal.modal("show")
+            showGen()
         }, 10000)
+    }
+
+    function showGen(){
+        leadModal.modal("show")
+        setTimeout(showGen, 50000)
     }
 
     lead_action.on("click", function(){

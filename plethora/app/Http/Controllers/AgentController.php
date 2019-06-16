@@ -77,19 +77,64 @@ class AgentController extends Controller
 
     public function findList(){
         $agent = $this->getAuthorizedUser();
-        $abodes = Abode::all();
+        $agent = $this->getAuthorizedUser();
         $tags = DB::table("abode_tags")->where("username", $agent["username"])->get();
-        $status = "";
+        $abodes = array();
 
-        foreach($abodes as $key => $value){
+        $temp_abodes = DB::table("abodes")->where("archive", 1)->get();
+        foreach($temp_abodes as $abode){
+            $features = array();
+            $has_brand = 0;
+            $branding_image = "";
+            $developer_image = DB::table("developers")->where("id", $abode->dev_id)
+                                                      ->where("archive", 1)
+                                                      ->first()->image;
+
+            if($abode->branding != 0){
+                $has_brand = 1;
+                $branding_image = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                                  ->where("archive", 1)
+                                                                  ->first()->image;
+            }
+            $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                     ->where("archive", 1)
+                                                     ->first()->category;
+            $location = DB::table("abode_location")->where("id", $abode->location)
+                                                   ->where("archive", 1)
+                                                   ->first()->location;
+            $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+            foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first()->display_name;
+                array_push($features, array(
+                    "feature" => $temp_feature,
+                    "value" => $feature->value
+                ));
+            }
+
+            array_push($abodes, array(
+                "current" => $abode,
+                "category" => $category,
+                "location" => $location,
+                "features" => $features,
+                "dev_image" => $developer_image,
+                "has_brand" => $has_brand,
+                "branding_image" => $branding_image
+            ));
+        }
+
+        /*foreach($abodes as $abode){
             foreach($tags as $tag){
-                if($value->abode_id == $tag->abode_id){
+                if($abode["current"][]->abode_id == $tag->abode_id){
                     unset($abodes[$key]);
                 }
             }
-        }
+        }*/
 
-        return view('agent.find_listing', compact("agent", "abodes",  "status"));
+        return view('agent.find_listing', compact("agent", "abodes"));
     }
 
     public function profile(Request $request){
@@ -117,7 +162,8 @@ class AgentController extends Controller
     public function inbox(Request $request){
         $agent = $this->getAuthorizedUser();
         $status = "inbox";
-        return view('agent.inbox', compact("agent", "status"));
+        $inboxes = DB::table("inboxes")->where("agent_id", $agent["id"])->get();
+        return view('agent.inbox', compact("agent", "inboxes"));
     }
 
     public function faqs(Request $request){
@@ -166,8 +212,11 @@ class AgentController extends Controller
             "address" => $info["permanent_address"],
             "contact" => $info["contact_number"],
             "email" => $info["email_address"],
+            "prc_license" => $info["prc_license"],
+            "facebook_account" => $info["facebook_account"],
             "referral_link" => $info["referral_link"],
             "image" => $info["image"],
+            "position" => DB::table("genealogies")->where("user_id", $info->user_id)->first()->position
         );
         return $agent;
     }
@@ -181,6 +230,15 @@ class AgentController extends Controller
         );
         $user = User::where("username", $request->username)->first();
         $agent_id = $user->id;
+
+        $display_name = DB::table("abodes")->where("id", $request->abode_id)->first()->display_name;
+
+         // Logger
+         $info = PersonalInformation::where("user_id", $agent_id)->first();
+         $logMessage = $info->first_name . " " . $info->last_name .
+         " tag's an abode/listing of  {$display_name} at " . Date("M-d-Y h:i:s");
+         Logging::saveInquiry($logMessage);
+
         return redirect()->route("listings", [$agent_id]);
     }
 
@@ -216,8 +274,8 @@ class AgentController extends Controller
 
                 // Logger
                 $info = PersonalInformation::where("user_id", $agent_id)->first();
-                $logMessage = "Agent " . $info->first_name . " " . $info->last_name .
-                "log's into the system at " . Date("M-d-Y h:i:s");
+                $logMessage = $info->first_name . " " . $info->last_name .
+                " log's into the system at " . Date("M-d-Y h:i:s");
                 Logging::saveLogin($logMessage);
 
                 return redirect()->route("progression", [$agent_id]);
@@ -242,6 +300,12 @@ class AgentController extends Controller
             "contact_number" => $request->contact,
             "referral_link" => $request->referral_link
         ]);
+
+        // Logger
+        $info = PersonalInformation::where("user_id", $request->agent_id)->first();
+        $logMessage = $info->first_name . " " . $info->last_name .
+        " updates account at " . Date("M-d-Y h:i:s");
+        Logging::saveLogin($logMessage);
 
         return redirect()->back()->with('success', 'You have updated your account');
     }

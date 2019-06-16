@@ -73,9 +73,10 @@
 
                     <div class = "col-md-12">
                             <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group form-group-select">
                                             <label for="exampleInputEmail1">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputEmail1" name = "password" required/>
+                                            <input type="password" class="form-control phr_password" id="exampleInputEmail1" name = "password" required/>
+                                            <i class="fa fa-eye password_toggle" aria-hidden="true"></i>
                                             @if($errors->has('username'))
                                             <span class = "help-block">
                                                 <strong>{{ $errors->first('password') }}</strong>
@@ -103,6 +104,18 @@
 
  <!-- Admin header -->
  @include('landing.layouts.footer')
+
+ <script>
+                var password_toggle = $(".password_toggle");
+                            password_toggle.click(function(){
+                                var phr_password = $(".phr_password");
+                                if(phr_password.attr("type") == "password"){
+                                    phr_password.attr("type", "text")
+                                }else{
+                                    phr_password.attr("type", "password")
+                                }
+                            })
+               </script>
 
 </body>
 </html>

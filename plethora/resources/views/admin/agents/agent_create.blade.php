@@ -100,12 +100,22 @@
                                 <input type="text" class="form-control" id="exampleInputEmail1" name = "middle_initial" required/>
                         </div>
                     </div>
-                    <div class="col-xs-4">
-                            <div class="form-group">
-                                    <label for="exampleInputEmail1">Name suffix</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" name = "name_suffix" required/>
-                            </div>
-                    </div>
+                    <div class="col-md-4">
+                                <div class="form-group form-group-select">
+                                        <label for="exampleInputEmail1">Name extension</label>
+                                        <select class="form-control" name = "name_suffix">
+                                                <option value = ""></option>
+                                                <option value = "Jr.">Jr.</option>
+                                                <option value = "I">I</option>
+                                                <option value = "II">II</option>
+                                                <option value = "III">III</option>
+                                                <option value = "IV">IV</option>
+                                                <option value = "MSW">MSW</option>
+                                                <option value = "PhD">PhD</option>
+                                        </select>
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </div>
+                        </div>
                     <div class="col-xs-4">
                             <div class="form-group form-group-select">
                                     <label for="exampleInputEmail1">Gender</label>
@@ -179,6 +189,12 @@
                                 <input type="text" class="form-control" id="exampleInputEmail1" name = "facebook_account" placeholder="eg. www.facebook.com/plethorahomes" required/>
                         </div>
                     </div>
+                    <div class="col-xs-4">
+                                <div class="form-group">
+                                        <label for="exampleInputEmail1">PRC license</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name = "prc_license" placeholder="eg. www.facebook.com/plethorahomes" required/>
+                                </div>
+                            </div>
                     <div class="col-xs-8">
                             <div class="form-group">
                                     <label for="exampleInputEmail1">Permanent Address</label>

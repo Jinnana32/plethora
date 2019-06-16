@@ -1,7 +1,27 @@
 @extends('admin.main')
 
 @section('content')
-    <section class="content">
+
+  <!-- Page Tag Header -->
+  <div class="row">
+        <div class = "col-xs-12">
+            <div class="row">
+
+                <div class="col-xs-6">
+                    <section class="content-header">
+                                <h1>
+                                Admin Dashboard
+                                <br/>
+                                <small>Manage accounts and logs</small>
+                                </h1>
+                            </section>
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- Page Tag Header -->
+
+<section class="content">
         <div class="row">
 
                 <div class="col-md-12">
@@ -57,6 +77,8 @@
                                 <!-- /.box-body -->
                               </div>
                 </div>
+
+              </div>
         </div>
     </section>
 
