@@ -64,8 +64,8 @@
                           </a>
                           <ul class="treeview-menu" style="display: none;">
                             <li><a href="{{ url("phradmin/agents/create") }}"><i class="fa fa-user"></i> Add Agent</a></li>
-                            <li><a href="{{ url("phradmin/agents") }}"><i class="fa fa-circle-o"></i> Approved</a></li>
-                            <li><a href="{{ url("phradmin/pending_agents") }}"><i class="fa fa-circle-o"></i> Pending</a></li>
+                            <li><a href="{{ url("phradmin/agents") }}"><i class="fa fa-check-circle"></i> Approved</a></li>
+                            <li><a href="{{ url("phradmin/pending_agents") }}"><i class="fa fa-hourglass"></i> Pending</a></li>
                           </ul>
                         </li>
                           <!-- Admin -->
@@ -75,7 +75,7 @@
                          <li class = "header phr-list-header">Keep track</li>
                          <li>
                           <a href="{{ url("phradmin/track/compensation") }}">
-                            <i class="fa fa-stack-overflow"></i> <span>Sales</span>
+                            <i class="fa fa-line-chart"></i> <span>Sales</span>
                           </a>
                          </li>
                          @endif
@@ -83,19 +83,19 @@
                          @if (Auth::user()->type == 1)
                           <li>
                             <a href="{{ url("phradmin/track/milestone") }}">
-                              <i class="fa fa-stack-overflow"></i> <span>Milestones</span>
+                              <i class="fa fa-rocket"></i> <span>Milestones</span>
                             </a>
                           </li>
 
                           <li>
                               <a href="{{ url("phradmin/track/incentives") }}">
-                                <i class="fa fa-stack-overflow"></i> <span>Incentives</span>
+                                <i class="fa fa-money"></i> <span>Incentives</span>
                               </a>
                           </li>
 
                           <li>
                               <a href="{{ url("phradmin/track/logging") }}">
-                                <i class="fa fa-stack-overflow"></i> <span>Logs</span>
+                                <i class="fa fa-database"></i> <span>Logs</span>
                               </a>
                           </li>
                           @endif
@@ -105,13 +105,13 @@
 
                         <li>
                           <a href="{{ url("phradmin/learning/trainings") }}">
-                           <i class="fa fa-cubes"></i> <span>Trainings</span>
+                           <i class="fa fa-black-tie"></i> <span>Trainings</span>
                          </a>
                         </li>
 
                         <li>
                           <a href="{{ url("phradmin/learning/webinars") }}">
-                          <i class="fa fa-cubes"></i> <span>Webinars</span>
+                          <i class="fa fa-television"></i> <span>Webinars</span>
                           </a>
                         </li>
                         @endif
