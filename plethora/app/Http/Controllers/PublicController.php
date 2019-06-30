@@ -19,7 +19,7 @@ class PublicController extends Controller
             return view('landing.maintenance');
         }else{
             $abodes = array();
-            $temp_abodes = DB::table("abodes")->where("archive", 1)->get();
+            $temp_abodes = DB::table("abodes")->where("archive", 1)->take(6)->get();
             foreach($temp_abodes as $abode){
                 $features = array();
                 $has_brand = 0;
