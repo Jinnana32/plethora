@@ -103,16 +103,17 @@
                         @endif
                             <div class = "phr-twin-header">
                                 <a href = "{{ url("abode") }}/{{ $abode["current"]->id }}"><h2 class = "twin-left">{{ $abode["current"]->display_name }}</h2></a>
-                                <h2 class = "twin-right">{{ $abode["current"]->date }}</h2>
+                                <h2 class = "twin-right">{{ date("M d, Y", strtotime($abode["current"]->date)) }}</h2>
                             </div>
                             <div class = "clearfix"></div>
                             <p class = "phr-monthly">{{ $abode["current"]->monthly_payment }}/monthly</p>
                             <p class = "phr-category">({{ $abode["category"] }})</p>
                             <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->address }}</p>
                             <ul>
-                                @foreach ($abode["features"] as $feature)
+                                @foreach (array_slice($abode["features"], 0, 4) as $feature)
                                     <li>{{ $feature["feature"] }}: {{ $feature["value"] }}</li>
                                 @endforeach
+                                <li><a style = "padding:0;" href = "{{ url("abode") }}/{{ $abode["current"]->id }}">More...</a></li>
                             </ul>
                     </div>
                 @endforeach
@@ -121,7 +122,7 @@
     </div>
 
     <div style = "clear:both;"></div>
-    <div class = "container text-center" style = "margin-top:20%;"><a href="{{ url("catalog") }}"><button class = "btn btn-primary">View All</button></a></div>
+    <div class = "container text-center" style = "margin-top:5%;"><a href="{{ url("catalog") }}"><button class = "btn btn-primary">View All</button></a></div>
 
     <style>
             .phr-dev-wrap {
