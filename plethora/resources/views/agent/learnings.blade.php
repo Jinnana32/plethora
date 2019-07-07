@@ -95,7 +95,7 @@
               <div class = "col-md-4 phr-webinar-item">
                   <h4>{{ $webinar->title }}</h4>
                   <p>{{ $webinar->content_description }}</p>
-                  <iframe src="{{ $webinar->youtube_link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  <iframe class = "yt-video-frame" src="{{ $webinar->youtube_link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               @endforeach
 
@@ -109,5 +109,24 @@
 
     <!-- Admin header -->
     @include('landing.layouts.footer')
+
+    <script>
+      $(document).ready(function(){
+        $(".yt-video-frame").each(function(){
+        //var head = $(this).contents()
+        console.log("Iframe content", $(this).contents())
+        /*var css = '<style type="text/css">' +
+          'div.ytp-chrome-top-buttons{display:none}; ' +
+          '</style>';
+          $(this).append(css);
+          console.log("append")
+          })*/
+
+      })
+
+      })
+
+    </script>
+
 </body>
 </html>

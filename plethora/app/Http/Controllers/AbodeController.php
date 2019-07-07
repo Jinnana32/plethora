@@ -35,6 +35,7 @@ class AbodeController extends Controller
             "location" => $request->location_id,
             "address" => $request->address,
             "monthly_payment" => $request->monthly_payment,
+            "monthly_equity" => $request->monthly_equity,
             "total_contract_price" => $request->total_contract_price,
             "net_selling_price" => $request->net_selling_price,
             "date" => date("Y-m-d h:i:s a", time()),
@@ -121,7 +122,8 @@ class AbodeController extends Controller
                 [
                     "total_contract_price" => $request->contract_price,
                     "net_selling_price" => $request->selling_price,
-                    "monthly_payment" => $request->monthly_price
+                    "monthly_payment" => $request->monthly_price,
+                    "monthly_equity" => $request->monthly_equity
                 ]
             );
         return redirect()->back()->with('success', 'Abode was successfully updated!');

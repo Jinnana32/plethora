@@ -91,7 +91,7 @@
 
         <div class="phr-property-wrap">
                 @foreach ($abodes as $abode)
-                    <div class="phr-property-item">
+                    <div class="phr-property-item" style = "margin-top:2em;">
                         <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode["dev_image"] }}" />
                         @if ($abode["has_brand"] != 0)
                             <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
@@ -106,7 +106,13 @@
                                 <h2 class = "twin-right">{{ date("M d, Y", strtotime($abode["current"]->date)) }}</h2>
                             </div>
                             <div class = "clearfix"></div>
-                            <p class = "phr-monthly">{{ $abode["current"]->monthly_payment }}/monthly</p>
+                            <p class = "phr-monthly">
+                                @if ($abode["current"]->monthly_payment < 1)
+                                Contact Selling Agent
+                                @else
+                                {{ $abode["current"]->monthly_payment }}/monthly
+                                @endif
+                            </p>
                             <p class = "phr-category">({{ $abode["category"] }})</p>
                             <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->address }}</p>
                             <ul>

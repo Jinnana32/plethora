@@ -147,10 +147,17 @@
 
                     <div class="col-xs-4">
                             <div class="form-group">
-                                    <label for="exampleInputEmail1">Monthly Payment</label>
+                                    <label for="exampleInputEmail1">Monthly Amortization</label>
                                     <input type="number" class="form-control" id="exampleInputEmail1" name = "monthly_payment" required/>
                             </div>
                     </div>
+
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                                <label for="exampleInputEmail1">Monthly Equity</label>
+                                <input type="number" class="form-control" id="exampleInputEmail1" name = "monthly_equity" required/>
+                        </div>
+                </div>
 
             </div>
         </div><!-- </row> -->
