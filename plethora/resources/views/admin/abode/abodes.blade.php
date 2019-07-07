@@ -308,7 +308,7 @@
             </form>
         </div>
 
-        <div class="modal" tabindex="-1" role="dialog" id = "update_features">
+        <div class="modal" tabindex="-1" role="dialog" id = "update_features" style = "overflow-y: scroll;">
                 <form id = "editFeature" method = "POST" enctype="multipart/form-data">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
