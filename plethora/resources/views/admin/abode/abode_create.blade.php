@@ -134,28 +134,28 @@
                     <div class="col-xs-4">
                             <div class="form-group">
                                     <label for="exampleInputEmail1">Total Contract Price</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" name = "total_contract_price" required/>
+                                    <input type="number" step="any" class="form-control" id="exampleInputEmail1" value = "0.00" name = "total_contract_price" required/>
                             </div>
                     </div>
 
                     <div class="col-xs-4">
                             <div class="form-group">
                                     <label for="exampleInputEmail1">Net Selling Price</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" name = "net_selling_price" required/>
+                                    <input type="number" step="any" class="form-control" id="exampleInputEmail1" value = "0.00" name = "net_selling_price" required/>
                             </div>
                     </div>
 
                     <div class="col-xs-4">
                             <div class="form-group">
                                     <label for="exampleInputEmail1">Monthly Amortization</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail1" name = "monthly_payment" required/>
+                                    <input type="number" step="any" class="form-control" id="exampleInputEmail1" value = "0.00" name = "monthly_payment" required/>
                             </div>
                     </div>
 
                     <div class="col-xs-4">
                         <div class="form-group">
                                 <label for="exampleInputEmail1">Monthly Equity</label>
-                                <input type="number" class="form-control" id="exampleInputEmail1" name = "monthly_equity" required/>
+                                <input type="number" step="any" class="form-control" id="exampleInputEmail1" value = "0.00" name = "monthly_equity" required/>
                         </div>
                 </div>
 
