@@ -46,11 +46,18 @@ class AbodeController extends Controller
 
         foreach($request->options as $option){
             $pair = explode(",", $option);
+
+            if($pair[2] == "false"){
+                $archive = 0;
+            }else{
+                $archive = 1;
+            }
+
             DB::table("abode_category_options")->insert([
                 "abode_id" => $id,
                 "feature_id" => $pair[0],
                 "value" => $pair[1],
-                "archive" => 1
+                "archive" => $archive
             ]);
         }
 

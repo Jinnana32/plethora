@@ -194,15 +194,20 @@
                 var options = [];
                 var abode_information = $(this).serializeObject();
 
-
                 $(".cat_options").each(function(index) {
+
+                    // Get the check values
+                    var isIncluded = $(this).siblings(".cat_include").is(':checked');
+
                     var feat_id = $(this).attr("id");
                     var opt_value = $(this).val();
-                    options.push(feat_id + "," + opt_value)
+                    options.push(feat_id + "," + opt_value + "," + isIncluded)
                 });
 
                 abode_information.options = options;
-                //console.log(abode_information);
+
+                console.log("Posted information", abode_information);
+
                 PhrService.post("{{ url('/api/v1/admin/abode') }}", abode_information,
                 function(data){
                         resetField(abodeForm)
@@ -210,6 +215,18 @@
                         showSuccess("Success", "New abode was added!");
                 })
 
+            })
+
+            $(document).on("change", ".cat_include", function(){
+                var input =  $(this).siblings(".cat_options")
+                var labelText = $(this).siblings(".cat_label")
+                if($(this).is(":checked")){
+                    input.prop('disabled', false);
+                    labelText.css("color", "#000")
+                }else{
+                    input.prop('disabled', true);
+                    labelText.css("color", "#ccc")
+                }
             })
 
             $(document).on("change", "#phrDevelopers", function(){
@@ -325,8 +342,9 @@
             function makeSelectableField(id, label, options){
                 var selectableField = '<div class="col-xs-4">' +
                         '<div class="form-group form-group-select">' +
-                                '<label for="exampleInputEmail1">'+ label +'</label>'+
-                                '<select class="form-control cat_options" id = "'+ id +'" name = "category_options[]">';
+                                '<input type = "checkbox" class = "cat_include" checked/>' +
+                                '<label class = "cat_label" for="exampleInputEmail1">'+ label +'</label>'+
+                                '<select class="form-control cat_options" id = "'+ id +'">';
 
                         for(var x = 0; x < options.length; x++){
                                 selectableField += '<option value = "'+ options[x].options +'">'+ options[x].options +'</option>';
@@ -341,8 +359,9 @@
             function makeGenericField(id, label){
                 return '<div class="col-xs-4">' +
                             '<div class="form-group">' +
-                                   '<label for="exampleInputEmail1">'+ label +'</label>' +
-                                    '<input type="text" class="form-control cat_options" id="'+ id +'" name = "category_options[]" required/>' +
+                                   '<input type = "checkbox" class = "cat_include" checked/>' +
+                                   '<label class = "cat_label" for="exampleInputEmail1">'+ label +'</label>' +
+                                    '<input type="text" class="form-control cat_options" id="'+ id +'" required/>' +
                             '</div>' +
                             '</div>';
             }
