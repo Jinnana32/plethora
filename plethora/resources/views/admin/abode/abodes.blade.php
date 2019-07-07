@@ -183,7 +183,7 @@
                                         {{ $abode["developer"]->name }}
                                         @if ($abode["has_brand"] != 0)
                                             <br/>
-                                            <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding"]->image }}" />
+                                            <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding"]->image }}" style = "width:32px;height:32px;"/>
                                             {{ $abode["branding"]->name }}
                                         @endif
                                     </td>
