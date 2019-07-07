@@ -63,6 +63,30 @@ class GenericController extends Controller
         return response()->json(compact("units"), 200);
     }
 
+    public function abodeOptions(Request $request) {
+        $result = array();
+        $abode_options = DB::table("abode_category_options")->where("abode_id", $request->abode_id)->get();
+        $category_id = DB::table("abodes")->where("id", $request->abode_id)->first()->category;
+
+        foreach($abode_options as $option){
+            $feature_options = DB::table("abode_options")->where("feat_id", $option->feature_id)
+                                                         ->where("category_id", $category_id)
+                                                         ->get();
+
+            $initial_feature = DB::table("abode_features")->where("id", $option->feature_id)->first();
+            array_push($result, array(
+                "id" => $option->id,
+                "feature" => $initial_feature->display_name,
+                "initial_value" => $option->value,
+                "enabled" => $option->archive,
+                "has_options" => $initial_feature->has_options,
+                "options" => $feature_options
+            ));
+        }
+
+        return response()->json($result, 200);
+    }
+
     public function locations(){
         $locations = DB::table("abode_location")->where("archive", 1)->get();
         return response()->json(compact("locations"), 200);

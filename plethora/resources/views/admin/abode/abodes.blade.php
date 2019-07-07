@@ -199,7 +199,7 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <div class = "table-link abode-options"><i class = "fa fa-edit phr-edit-brand" data-toggle="modal" data-target="#edit_branding"></i> Quick Edit</div>
+                                        <div class = "table-link abode-options" id = "{{ $abode["current"]->id }}"><i class = "fa fa-edit phr-edit-brand" data-toggle="modal" data-target="#update_features"></i> Quick Edit</div>
                                         <ul>
                                             @foreach ($abode["features"] as $feature)
                                                 <li>{{ $feature["feature"] }}: {{ $feature["value"] }}</li>
@@ -309,25 +309,23 @@
         </div>
 
         <div class="modal" tabindex="-1" role="dialog" id = "update_features">
-                <form action="{{ route("phradmin.update_abode_pricing.submit") }}" method = "POST" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <div class="modal-dialog" role="document">
+                <form id = "editFeature" method = "POST" enctype="multipart/form-data">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Update features</h5>
+                                <div class = "col-form-header">
+                                        <div class="dot-header"></div>
+                                        <span>Edit Unit info</span>
+                                </div>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Cannot update for the moment.
-                                    </div>
-                                </div>
+                            <div class="row phr-feature-edit"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type = "button" class="btn btn-primary">Continue</button>
+                            <button class="btn btn-primary">Continue</button>
                         </div>
                         </div>
                     </div>
@@ -392,8 +390,47 @@
 
     $(document).ready(function(){
 
+        var editFeature = $("#editFeature");
+        var currentEditingList
+
         $(document).on('click', '.phr-property-item', function(){
             $("#abode_id").val($(this).attr("id"))
+        })
+
+        editFeature.submit(function(e){
+            e.preventDefault()
+
+            var options = [];
+            var abode_information = $(this).serializeObject();
+
+            $(".cat_options").each(function(index) {
+
+                // Get the check values
+                var isIncluded = $(this).siblings(".cat_include").is(':checked');
+
+                var feat_id = $(this).attr("id");
+                var opt_value = $(this).val();
+                options.push(feat_id + "," + opt_value + "," + isIncluded)
+            });
+
+            abode_information.options = options;
+            abode_information.abode_id = $(this).attr("name")
+
+            PhrService.post("{{ url('/api/v1/admin/abode/options/update') }}", abode_information,
+                function(data){
+
+                    var newFeatures = ""
+
+                    for(var x =0; x < data.length; x++){
+                        newFeatures += " <li>" + data[x].feature + ": " + data[x].value + "</li>"
+                    }
+
+                    // TODO update the existing record
+                    $("#update_features").modal("hide")
+                    hideLoading()
+                    showSuccess("Success", "Abode was updated was added!");
+                    currentEditingList.html(newFeatures)
+            })
         })
 
         $(document).on('click', '.table-link', function(){
@@ -411,12 +448,10 @@
         })
 
         $(document).on('click', '.abode-options', function(){
-            showLoading();
-                var url = "{{ url('/api/v1/admin/developers') }}"
-                PhrService.get(url, {}, function(resp){
-                   hideLoading()
-                   $("#update_features").modal("show")
-                })
+            var abode_id = $(this).attr("id")
+            getCategoryOptions(abode_id)
+            $("#update_features").modal("show")
+            currentEditingList = $(this).siblings("ul")
         })
 
         $(document).on("click", '.filterAbode', function(){
@@ -469,6 +504,87 @@
                    categoryOptions.html(options)
                 })
         }
+
+        function makeSelectableField(response){
+                var isChecked = "checked"
+                var isEnabled = ""
+                var color = ""
+                if(response.enabled == 0){
+                    isChecked = ""
+                    isEnabled = "disabled"
+                    color = "style='color:#ccc'"
+                }
+                var selectableField = '<div class="col-md-6">' +
+                        '<div class="form-group form-group-select">' +
+                                '<input type = "checkbox" class = "cat_include" '+ isChecked +'/>' +
+                                '<label '+ color +' class = "cat_label" for="exampleInputEmail1">'+ response.feature +'</label>'+
+                                '<select class="form-control cat_options" id = "'+ response.id +'" '+ isEnabled +'>';
+
+                                    // Place initial value
+                                    selectableField += '<option value = "'+ response.initial_value +'">'+ response.initial_value +'</option>';
+
+                        for(var x = 0; x < response.options.length; x++){
+                                if(response.options[x].options != response.initial_value){
+                                    selectableField += '<option value = "'+ response.options[x].options +'">'+ response.options[x].options+'</option>';
+                                }
+                        }
+
+                 selectableField += '</select>'+
+                                    '<i class="fa fa-angle-down" aria-hidden="true"></i>'+
+                                    '</div></div>';
+                return selectableField;
+            }
+
+        function makeGenericField(response){
+                var isChecked = "checked"
+                var isEnabled = ""
+                var color = ""
+                if(response.enabled == 0){
+                    isChecked = ""
+                    isEnabled = "disabled"
+                    color = "style='color:#ccc'"
+                }
+                return '<div class="col-md-6">' +
+                            '<div class="form-group">' +
+                                   '<input type = "checkbox" class = "cat_include" '+ isChecked +'/>' +
+                                   '<label '+ color +' class = "cat_label" for="exampleInputEmail1">'+ response.feature +'</label>' +
+                                    '<input '+ isEnabled +' type="text" class="form-control cat_options" id="'+ response.id +'" value = "'+ response.initial_value +'" required/>' +
+                            '</div>' +
+                            '</div>';
+            }
+
+        function getCategoryOptions(abode_id){
+                var featureEditWrapper = $(".phr-feature-edit");
+                editFeature.attr("name", abode_id)
+                var url = "{{ url('/api/v1/admin/abode/options') }}/" + abode_id
+                PhrService.get(url, {}, function(resp){
+                   var optionContent = ""
+                   hideLoading()
+                   $(".modal-backdrop").css("display", "none");
+                   for(var x = 0; x < resp.length; x++){
+                        if(resp[x].has_options == 1){
+                          optionContent += makeSelectableField(resp[x])
+                        }else{
+                          optionContent += makeGenericField(resp[x])
+                        }
+                   }
+
+                   featureEditWrapper.html(optionContent)
+                })
+        }
+
+        $(document).on("change", ".cat_include", function(){
+                var input =  $(this).siblings(".cat_options")
+                var labelText = $(this).siblings(".cat_label")
+                if($(this).is(":checked")){
+                    input.prop('disabled', false);
+                    labelText.css("color", "#000")
+                }else{
+                    input.prop('disabled', true);
+                    labelText.css("color", "#ccc")
+                }
+            })
+
 
     })
 </script>

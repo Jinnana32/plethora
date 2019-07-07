@@ -65,6 +65,43 @@ class AbodeController extends Controller
 
     }
 
+    public function updateOptions(Request $request){
+        foreach($request->options as $option){
+            $tri = explode(",", $option);
+            $option_id = $tri[0];
+            $value = $tri[1];
+            $isArchive = $tri[2];
+
+            if($isArchive == "false"){
+                $archive = 0;
+            }else{
+                $archive = 1;
+            }
+
+            DB::table("abode_category_options")->where("id", $option_id)->update([
+                "value" => $value,
+                "archive" => $archive
+            ]);
+        }
+
+        $features = array();
+        $temp_features = DB::table("abode_category_options")->where("abode_id", $request->abode_id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+
+        foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first()->display_name;
+                array_push($features, array(
+                    "feature" => $temp_feature,
+                    "value" => $feature->value
+                ));
+        }
+
+        return response()->json($features, 200);
+    }
+
     public function update(Request $request, $id){
 
         if($abode = Abode::find($id)){
