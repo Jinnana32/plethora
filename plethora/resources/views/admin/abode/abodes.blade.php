@@ -196,10 +196,10 @@
                                     <td>
                                         <div class = "table-link" id = "{{ $abode["current"]->id }}" data-toggle="modal" data-target="#update_pricing"><i class = "fa fa-edit phr-edit-brand"></i> Quick Edit</div>
                                         <ul class = "phr-pricing">
-                                            <li class = "contract_pricing" name = "{{ $abode["current"]->total_contract_price }}" style = "font-size:0.9em;"><strong>Contract Price:</strong> <br/><span class = "money-format">{{ number_format($abode["current"]->total_contract_price) }}</span></li>
-                                            <li class = "selling_pricing" name = "{{ $abode["current"]->net_selling_price }}" style = "font-size:0.9em;"><strong>NSP:</strong> <br/><span class = "money-format">{{ number_format($abode["current"]->net_selling_price) }}</span></li>
-                                            <li class = "monthly_pricing" name = "{{ $abode["current"]->monthly_payment }}" style = "font-size:0.9em;"><strong>Amortization:</strong> <br/><span class = "money-format">{{ number_format($abode["current"]->monthly_payment) }}</span></li>
-                                            <li class = "monthly_equity" name = "{{ $abode["current"]->monthly_equity }}" style = "font-size:0.9em;"><strong>Equity:</strong> <br/><span class = "money-format">{{ number_format($abode["current"]->monthly_equity) }}</span></li>
+                                            <li class = "contract_pricing" name = "{{ $abode["current"]->total_contract_price }}" style = "font-size:0.9em;"><strong>Contract Price:</strong> <br/><span class = "money-format">{{ $abode["current"]->total_contract_price }}</span></li>
+                                            <li class = "selling_pricing" name = "{{ $abode["current"]->net_selling_price }}" style = "font-size:0.9em;"><strong>NSP:</strong> <br/><span class = "money-format">{{ $abode["current"]->net_selling_price }}</span></li>
+                                            <li class = "monthly_pricing" name = "{{ $abode["current"]->monthly_payment }}" style = "font-size:0.9em;"><strong>Amortization:</strong> <br/><span class = "money-format">{{ $abode["current"]->monthly_payment }}</span></li>
+                                            <li class = "monthly_equity" name = "{{ $abode["current"]->monthly_equity }}" style = "font-size:0.9em;"><strong>Equity:</strong> <br/><span class = "money-format">{{ $abode["current"]->monthly_equity }}</span></li>
                                         </ul>
                                     </td>
                                     <td>
