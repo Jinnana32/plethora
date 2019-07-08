@@ -40,7 +40,11 @@
                 @endif
             </div>
 
-<div class="col-xs-4 col-xs-offset-8" style = "text-align:right;padding-right:2%;margin-bottom:20px;">
+<div class = "col-md-8" style = "text-align:left;padding-left:4%;padding-top:2%;cursor:pointer;">
+    <a data-toggle="modal" data-target="#abode_filter"><i class = "fa fa-filter"></i><span>Advance filter</span></a>
+</div>
+
+<div class="col-md-4" style = "text-align:right;padding-right:2%;margin-bottom:20px;">
         <a href = "{{ url("phradmin/abode/create") }}"><button class = "btn btn-warning">
             Create new abode <i class="fa fa-plus"></i>
         </button></a>
@@ -221,6 +225,122 @@
 </section><!-- </content> -->
 </section><!-- Content Section> -->
 
+<div class="modal" tabindex="-1" role="dialog" id = "abode_filter" style = "overflow-y:scroll;">
+        <form id="abodeFilterForm" method = "POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class = "col-form-header">
+                        <div class="dot-header"></div>
+                        <span>Advance filter</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                        <div class="row">
+                                <div class="col-md-4">
+                                        <div class="form-group form-group-select">
+                                            <label for="propert_category">Category</label>
+                                            <br/>
+                                            <select class = "search-form" id = "phrCategory" name = "filter_category">
+                                                <option value = "0">Any</option>
+                                                @foreach ($categories as $category)
+                                                <option value = "{{ $category->id }}">{{ $category->category }}</option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                        <div class="form-group form-group-select">
+                                            <label for="propert_category">Property Location</label>
+                                            <br/>
+                                            <select class = "search-form" id = "locationID" name = "filter_location">
+                                                <option value = "0">Any</option>
+                                                @foreach ($locations as $location)
+                                                    <option value = "{{ $location->id }}">{{ $location->location }}</option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                        <div class="form-group form-group-select">
+                                            <label for="propert_category">Property Developer</label>
+                                            <br/>
+                                            <select class = "search-form" id = "developerId" name = "filter_developer">
+                                                <option value = "0">Any</option>
+                                                @foreach ($developers as $developer)
+                                                    <option value = "{{ $developer->id }}">{{ $developer->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                        </div>
+                                </div>
+
+                                <div class = "col-md-6">
+                                        <h4>Net Selling Price</h4>
+                                        <div class = "row">
+                                            <div class = "col-xs-6">
+                                                    <div class="form-group">
+                                                            <label for="propert_category">From</label>
+                                                            <br/>
+                                                            <input class = "form-control" value = "0.00" type="number" step="any" name = "net_from"/>
+                                                        </div>
+                                            </div>
+                                            <div class = "col-xs-6">
+                                                    <div class="form-group">
+                                                            <label for="propert_category">To</label>
+                                                            <br/>
+                                                            <input class = "form-control" value = "1000000.00" type="number" step="any" name = "net_to"/>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class = "col-md-6">
+                                        <h4>Monthly Amortization</h4>
+                                        <div class = "row">
+                                            <div class = "col-xs-6">
+                                                    <div class="form-group">
+                                                            <label for="propert_category">From</label>
+                                                            <br/>
+                                                            <input class = "form-control" value = "0.00" type="number" step="any" name = "amor_from"/>
+                                                        </div>
+                                            </div>
+                                            <div class = "col-xs-6">
+                                                    <div class="form-group">
+                                                            <label for="propert_category">To</label>
+                                                            <br/>
+                                                            <input class = "form-control" value = "1000000.00" type="number" step="any" name = "amor_to"/>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class = "col-md-12">
+                                        <div class = "col-xs-12 col-form-header">
+                                                <div class="dot-header"></div>
+                                                <span>Unit info</span>
+                                        </div>
+                                         <!-- Category option -->
+                                        <div class = "col-xs-12 phr-form-category-options" style = "padding:0;">
+                                        </div>
+                                </div>
+
+                            </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Filter</button>
+                </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
 <div class="modal" tabindex="-1" role="dialog" id = "update_image">
         <form action="{{ route("phradmin.update_abode_image.submit") }}" method = "POST" enctype="multipart/form-data">
             {{ csrf_field() }}
@@ -392,9 +512,32 @@
 
         var editFeature = $("#editFeature");
         var currentEditingList
+        var abodeFilterForm = $("#abodeFilterForm");
+
+        getInitialCategories()
 
         $(document).on('click', '.phr-property-item', function(){
             $("#abode_id").val($(this).attr("id"))
+        })
+
+        abodeFilterForm.submit(function(e){
+            e.preventDefault()
+
+            var options = [];
+            var filterInformation = $(this).serializeObject();
+
+            $(".cat_options").each(function(index) {
+
+                // Get the check values
+                var isIncluded = $(this).siblings(".cat_include").is(':checked');
+                var feat_id = $(this).attr("id");
+                var opt_value = $(this).val();
+                options.push(feat_id + "," + opt_value + "," + isIncluded)
+
+            });
+
+            filterInformation.options = options;
+            console.log(filterInformation)
         })
 
         editFeature.submit(function(e){
@@ -584,6 +727,67 @@
                     labelText.css("color", "#ccc")
                 }
             })
+
+
+        $(document).on("change", "#phrCategory", function(){
+            var catId = $(this).val()
+            getCategoryOption(catId);
+        })
+
+        function makeSelectableFields(id, label, options){
+                var selectableField = '<div class="col-xs-4">' +
+                        '<div class="form-group form-group-select">' +
+                                '<input type = "checkbox" class = "cat_include"/>' +
+                                '<label class = "cat_label" for="exampleInputEmail1">'+ label +'</label>'+
+                                '<select class="form-control cat_options" id = "'+ id +'" disabled>';
+
+                        for(var x = 0; x < options.length; x++){
+                                selectableField += '<option value = "'+ options[x].options +'">'+ options[x].options +'</option>';
+                        }
+
+                 selectableField += '</select>'+
+                                    '<i class="fa fa-angle-down" aria-hidden="true"></i>'+
+                                    '</div></div>';
+                return selectableField;
+            }
+
+            function makeGenericFields(id, label){
+                return '<div class="col-xs-4">' +
+                            '<div class="form-group">' +
+                                   '<input type = "checkbox" class = "cat_include"/>' +
+                                   '<label class = "cat_label" for="exampleInputEmail1">'+ label +'</label>' +
+                                    '<input type="text" class="form-control cat_options" id="'+ id +'" required disabled/>' +
+                            '</div>' +
+                            '</div>';
+            }
+
+            function getInitialCategories(){
+                var catId = $("#phrCategory").val()
+                getCategoryOption(catId)
+            }
+
+            function getCategoryOption(category_id){
+                var CategoryOptionsWrapper = $(".phr-form-category-options");
+                var url = "{{ url('/api/v1/admin/category/options') }}/" + category_id
+                PhrService.get(url, {}, function(resp){
+                   hideLoading()
+                   $(".modal-backdrop").css("display", "none");
+                   var optionContent = "No options to show. Category filter 'Any'";
+                   var features = resp.units.feats;
+                   var options = resp.units.opts;
+                   if(features.length > 0) optionContent = ""
+                   for(var x = 0; x < features.length; x++){
+                        if(features[x][0].has_options == 1){
+                          optionContent += makeSelectableFields(features[x][0].id,features[x][0].display_name, options[x])
+                        }/*else{
+                          optionContent += makeGenericFields(features[x][0].id,features[x][0].display_name)
+                        }*/
+                   }
+
+                   CategoryOptionsWrapper.html(optionContent)
+
+                })
+            }
 
 
     })
