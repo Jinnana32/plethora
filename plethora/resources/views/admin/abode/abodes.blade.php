@@ -408,7 +408,7 @@
                                 </div>
                                 <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Monthly Price</label>
+                                            <label for="exampleInputEmail1">Monthly Amortization</label>
                                             <input class="form-control" type="text" id="monthlyPrice" name = "monthly_price" required/>
                                         </div>
                                 </div>
