@@ -91,7 +91,7 @@
 
         <div class="phr-property-wrap">
                 @foreach ($abodes as $abode)
-                    <div class="phr-property-item" style = "margin-top:2em;">
+                    <div class="phr-property-item" style = "margin-top:4em;">
                         <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode["dev_image"] }}" />
                         @if ($abode["has_brand"] != 0)
                             <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding_image"] }}" />

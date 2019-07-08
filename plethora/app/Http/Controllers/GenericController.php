@@ -40,7 +40,6 @@ class GenericController extends Controller
     }
 
     public function categoryOptions(Request $request){
-
         $features = array();
         $options = array();
         $cat_features = DB::table("abode_category_features")->where("category_id", $request->category_id)
@@ -53,6 +52,36 @@ class GenericController extends Controller
                                                 ->where("category_id", $cat_feature->category_id)->get();
             array_push($options, $option);
             array_push($features, $feature);
+        }
+
+        $units = array(
+            "feats" => $features,
+            "opts" => $options
+        );
+
+        return response()->json(compact("units"), 200);
+    }
+
+    public function categoryOptionsDetails(Request $request){
+        $features = array();
+        $options = array();
+        $cat_features = DB::table("abode_category_features")->where("category_id", $request->category_id)
+                                                            ->where("archive", 1)
+                                                            ->get();
+
+        foreach($cat_features as $cat_feature){
+            $feature = DB::table("abode_features")->where("id", $cat_feature->feature_id)->first();
+            $option = DB::table("abode_options")->where("feat_id", $cat_feature->feature_id)
+                ->where("category_id", $cat_feature->category_id)->first();
+
+            // If feature does not have a option
+            if($feature->has_options == "0"){
+                $option = DB::select("SELECT DISTINCT value FROM `abode_category_options` WHERE feature_id = '{$feature->id}'");
+            }
+
+            array_push($features, $feature);
+            array_push($options, $option);
+
         }
 
         $units = array(
