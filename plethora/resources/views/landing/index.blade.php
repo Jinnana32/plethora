@@ -79,6 +79,7 @@
                         <div class="phr-fade-block">
                             <h2>{{ $location->location }}</h2>
                         </div>
+
                     </div>
                 @endforeach
 
@@ -201,13 +202,14 @@
             });
 
             $(document).on("click", ".carousel-item", function(){
-                var developer = $(this).attr("id");
-                window.location = window.location.href + "catalog/search/" + 0 + "/" + 0 + "/" + developer
+                var location = $(this).attr("id");
+                window.location = window.location.href + location + "/developers"
             })
 
             $(document).on("click", ".location_click", function(){
-                var location = $(this).attr("id");
-                window.location = window.location.href + "catalog/search/" + 0 + "/" + location + "/" + 0
+
+                var developer = $(this).attr("id");
+                window.location = window.location.href + "catalog/search/" + 0 + "/" + 0 + "/" + developer
             })
 
         })

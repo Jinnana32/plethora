@@ -201,6 +201,19 @@ class PublicController extends Controller
         return view('landing.developers', compact('developers'));
     }
 
+    public function showDevelopersByLocation(Request $request){
+        $devs_array = array();
+        $developers = DB::select("SELECT DISTINCT dev_id FROM abodes WHERE location = '{$request->location_id}'");
+        $location = DB::table("abode_location")->where("id", $request->location_id)->first();
+
+        foreach($developers as $developer){
+            $dev = DB::table("developers")->where("id", $developer->dev_id)->first();
+            array_push($devs_array, $dev);
+        }
+
+        return view('landing.location_developers', compact('devs_array', 'location'));
+    }
+
     public function showFindAgents(){
         return view('landing.agents');
     }

@@ -8,6 +8,7 @@ Route::get('/', 'PublicController@showLandingPage');
 Route::get("/catalog", 'PublicController@showCatalog');
 Route::get("/catalog/search/{category}/{location}/{developer}", "PublicController@showSearchCatalog");
 Route::get("/developers", 'PublicController@showDevelopers');
+Route::get("/{location_id}/developers", 'PublicController@showDevelopersByLocation');
 Route::get('/abode', 'PublicController@showAbodes');
 Route::get('/abode/{abode_id}', 'PublicController@showAbodeDetail');
 
