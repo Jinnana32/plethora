@@ -73,14 +73,14 @@
     <div class="container-fluid" style = "margin-top:1%;padding:0;padding-left:1%;">
         <div class="phr-carousel">
 
-            @foreach ($developers as $developer)
-            <div class="carousel-item" id = "{{ $developer->id }}">
-                <img src="{{ url("") }}/plethora/storage/app/public/developers/{{ $developer->image }}" class="img-responsive">
-                <div class="phr-fade-block">
-                    <h2>{{ $developer->name }}</h2>
-                </div>
-            </div>
-            @endforeach
+                @foreach ($locations as $location)
+                <div class="carousel-item" id = "{{ $location->id }}">
+                        <img src="{{ url("") }}/plethora/storage/app/public/developers/{{ $location->image }}" class="img-responsive">
+                        <div class="phr-fade-block">
+                            <h2>{{ $location->location }}</h2>
+                        </div>
+                    </div>
+                @endforeach
 
         </div>
     </div>
@@ -160,24 +160,24 @@
 
             .phr-dev-wrap div h2{
                 padding-top:50%;
-                font-size:1.5em;
+                font-size:1em;
                 color:#fff;
             }
         </style>
  <div style = "clear:both;"></div>
     <div class="container text-center phr-properties">
-            <h2>Our Locations</h2>
+            <h2>Our Partners</h2>
             <div class="phr-line"></div>
             <div class="row" style = "margin-top:5%;">
-                    @foreach ($locations as $location)
-                        <div class="phr-dev-wrap location_click" id = "{{ $location->id }}">
-                            <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $location->image }}" class="img-responsive">
-                            <div class="phr-fade-block">
-                                <h2>{{ $location->location }}</h2>
-                            </div>
+                @foreach ($developers as $developer)
+                <div class="phr-dev-wrap location_click" id = "{{ $developer->id }}">
+                        <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $developer->image }}" class="img-responsive">
+                        <div class="phr-fade-block">
+                            <h2>{{ $developer->name }}</h2>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
