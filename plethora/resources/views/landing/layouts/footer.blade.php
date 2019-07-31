@@ -51,6 +51,7 @@
 
             <div class = "phr-credits">
                 <img class = "img-responsive" src="{{ url("/vendor/img/phr-logo.jpg") }}" style = "width:150px;">
+                <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=p4npwqLhu0z56ySDT3jj4SZVCMD56jHwBYlocGr3WcOjY8YlrA3IFz6f61PN"></script></span>
                 <h2 style = "float:right;">Plethora Homes Realty &copy; 2019</h2>
             </div>
         </div>
@@ -164,7 +165,7 @@
     <script src="{{ url("vendor/js/phrdialogs.js") }}"></script>
     <script src="{{ url("vendor/js/jquery.print.js") }}"></script>
     <script src="{{ url("vendor/bootstrap/dist/js/bootstrap.bundle.min.js") }}"></script>
-    <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=p4npwqLhu0z56ySDT3jj4SZVCMD56jHwBYlocGr3WcOjY8YlrA3IFz6f61PN"></script></span>
+
     <script>
 
         function showSnackbar(element) {
