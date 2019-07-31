@@ -50,10 +50,6 @@
   logged_out_greeting="Welcome to plethora homes! How may i help you?">
 </div>
 
-<div class="fb-customerchat"
-page_id="101544571196382">
-</div>
-
 <style>
     .lead_gen {
       list-style: none;
