@@ -214,6 +214,72 @@ class PublicController extends Controller
         return view('landing.location_developers', compact('devs_array', 'location'));
     }
 
+    public function showDeveloperProjects(Request $request) {
+        // Get request params
+        $locationId = $request->location_id;
+        $devId = $request->dev_id;
+
+        // Store devs with there projects and model/unit
+        $devs_array = array();
+
+        // Get location reference
+        $location = DB::table("abode_location")->where("id", $locationId)->first();
+
+        // Get developer reference
+        $developer = DB::table("developers")->where("id", $devId)->first();
+
+        $abodes = array();
+        $temp_abodes = DB::table("abodes")->where("dev_id", $devId)->where("location", $locationId)->get();
+
+        // Get abodes from developer
+        foreach($temp_abodes as $abode){
+            $features = array();
+            $has_brand = 0;
+            $branding_image = "";
+            $developer_image = DB::table("developers")->where("id", $abode->dev_id)
+                                                      ->where("archive", 1)
+                                                      ->first()->image;
+
+            if($abode->branding != 0){
+                $has_brand = 1;
+                $branding_image = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                                  ->where("archive", 1)
+                                                                  ->first()->image;
+            }
+            $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                     ->where("archive", 1)
+                                                     ->first()->category;
+            $loc_name = DB::table("abode_location")->where("id", $abode->location)
+                                                   ->where("archive", 1)
+                                                   ->first()->location;
+            $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+            foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first()->display_name;
+                array_push($features, array(
+                    "feature" => $temp_feature,
+                    "value" => $feature->value
+                ));
+            }
+
+            array_push($abodes, array(
+                "current" => $abode,
+                "category" => $category,
+                "location" => $loc_name,
+                "features" => $features,
+                "dev_image" => $developer_image,
+                "has_brand" => $has_brand,
+                "branding_image" => $branding_image
+            ));
+        }
+
+
+        return view("landing.developer_projects", compact("abodes", "developer", "location"));
+    }
+
     public function showFindAgents(){
         return view('landing.agents');
     }

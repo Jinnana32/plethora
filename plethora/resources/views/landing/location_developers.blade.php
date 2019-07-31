@@ -66,24 +66,49 @@
                 font-size:1em;
                 color:#fff;
             }
+
+            .phr-dev-header {
+                background-color:#27ae60;
+                display:inline;
+                border: 1px solid #27ae60;
+                padding: 3px 10px;
+                border-top-right-radius: 10px;
+            }
+
+            .phr-dev-header > img {
+                width:24px;
+                height:24px;
+            }
+
+            .phr-dev-header > span {
+                font-size: 1em;
+                color:white;
+            }
+
+            .phr-dev-line {
+                min-height: 3px;
+                background-color:#27ae60;
+            }
+
         </style>
+
     <div class="row">
             <div class="col-md-12">
-                <div class="container text-center phr-properties">
+                <div class="container text-center phr-properties" style = "margin-bottom: 3em;">
                         <h2>Our Partners</h2>
                         <div class="phr-line"></div>
-                        <div class="row" style = "margin-top:5%;">
-                            @foreach ($devs_array as $developer)
-                            <div class="phr-dev-wrap location_click" id = "{{ $developer->id }}">
-                                    <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $developer->image }}" class="img-responsive">
-                                    <div class="phr-fade-block">
-                                        <h2>{{ $developer->name }}</h2>
-                                    </div>
-                                </div>
-                            @endforeach
-
+                </div>
+                <div class = "container">
+                    <input type = "hidden" id = "{{ $location->id }}" class = "location_id" />
+                    @foreach ($devs_array as $developer)
+                        <div class="phr-dev-wrap project_click" id = "{{ $developer->id }}">
+                            <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $developer->image }}" class="img-responsive">
+                            <div class="phr-fade-block">
+                                <h2>{{ $developer->name }}</h2>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
+                </div>
             </div>
     </div>
 
@@ -93,6 +118,16 @@
     @include('landing.layouts.footer')
     <!-- Admin header -->
     @include('landing.layouts.scripts')
+
+    <script>
+        $(document).ready(function(){
+            $(document).on("click", ".project_click", function(){
+                var developerId = $(this).attr("id");
+                var locationId = $(".location_id").attr("id");
+                window.location = window.location.href + "/" + developerId + "/projects"
+            })
+        })
+    </script>
 
 </body>
 </html>
