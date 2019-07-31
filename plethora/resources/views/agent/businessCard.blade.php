@@ -51,6 +51,33 @@
                     <button class = "btn btn-primary btnGenerateCard">Generate cards</button>
                 </div>
 
+                <style>
+
+                </style>
+
+                <div class = "col-md-12">
+
+                    <div class = "phr-call-card">
+                            <img src = "{{ url("") }}/vendor/img/phr-logo.jpg"  style = "width:100px; height: 50px;"/>
+                            <h2>VICTOR B. CHUA</h2>
+                            <p>LICENSED REAL ESTATE BROKER</p>
+                            <p>REB Reg. no. 005839</p>
+
+                            <div class = "phr-call-card-footer">
+                                <div class = "left">
+                                    <p>09217298758</p>
+                                    <p>09217298758</p>
+                                    <p>victorchua@yahoo.com</p>
+                                </div>
+                                <div class = "right">
+                                    <p>REB Reg. no. 005839</p>
+                                    <p>REB Reg. no. 005839</p>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+
 
                 <div class = "col-md-12 biz-print-card">
                   <div class = "row">

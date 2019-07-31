@@ -175,7 +175,7 @@
                                                                 </tr>
                                                                 <tr role="row" class="odd">
                                                                         <td class="sorting_1">Total Contract Price:</td>
-                                                                        <td>{{ $abode["total_contract_price"] }}</td>
+                                                                        <td>&#8369 {{ number_format($abode["total_contract_price"]) }}</td>
                                                                 </tr>
                                                                 <tr role="row" class="odd">
                                                                         <td class="sorting_1">Net Selling Price:</td>
@@ -230,30 +230,133 @@
                             <div class="col-md-12">
                                     <div class = "phr-card">
 
-                                            <h3>Mortrage Calculator</h3>
-                                            <form>
+                                            <h3>Amortization Calculator</h3>
+                                            <form id = "mortrage_calculator">
                                             <div class="form-group">
-                                                    <label for="exampleInputEmail1">Contract Pice</label>
-                                                    <input type="number" class="form-control" id="exampleInputEmail1" value = "5700005" name = "project_name" required/>
+                                                    <label for="exampleInputEmail1">Contract Price</label>
+                                                    <input type="number" class="form-control" id="principal" name = "project_name" required/>
                                             </div>
 
                                             <div class="form-group">
                                                     <label for="exampleInputEmail1">Downpayment</label>
-                                                    <input type="number" class="form-control" id="exampleInputEmail1" name = "project_name" required/>
+                                                    <input type="number" class="form-control" id="downpayment" name = "project_name" required/>
                                             </div>
 
                                             <div class="form-group">
-                                                    <label for="exampleInputEmail1">Loan Term</label>
-                                                    <input type="number" class="form-control" id="exampleInputEmail1" name = "project_name" required/>
+                                                    <label for="exampleInputEmail1">Loan Term (In months)</label>
+                                                    <select id = "terms" class="form-control" name = "loan_terms">
+                                                                <option value = "6">6 (half a year)</option>
+                                                                <option value = "12">12 (a year)</option>
+                                                                <option value = "24">24 (two years)</option>
+                                                                <option value = "36">36 (three years)</option>
+                                                                <option value = "48">48 (four years)</option>
+                                                                <option value = "60">60 (five years)</option>
+                                                            </select>
                                             </div>
 
                                             <div class="form-group">
-                                                    <label for="exampleInputEmail1">Interest</label>
-                                                    <input type="number" class="form-control" id="exampleInputEmail1" name = "project_name" required/>
+                                                    <label for="exampleInputEmail1">Interest (%)</label>
+                                                    <input type="number" class="form-control" id="interest" name = "project_name" required/>
                                             </div>
 
-                                            <button class = "btn btn-info btn-block">Calculate</button>
+                                            <div class="form-group">
+                                                        <h6>First Payment</h6>
+                                                        <label for="emailAddress">Month</label>
+                                                        <select id = "m_net" class="form-control" name = "loan_terms">
+                                                            <option value = "1">January</option>
+                                                            <option value = "2">Febuary</option>
+                                                            <option value = "3">March</option>
+                                                            <option value = "4">April</option>
+                                                            <option value = "5">May</option>
+                                                            <option value = "6">June</option>
+                                                            <option value = "7">July</option>
+                                                            <option value = "8">August</option>
+                                                            <option value = "9">Sept</option>
+                                                            <option value = "10">Oct</option>
+                                                            <option value = "11">November</option>
+                                                            <option value = "12">December</option>
+                                                        </select>
+
+
+                                                        <label for="emailAddress">Day</label>
+                                                        <select id = "d_net" class="form-control" name = "loan_terms">
+                                                            <option value = "1">1</option>
+                                                            <option value = "2">2</option>
+                                                            <option value = "3">3</option>
+                                                            <option value = "4">4</option>
+                                                            <option value = "5">5</option>
+                                                            <option value = "6">6</option>
+                                                            <option value = "7">7</option>
+                                                            <option value = "8">8</option>
+                                                            <option value = "9">9</option>
+                                                            <option value = "10">10</option>
+                                                            <option value = "11">11</option>
+                                                            <option value = "12">12</option>
+                                                            <option value = "13">13</option>
+                                                            <option value = "14">14</option>
+                                                            <option value = "15">15</option>
+                                                            <option value = "16">16</option>
+                                                            <option value = "17">17</option>
+                                                            <option value = "18">18</option>
+                                                            <option value = "19">19</option>
+                                                            <option value = "20">20</option>
+                                                            <option value = "21">21</option>
+                                                            <option value = "22">22</option>
+                                                            <option value = "23">23</option>
+                                                            <option value = "24">24</option>
+                                                            <option value = "25">25</option>
+                                                            <option value = "26">26</option>
+                                                            <option value = "27">27</option>
+                                                            <option value = "28">28</option>
+                                                            <option value = "29">29</option>
+                                                            <option value = "30">30</option>
+                                                            <option value = "31">31</option>
+                                                        </select>
+
+                                                        <label for="emailAddress">Year</label>
+                                                        <select id = "y_net" class="form-control" name = "loan_terms">
+                                                            <option value = "2019">2019</option>
+                                                            <option value = "2020">2020</option>
+                                                            <option value = "2021">2021</option>
+                                                            <option value = "2022">2022</option>
+                                                            <option value = "2023">2023</option>
+                                                            <option value = "2024">2024</option>
+                                                            <option value = "2025">2025</option>
+                                                            <option value = "2026">2026</option>
+                                                            <option value = "2027">2027</option>
+                                                            <option value = "2028">2028</option>
+                                                            <option value = "2029">2029</option>
+                                                            <option value = "2030">2030</option>
+                                                        </select>
+                                                      </div>
+                                            <button class = "btn btn-info btn-block calculateLoan">Calculate</button>
                                             </form>
+
+                                            <div class="modal" tabindex="-1" role="dialog" id = "add_feature">
+
+                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Amortization schedule</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                        <div class="row" id = "schedule_box" style = "padding: 2em;">
+                                                                        </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Done</button>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+
+                                                    </div>
+
+
                                         </div>
                             </div>
                         </div>
@@ -315,6 +418,8 @@
                   </section>
     <!-- Admin header -->
     @include('landing.layouts.footer')
+    <script src="{{ url("vendor/js/date.js") }}"></script>
+    <script src="{{ url("vendor/js/dateformat.js") }}"></script>
 
     @if(session('success'))
     <script>
@@ -323,6 +428,145 @@
         })()
     </script>
     @endif
+
+    <script>
+    $(document).ready(function() {
+
+        var calculateBtn = $(".calculateLoan");
+
+        $("#mortrage_calculator").submit(function(e){
+                e.preventDefault()
+                getValues();
+                $("#add_feature").modal("show");
+        })
+
+        calculateBtn.click(function(){
+
+        });
+
+        function getValues() {
+        //button click gets values from inputs
+        var principal = parseFloat($("#principal").val());
+        var downpayment = parseFloat($("#downpayment").val());
+
+        var m_net = $("#m_net").val();
+        var d_net = $("#d_net").val();
+        var y_net = $("#y_net").val();
+
+        var first_payment = m_net + "/" + d_net + "/" + y_net;
+
+        var balance = principal - downpayment;
+
+        var interestRate = (parseFloat($("#interest").val()) / 100.0);
+
+        var terms = parseInt($("#terms").val());
+
+        //set the div string
+        var sched_box = $("#schedule_box");
+
+        //in case of a re-calc, clear out the div!
+        sched_box.html("");
+
+        sched_box.html(amort(balance, interestRate, terms,first_payment));
+        }
+
+        /**
+         * Amort function:
+         * Calculates the necessary elements of the loan using the supplied user input
+         * and then displays each months updated amortization schedule on the page
+         */
+        function amort(balance, interestRate, terms,first_payment) {
+
+        var curr_date = new Date(first_payment);
+
+        //Calculate the per month interest rate
+        var monthlyRate = interestRate / 12;
+
+        //Calculate the payment
+        var payment =
+        balance * (monthlyRate / (1 - Math.pow(1 + monthlyRate, -terms)));
+
+        //begin building the return string for the display of the amort table
+        var result =
+        "<h5>Loan Contract</h5>" +
+        "<table class = 'table table-striped'><tr><td>Remaining to pay:</td><td> &#8369 " +
+        balance.toLocaleString('en') +
+        "</td></tr>" +
+        "<tr><td>Interest rate: </td><td>" +
+        (interestRate * 100) +
+        "%</td></tr>" +
+        "<tr><td>Number of months: </td><td>" +
+        terms +
+        "</td></tr>" +
+        "<tr><td>Monthly payment:</td><td> &#8369 " +
+        payment.toLocaleString('en') +
+        "</td></tr>" +
+        "<tr><td> Total paid:</td><td> &#8369 " +
+        (payment * terms).toLocaleString('en') +
+        "</td></tr></table><br/><br/>";
+
+        result += "<h5>Loan schedule</h5>"
+        //add header row for table to return string
+        result +=
+        "<table class = 'table table-striped'><tr><th>Month #</th><th>Balance</th>" +
+        "<th>Interest</th><th>Principal</th>";
+
+        /**
+         * Loop that calculates the monthly Loan amortization amounts then adds
+         * them to the return string
+         */
+        for (var count = 0; count < terms; ++count) {
+        //in-loop interest amount holder
+        var interest = 0;
+
+        //in-loop monthly principal amount holder
+        var monthlyPrincipal = 0;
+
+        //start a new table row on each loop iteration
+        result += "<tr>";
+
+        //display the month number in col 1 using the loop count variable
+        result += "<td>" + curr_date.toString("MMM d,yyyy") + "</td>";
+
+        //code for displaying in loop balance
+        result += "<td> &#8369 " + balance.toLocaleString('en'); + "</td>";
+
+        //calc the in-loop interest amount and display
+        interest = balance * monthlyRate;
+        result += "<td> &#8369 " + interest.toFixed(2) + "</td>";
+
+        //calc the in-loop monthly principal and display
+        monthlyPrincipal = payment - interest;
+        result += "<td> &#8369 " + monthlyPrincipal.toLocaleString('en'); + "</td>";
+
+        //end the table row on each iteration of the loop
+        result += "</tr>";
+
+        //update the balance for each loop iteration
+        balance = balance - monthlyPrincipal;
+
+        curr_date = curr_date.addMonths(1);
+        }
+
+        //Final piece added to return string before returning it - closes the table
+        result += "</table>";
+
+        //returns the concatenated string to the page
+        return result;
+        }
+
+        function validateInputs(value) {
+        //some code here to validate inputs
+        if (value == null || value == "") {
+        return false;
+        } else {
+        return true;
+        }
+        }
+
+        });
+
+    </script>
 
 </body>
 </html>
