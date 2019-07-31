@@ -101,9 +101,6 @@
 
                 </div>
                 <div class="container text-center phr-properties">
-                        <h2>Recent Properties</h2>
-                        <div class="phr-line"></div>
-
                         <div class="phr-property-wrap">
                                 @foreach ($abodes as $abode)
                                     <div class="phr-property-item" style = "margin-top:4em;">
