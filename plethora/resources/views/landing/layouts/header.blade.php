@@ -29,6 +29,7 @@
     attribution=setup_tool
     page_id="101544571196382"
     theme_color="#27ae60"
+    minimized="false"
     logged_in_greeting="Welcome to plethora homes! How may i help you?"
     logged_out_greeting="Welcome to plethora homes! How may i help you?">
   </div>
