@@ -181,12 +181,29 @@ class AgentController extends Controller
         $compensations = DB::select("SELECT
         compensations.id,
         developers.name as developer_name,
-        abodes.display_name as project_name,
+        projects.name as project_name,
+        abodes.display_name as model_unit,
+        abodes.total_contract_price,
+        abodes.net_selling_price,
+        CONCAT(compensations.first_name, ' ' , compensations.last_name) as buyer_name,
+        CONCAT(personal_information.first_name, ' ', personal_information.last_name) as seller_name,
         compensations.date_created,
         compensation_details.com_receive,
         compensation_details.balance,
         compensations.status,
-        IF(compensations.agent_id = '{$agent["id"]}', 'Yes', 'No') as type FROM developers INNER JOIN abodes ON developers.id = abodes.dev_id INNER JOIN compensations ON compensations.abode_id = abodes.id INNER JOIN compensation_details ON compensation_details.com_id = compensations.id WHERE compensation_details.agent_id = '{$agent['id']}'");
+        compensations.commission_rate,
+        compensation_details.percent_sharing,
+        compensation_details.com_receive as total_commission,
+        compensation_details.amount_release as commission_release,
+        compensation_details.balance,
+        IF(compensations.agent_id = '{$agent["id"]}', 'Yes', 'No') as type
+        FROM developers
+        INNER JOIN abodes ON developers.id = abodes.dev_id
+        INNER JOIN projects ON projects.id = abodes.project
+        INNER JOIN compensations ON compensations.abode_id = abodes.id
+        INNER JOIN compensation_details ON compensation_details.com_id = compensations.id
+        INNER JOIN personal_information ON personal_information.user_id = compensations.agent_id
+        WHERE compensation_details.agent_id = '{$agent["id"]}'");
 
         return view('agent.progression', compact("agent", "milestone", "earnings", "incentives", "compensations"));
     }

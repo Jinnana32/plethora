@@ -14,7 +14,8 @@ Route::get('/abode/{abode_id}', 'PublicController@showAbodeDetail');
 /* Agent */
 Route::get("/agent/find", 'PublicController@showFindAgents');
 Route::get('/agent/{agent_name}', 'PublicController@showAgent');
-Route::get('/agents', 'PublicController@showAgents');
+Route::get('/agents', 'PublicController@showFindAgentPage');
+Route::get('/agents/{agent_name}', 'PublicController@showAgentsByName');
 Route::post('/agent/edit/info', 'AgentController@editInfo')->name("edit_info.submit");
 Route::get('register', function(){ return view("public.pub_register"); })->name("register");
 Route::get('/register/{agent_name}', 'PublicController@showAgentReferralLink');

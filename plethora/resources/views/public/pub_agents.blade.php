@@ -37,30 +37,25 @@
   <section style = "background-color:#f3f3f3;padding-top:5em;padding-bottom:10em;" id="gallery">
         <div class="container">
           <div class="row">
-
-            <div class="col-md-5" style="text-align:center;">
-                <h3>Look for an agent you may know</h3>
-                <div class="phr-line"></div>
-                <form>
-                        <div class="form-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1" name = "project_name" required/>
-                        </div>
-                        <button class = "btn btn-success">Search</button>
-                        </form>
-            </div>
-            <div class="col-md-2" style="text-align:center;">
-                <div style="width:1px; height: 100px;; background:#d3d3d3; margin: 0 auto;"></div>
-                <h5 style = "padding-top: 1.5em;padding-bottom:1.5em;">Or</h5>
-                <div style="width:1px; height:100px; background:#d3d3d3; margin: 0 auto;"></div>
-            </div>
-            <div class="col-md-5" style="text-align:center;">
-                    <h3>Contact Us Directly</h3>
-                    <div class="phr-line"></div>
-                    <h5><i class="fa fa-inbox"></i> plethorahomes@gmail.com</h5>
-                    <p>Email</p>
-                    <h5><i class="fa fa-phone"></i> 0921-7298-758</h5>
-                    <p>Mobile</p>
-            </div>
+                @foreach ($agents as $agent)
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img class="mx-auto rounded-circle" src="{{ $agent["image"] }}" alt="">
+                        <h4>{{ $agent["firstname"] }} {{ $agent["lastname"] }}</h4>
+                        <p class="text-muted">{{ $agent["position"] }}</p>
+                        <ul class="list-inline social-buttons">
+                        <li class="list-inline-item">
+                            <i class = "fa fa-phone"></i> {{ $agent["contact"] }}
+                        </li>
+                        <li class="list-inline-item">
+                            <i class = "fa fa-envelope"></i> {{ $agent["email"] }}
+                        </li>
+                        <li class="list-inline-item" style = "font-size:0.7em;">
+                            {{ url("/agent") }}/{{ $agent["referral_link"] }}
+                        </li>
+                        </ul>
+                        <a href = "{{ url("") }}/agent/{{ $agent["referral_link"] }}"><button style = "margin-top:20px;" class = "btn btn-info">View Profile</button></a>
+            @endforeach
 
           </div>
         </div>
@@ -68,6 +63,7 @@
 
     <!-- Admin header -->
     @include('landing.layouts.footer')
+
 
 </body>
 </html>

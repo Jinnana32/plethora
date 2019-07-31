@@ -63,6 +63,27 @@
     display: block;
     font-size: 18px;
   }
+
+  .dtHorizontalExampleWrapper {
+max-width: 600px;
+margin: 0 auto;
+}
+#dtHorizontalExample th, td {
+white-space: nowrap;
+}
+
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
       </style>
 </head>
 
@@ -103,7 +124,7 @@
                                 <i class="fa fa-code-fork"></i>
                                 <span class="count-numbers">
                                   @if ($milestone != null)
-                                  {{ $milestone->total_milestone }}
+                                  &#8369 {{ number_format($milestone->total_milestone) }}
                                   @else
                                   0
                                   @endif
@@ -117,7 +138,7 @@
                                 <i class="fa fa-database"></i>
                                 <span class="count-numbers">
                                   @if($earnings[0]->earning != null)
-                                  {{ $earnings[0]->earning }}
+                                  &#8369 {{ number_format($earnings[0]->earning) }}
                                   @else
                                   0
                                   @endif
@@ -161,8 +182,8 @@
                                 <tr>
                                     <td>{{ $compensation->date_created }}</td>
                                     <td>{{ $compensation->developer_name }} {{ $compensation->project_name }}</td>
-                                    <td>{{ $compensation->com_receive }}</td>
-                                    <td>{{ $compensation->balance }}</td>
+                                    <td>&#8369 {{ number_format($compensation->com_receive) }}</td>
+                                    <td>&#8369 {{ number_format($compensation->balance) }}</td>
                                     <td>{{ $compensation->status }}</td>
                                 </tr>
                               @endforeach
@@ -206,9 +227,64 @@
                   <div class="phr-profile-card">
                       <div class = "col-md-12  col-form-header">
                           <div class="dot-header"></div>
-                          <span>My Structure</span>
+                          <span>Geneaology</span>
                         </div>
                         <div id="chart_div"></div>
+                  </div>
+                </div> <!-- Geneology -->
+
+                 <!-- Compensation -->
+              <div class="col-md-12 phr-progress-card">
+                  <div class="phr-profile-card">
+                      <div class = "col-md-12  col-form-header">
+                          <div class="dot-header"></div>
+                          <span>My Ledger</span>
+                        </div>
+                        <div  style = "overflow-x: scroll">
+                        <table  id="dtHorizontalExample" class = "table" style = "font-size:0.7em;" width="100%">
+                            <thead>
+                              <tr>
+                                <th>Buyer</th>
+                                <th>Seller</th>
+                                <th>Developer</th>
+                                <th>Project Name</th>
+                                <th>Model/Unit</th>
+                                <th>Unit Number</th>
+                                <th>Total Contract Price</th>
+                                <th>Total Selling Price</th>
+                                <th>Commission Rate</th>
+                                <th>Commission Share</th>
+                                <th>Total Commission</th>
+                                <th>Commission Release</th>
+                                <th>Reference Number</th>
+                                <th>Date</th>
+                                <th>Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($compensations as $compensation)
+                                <tr>
+                                    <td>{{ $compensation->buyer_name }}</td>
+                                    <td>{{ $compensation->seller_name }}</td>
+                                    <td>{{ $compensation->developer_name }}</td>
+                                    <td>{{ $compensation->project_name }}</td>
+                                    <td>{{ $compensation->model_unit }}</td>
+                                    <td>N/A</td>
+                                    <td>&#8369 {{ number_format($compensation->total_contract_price) }}</td>
+                                    <td>&#8369 {{ number_format($compensation->net_selling_price) }}</td>
+                                    <td>{{ $compensation->commission_rate }}</td>
+                                    <td>{{ $compensation->percent_sharing }}</td>
+                                    <td>&#8369 {{ number_format($compensation->total_commission) }}</td>
+                                    <td>&#8369 {{ number_format($compensation->commission_release) }}</td>
+                                    <td>N/A</td>
+                                    <td>{{ $compensation->date_created }}</td>
+                                    <td>&#8369 {{ number_format($compensation->balance) }}</td>
+                                </tr>
+                              @endforeach
+
+                            </tbody>
+                        </table>
+                        </div>
                   </div>
                 </div> <!-- Geneology -->
 
@@ -273,6 +349,13 @@
         }
       })
   }
+
+  $(document).ready(function () {
+$('#dtHorizontalExample').DataTable({
+"scrollX": true
+});
+$('.dataTables_length').addClass('bs-select');
+});
 
 </script>
 

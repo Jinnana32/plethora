@@ -298,7 +298,6 @@ class PublicController extends Controller
     }
 
     /* Agent functions */
-
     public function showAgent(Request $request){
 
         $info = PersonalInformation::where("referral_link", $request->agent_name)->first();
@@ -324,7 +323,11 @@ class PublicController extends Controller
         return view('public.pub_agentlink',compact('agent', 'abodes'));
     }
 
-    public function showAgents(){
+    public function showFindAgentPage() {
+        return view('public.pub_find_agents');
+    }
+
+    public function showAgentsByName(Request $request){
 
         $users_pos = User::where("access_level", "agent")->where("verified", 1)->get();
         $agents = array();
@@ -332,15 +335,21 @@ class PublicController extends Controller
         foreach($users_pos as $users){
             $user_info = PersonalInformation::where("user_id", $users->id)->first();
             $user_gen = Genealogy::where("user_id", $users->id)->first();
-            array_push($agents, array(
-                "firstname" => $user_info["first_name"],
-                "lastname" => $user_info["last_name"],
-                "position" => $user_gen["position"],
-                "email" => $user_info["email_address"],
-                "contact" => $user_info["contact_number"],
-                "referral_link" => $user_info["referral_link"],
-                "image" => $user_info["image"],
-            ));
+
+            // Only Push agents with nearest result
+            $pattern = strtolower("'/\b" . $request->agent_name . "\b/'");
+            if(strpos($pattern, strtolower($user_info["first_name"])) == true || strpos($pattern, strtolower($user_info["last_name"])) == true){
+                array_push($agents, array(
+                    "firstname" => $user_info["first_name"],
+                    "lastname" => $user_info["last_name"],
+                    "position" => $user_gen["position"],
+                    "email" => $user_info["email_address"],
+                    "contact" => $user_info["contact_number"],
+                    "referral_link" => $user_info["referral_link"],
+                    "image" => $user_info["image"],
+                ));
+            }
+
         }
 
         return view('public.pub_agents')->with(compact('agents'));
