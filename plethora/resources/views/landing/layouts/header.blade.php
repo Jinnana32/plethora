@@ -4,7 +4,7 @@
 <meta name="author" content="">
 
 <title>Plethora Realty Homes</title>
-<meta http-equiv="Content-Security-Policy" content="frame-ancestors https://web.facebook.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-eval' https://web.facebook.com; img-src 'self' https://www.facebook.com; media-src 'self'; object-src 'self'; style-src 'self'  'unsafe-inline'; frame-src 'self' https://s-static.ak.facebook.com https://www.facebook.com https://www.youtube.com; ">
 
 <!-- Bootstrap core CSS -->
 <link href="{{ url("css/bootstrap.min.css") }}" rel="stylesheet">
