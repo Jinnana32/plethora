@@ -98,7 +98,6 @@
                         <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $developer->image }}" class="img-responsive">
                         <h2>{{ $developer->name }}</h2>
                         <div class="phr-line"></div>
-
                 </div>
                 <div class="container text-center phr-properties">
                         <div class="phr-property-wrap">

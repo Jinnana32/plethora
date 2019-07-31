@@ -29,7 +29,7 @@
   window.fbAsyncInit = function() {
     FB.init({
       xfbml            : true,
-      version          : 'v3.2'
+      version          : 'v4.0'
     });
   };
 
@@ -44,16 +44,15 @@
 <!-- Your customer chat code -->
 <div class="fb-customerchat"
   attribution=setup_tool
-  page_id="1021835851537559"
-  theme_color="#FEA30A"
-  logged_in_greeting="Hi! How can we help you?"
-  logged_out_greeting="Hi! How can we help you?">
+  page_id="101544571196382"
+  theme_color="#27ae60"
+  logged_in_greeting="Welcome to plethora homes! How may i help you?"
+  logged_out_greeting="Welcome to plethora homes! How may i help you?">
 </div>
 
 <div class="fb-customerchat"
- page_id="1021835851537559">
+page_id="101544571196382">
 </div>
-
 
 <style>
     .lead_gen {
