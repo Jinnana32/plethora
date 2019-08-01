@@ -488,7 +488,7 @@
 
         //begin building the return string for the display of the amort table
         var result =
-        "<h5>Loan Contract</h5>" +
+        "<h5>Amortization Summary</h5>" +
         "<table class = 'table table-striped'><tr><td>Remaining to pay:</td><td> &#8369 " +
         balance.toLocaleString('en') +
         "</td></tr>" +
@@ -505,7 +505,7 @@
         (payment * terms).toLocaleString('en') +
         "</td></tr></table><br/><br/>";
 
-        result += "<h5>Loan schedule</h5>"
+        result += "<h5>Amortization schedule</h5>"
         //add header row for table to return string
         result +=
         "<table class = 'table table-striped'><tr><th>Month #</th><th>Balance</th>" +
