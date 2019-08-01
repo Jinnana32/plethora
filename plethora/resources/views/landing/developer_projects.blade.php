@@ -94,8 +94,8 @@
 
     <div class="row">
             <div class="col-md-12">
-                <div class="container text-center phr-properties" style = "margin-bottom: 3em;">
-                        <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $developer->image }}" class="img-responsive" style = "width:150px; height: 150px;">
+                <div class="container text-center phr-properties" style = "margin-bottom: 1.5em;">
+                        <img src="{{ url("") }}/plethora/storage/app/public//developers/{{ $developer->image }}" class="img-responsive" style = "width:150px; height: 150px; margin-bottom: 1.2em;">
                         <h2>{{ $developer->name }}</h2>
                         <div class="phr-line"></div>
                 </div>
