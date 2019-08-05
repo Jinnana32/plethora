@@ -85,7 +85,7 @@
                 <div class="col-md-12" id = "collapseOptions">
                     <a data-toggle="collapse" data-parent="#collapseOptions" href="#optionsPanel" style = "color:mediumseagreen;">More options <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                     <div id = "optionsPanel" class = "row collapse phr-form-category-options" style = "margin-top:10px;">
-                            Hello options
+                        <span>No options to show. Category filter 'Any'</span>
                     </div>
                 </div>
 
