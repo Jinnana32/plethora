@@ -62,6 +62,52 @@ class GenericController extends Controller
         return response()->json(compact("units"), 200);
     }
 
+    public function categoryOptionsFiltered(Request $request){
+        $features = array();
+        $options = array();
+
+        switch($request->category_id){
+            // House and lot
+            case 1:
+                /*$cat_features = DB::table("abode_category_features")
+                ->where("category_id", $request->category_id)
+                ->where("archive", 1)
+                ->where("feature_id", 13)
+                ->where("feature_id", 4)
+                ->where("feature_id", 5)
+                ->where("feature_id", 6)
+                ->get();*/
+                $cat_features = DB::select("SELECT * FROM abode_category_features WHERE category_id = '1' AND archive = '1' AND (feature_id = '13' OR feature_id = '4' OR feature_id = '5' OR feature_id = '6')");
+            break;
+
+            // Condo
+            case 2:
+                $cat_features = DB::select("SELECT * FROM abode_category_features WHERE category_id = '2' AND archive = '1' AND feature_id = '4'");
+            break;
+
+            // Lot only
+            case 3:
+                $cat_features = DB::select("SELECT * FROM abode_category_features WHERE category_id = '3' AND archive = '1' AND feature_id = '4'");
+            break;
+        }
+
+        foreach($cat_features as $cat_feature){
+            $feature = DB::table("abode_features")->where("id", $cat_feature->feature_id)->get();
+            $option = DB::table("abode_options")->where("feat_id", $cat_feature->feature_id)
+                                                ->where("category_id", $cat_feature->category_id)->get();
+            array_push($options, $option);
+            array_push($features, $feature);
+
+        }
+
+        $units = array(
+            "feats" => $features,
+            "opts" => $options
+        );
+
+        return response()->json(compact("units"), 200);
+    }
+
     public function categoryOptionsDetails(Request $request){
         $features = array();
         $options = array();

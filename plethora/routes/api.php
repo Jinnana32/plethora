@@ -76,6 +76,7 @@ Route::group(['prefix' => '/v1/admin'], function() {
      Route::get('developers', 'GenericController@index');
      Route::get('category', 'GenericController@category');
      Route::get('category/options/{category_id}', 'GenericController@categoryOptions');
+     Route::get('category/options/filtered/{category_id}', 'GenericController@categoryOptionsFiltered');
      Route::get('category/options/{category_id}/details', 'GenericController@categoryOptionsDetails');
      Route::get('abode/options/{abode_id}', 'GenericController@abodeOptions');
      Route::get('agents', 'GenericController@agents');

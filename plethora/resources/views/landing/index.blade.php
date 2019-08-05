@@ -186,6 +186,7 @@
 
     <!-- Admin header -->
     @include('landing.layouts.footer')
+
     <!-- Admin header -->
     @include('landing.layouts.scripts')
 
