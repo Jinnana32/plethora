@@ -160,7 +160,7 @@ class AgentController extends Controller
     public function businessCard(Request $request){
         $agent = $this->getAuthorizedUser();
         $status = "business";
-        return view('agent.businesscard', compact("agent", "status"));
+        return view('agent.businessCard', compact("agent", "status"));
     }
 
     public function inbox(Request $request){
