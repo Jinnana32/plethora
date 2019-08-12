@@ -1,0 +1,78 @@
+@media print {
+    body {-webkit-print-color-adjust: exact;}
+    }
+.phr-call-card {
+            width: 700px;
+            height:400px;
+            background:white !important;
+            font-weight: bold;
+        }
+
+        .phr-card-image {
+            width: 90%;
+            margin:0 auto;
+            text-align: center;
+        }
+
+        .phr-card-image img {
+            width: 100%;
+            height: 250px;
+        }
+
+        .phr-card-header {
+            text-align: center;
+            line-height: 10px;
+            margin-top: -30px;
+            margin-bottom:2em;
+        }
+
+        .phr-card-header h2 {
+            text-decoration: underline;
+        }
+
+        .phr-card-header h2,p {
+            font-family: trajanPro !important;
+        }
+
+        .phr-card-header > p {
+            font-weight: 300;
+        }
+
+        .phr-call-card-footer {
+            background:#005301 !important;
+            height: 100px;
+
+            line-height: 15px;
+        }
+
+        .phr-call-card-footer .left {
+            width:50%;
+            float:left;
+            padding-left:8%;
+            padding-top:3%;
+            font-family: trajanPro !important;
+        }
+
+        .phr-call-card-footer .left > p{
+            margin-bottom: 0.5em;
+            font-family: trajanPro !important;
+            font-size: 1.2em;
+            font-weight: bolder;
+            color:#fcf5fb;
+        }
+
+        .phr-call-card-footer .right {
+            width:50%;
+            float:right;
+            text-align: center;
+            padding-top:3%;
+        }
+
+        .phr-call-card-footer .right > p {
+            margin-bottom: 0.5em;
+            font-family: trajanPro !important;
+            font-size: 1.2em;
+            line-height: 20px;
+            font-weight: 300;
+            color:#fcf5fb;
+        }

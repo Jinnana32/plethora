@@ -304,12 +304,19 @@ class AgentController extends Controller
     }
 
     public function editInfo(Request $request){
-
-        // Update username and password
-        DB::table("users")->where("id", $request->agent_id)->update([
-            "username" => $request->username,
-            "password" => Hash::make($request->password)
-        ]);
+        // WARNING. dont try this at work
+        if(empty($request->password)){
+            // Update username and password
+            DB::table("users")->where("id", $request->agent_id)->update([
+                "username" => $request->username
+            ]);
+        }else{
+             // Update username and password
+            DB::table("users")->where("id", $request->agent_id)->update([
+                "username" => $request->username,
+                "password" => Hash::make($request->password)
+            ]);
+        }
 
         // Update infos
         DB::table("personal_information")->where("user_id", $request->agent_id)->update([

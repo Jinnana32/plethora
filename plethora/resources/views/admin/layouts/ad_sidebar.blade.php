@@ -42,6 +42,7 @@
                           </a>
                           <ul class="treeview-menu" style="display: none;">
                             <li><a href="{{ url("phradmin/abode") }}"><i class="fa fa-circle-o"></i> View All Listings</a></li>
+                            <li><a href="{{ url("phradmin/customize/search") }}"><i class="fa fa-circle-o"></i> View Search Options</a></li>
                             <li><a href="{{ url("phradmin/customize/developers") }}"><i class="fa fa-steam"></i>  Developers</a></li>
                             <li><a href="{{ url("phradmin/customize/location") }}"><i class="fa fa-map"></i> Locations</a></li>
                             <li><a href="{{ url("phradmin/customize/category") }}"><i class="fa fa-book"></i> Categories</a></li>

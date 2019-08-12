@@ -168,6 +168,7 @@
 <script src="{{ url("vendor/js/phrdialogs.js") }}"></script>
 <script src="{{ url("vendor/js/jquery.print.js") }}"></script>
 <script src="{{ url("vendor/bootstrap/dist/js/bootstrap.bundle.min.js") }}"></script>
+<script src = "{{ url("vendor/js/printThis.js") }}"></script>
 
    <!-- DONT DO THIS AT HOME -->
     <script>

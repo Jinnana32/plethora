@@ -69,35 +69,68 @@ class GenericController extends Controller
         switch($request->category_id){
             // House and lot
             case 1:
-                /*$cat_features = DB::table("abode_category_features")
-                ->where("category_id", $request->category_id)
-                ->where("archive", 1)
-                ->where("feature_id", 13)
-                ->where("feature_id", 4)
-                ->where("feature_id", 5)
-                ->where("feature_id", 6)
-                ->get();*/
-                $cat_features = DB::select("SELECT * FROM abode_category_features WHERE category_id = '1' AND archive = '1' AND (feature_id = '13' OR feature_id = '4' OR feature_id = '5' OR feature_id = '6')");
+                $cat_features = DB::select(
+                    "SELECT * FROM abode_category_features
+                    WHERE category_id = '1'
+                    AND archive = '1'
+                    AND (feature_id = '13'
+                    OR feature_id = '4'
+                    OR feature_id = '5'
+                    OR feature_id = '6')");
             break;
 
             // Condo
             case 2:
-                $cat_features = DB::select("SELECT * FROM abode_category_features WHERE category_id = '2' AND archive = '1' AND feature_id = '4'");
+                $cat_features = DB::select(
+                    "SELECT * FROM abode_category_features
+                    WHERE category_id = '2'
+                    AND archive = '1'
+                    AND feature_id = '4'");
             break;
 
             // Lot only
             case 3:
-                $cat_features = DB::select("SELECT * FROM abode_category_features WHERE category_id = '3' AND archive = '1' AND feature_id = '4'");
+                $cat_features = DB::select(
+                    "SELECT * FROM abode_category_features
+                    WHERE category_id = '3'
+                    AND archive = '1'
+                    AND feature_id = '4'");
             break;
         }
 
         foreach($cat_features as $cat_feature){
             $feature = DB::table("abode_features")->where("id", $cat_feature->feature_id)->get();
-            $option = DB::table("abode_options")->where("feat_id", $cat_feature->feature_id)
-                                                ->where("category_id", $cat_feature->category_id)->get();
+
+            if($request->category_id == "1" && $cat_feature->feature_id == "4"){
+                $option = DB::select(
+                    "SELECT * FROM abode_options
+                    WHERE feat_id = '4'
+                    AND category_id = '1'
+                    AND
+                    (id = '1' OR id = '2' OR id = '27' or id = '28')");
+            }else if($request->category_id == "2" && $cat_feature->feature_id == "4"){
+                $option = DB::select(
+                    "SELECT * FROM abode_options
+                    WHERE feat_id = '4'
+                    AND category_id = '2'
+                    AND
+                    (id = '30'
+                    OR id = '31'
+                    OR id = '32'
+                    OR id = '33'
+                    OR id = '35'
+                    OR id = '36'
+                    OR id = '85'
+                    OR id = '87'
+                    OR id = '88'
+                    OR id = '89')");
+            }else{
+                $option = DB::table("abode_options")->where("feat_id", $cat_feature->feature_id)
+                ->where("category_id", $cat_feature->category_id)->get();
+            }
+
             array_push($options, $option);
             array_push($features, $feature);
-
         }
 
         $units = array(
