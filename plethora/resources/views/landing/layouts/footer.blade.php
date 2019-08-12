@@ -158,16 +158,19 @@
 
     </footer>
 
-    <!-- Admin header -->
-    <script src="{{ url("vendor/jquery/dist/jquery.min.js") }}"></script>
-    <script src="{{ url("vendor/js/phrService.js") }}"></script>
-    <script src="{{ url("vendor/js/serialize-object.js") }}"></script>
-    <script src="{{ url("vendor/js/phrdialogs.js") }}"></script>
-    <script src="{{ url("vendor/js/jquery.print.js") }}"></script>
-    <script src="{{ url("vendor/bootstrap/dist/js/bootstrap.bundle.min.js") }}"></script>
 
+<!-- Bootstrap core JavaScript -->
+<script src="{{ url("vendor/jquery/dist/jquery.min.js") }}"></script>
+<script src="{{ url("vendor/bootstrap/dist/js/bootstrap.min.js") }}"></script>
+<script src="{{ url("vendor/jquery/dist/jquery.min.js") }}"></script>
+<script src="{{ url("vendor/js/phrService.js") }}"></script>
+<script src="{{ url("vendor/js/serialize-object.js") }}"></script>
+<script src="{{ url("vendor/js/phrdialogs.js") }}"></script>
+<script src="{{ url("vendor/js/jquery.print.js") }}"></script>
+<script src="{{ url("vendor/bootstrap/dist/js/bootstrap.bundle.min.js") }}"></script>
+
+   <!-- DONT DO THIS AT HOME -->
     <script>
-
         function showSnackbar(element) {
         // Get the snackbar DIV
         var x = document.getElementById(element);

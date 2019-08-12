@@ -152,13 +152,8 @@ Route::group(['middleware' => ['agent_auth'], 'prefix' => 'agent'], function() {
     Route::get('/{agent_id}/faqs', 'AgentController@faqs')->name('faqs');
     Route::get('/{agent_id}/profile', 'AgentController@profile')->name('profile');
     Route::get('/{agent_id}/find_list', 'AgentController@findList')->name('findList');
-
-    Route::get('/{abode_id}/tags/{username}', 'AgentController@tagAgent')->name('tagAgent');
-    Route::get('/{abode_id}/untags/{username}', 'AgentController@untagAgent')->name('UntagAgent');
-
+    Route::get('/{abode_id}/tags', 'AgentController@tagAgent')->name('tagAgent');
+    Route::get('/{abode_id}/untags', 'AgentController@untagAgent')->name('UntagAgent');
     Route::get('/{agent_id}/progression/genealogy', 'AgentController@genealogy')->name('genealogy');
-
-
     Route::post('/profile/image/update', 'AgentController@updateAgentImage')->name("phradmin.update_profile_image.submit");
-
 });

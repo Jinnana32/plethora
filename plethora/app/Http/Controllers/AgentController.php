@@ -23,7 +23,7 @@ class AgentController extends Controller
 
     public function listings(Request $request){
         $agent = $this->getAuthorizedUser();
-        $tags = DB::table("abode_tags")->where("username", $agent["username"])->get();
+        $tags = DB::table("abode_tags")->where("agent_id", $agent["id"])->get();
         $abodes = array();
         foreach($tags as $tag){
         $temp_abodes = DB::table("abodes")->where("archive", 1)->where("id", $tag->abode_id)->get();
@@ -78,7 +78,7 @@ class AgentController extends Controller
     public function findList(){
         $agent = $this->getAuthorizedUser();
         $agent = $this->getAuthorizedUser();
-        $tags = DB::table("abode_tags")->where("username", $agent["username"])->get();
+        $tags = DB::table("abode_tags")->where("agent_id", $agent["id"])->get();
         $abodes = array();
 
         $temp_abodes = DB::table("abodes")->where("archive", 1)->get();
@@ -126,15 +126,19 @@ class AgentController extends Controller
             ));
         }
 
-        /*foreach($abodes as $abode){
+        foreach($abodes as $key => $abode){
             foreach($tags as $tag){
-                if($abode["current"][]->abode_id == $tag->abode_id){
+                if($abode["current"]->id == $tag->abode_id){
                     unset($abodes[$key]);
                 }
             }
-        }*/
+        }
 
-        return view('agent.find_listing', compact("agent", "abodes"));
+        $developers = DB::table("developers")->where("archive", 1)->get();
+        $locations = DB::table("abode_location")->where("archive", 1)->get();
+        $categories = DB::table("abode_categories")->where("archive", 1)->get();
+
+        return view('agent.find_listing', compact("agent", "abodes", "developers", "locations", "categories"));
     }
 
     public function profile(Request $request){
@@ -239,34 +243,31 @@ class AgentController extends Controller
     }
 
     public function tagAgent(Request $request){
+        $agent = $this->getAuthorizedUser();
         DB::table("abode_tags")->insert(
             [
                 "abode_id" => $request->abode_id,
-                "username" => $request->username
+                "agent_id" => $agent["id"]
             ]
         );
-        $user = User::where("username", $request->username)->first();
-        $agent_id = $user->id;
-
         $display_name = DB::table("abodes")->where("id", $request->abode_id)->first()->display_name;
 
          // Logger
-         $info = PersonalInformation::where("user_id", $agent_id)->first();
+         $info = PersonalInformation::where("user_id", $agent["id"])->first();
          $logMessage = $info->first_name . " " . $info->last_name .
          " tag's an abode/listing of  {$display_name} at " . Date("M-d-Y h:i:s");
          Logging::saveInquiry($logMessage);
 
-        return redirect()->route("listings", [$agent_id]);
+        return redirect()->route("listings", [$agent["id"]]);
     }
 
     public function untagAgent(Request $request){
+        $agent = $this->getAuthorizedUser();
         DB::table("abode_tags")
-            ->where("username", $request->username)
+            ->where("agent_id", $agent["id"])
             ->where("abode_id", $request->abode_id)
             ->delete();
-        $user = User::where("username", $request->username)->first();
-        $agent_id = $user->id;
-        return redirect()->route("listings", [$agent_id]);
+        return redirect()->route("listings", [$agent["id"]]);
     }
 
     public function login(Request $request){

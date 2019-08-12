@@ -73,7 +73,7 @@
 .carousel-item {
     display: inline-block;
     margin-right:0.5rem;
-    background-color:orange;
+    background-color:gray;
     width: 25%;
     height: 100%;
     position: relative;
@@ -185,28 +185,88 @@
     right:10px;
 }
 
-.phr-property-item h2 {
+.phr-property-item  h2 {
     font-size:1.3em;
     color: #27ae60;
     padding-top:1rem;
 }
 
-.phr-property-item > p.phr-monthly {
+.phr-property-item  > p.phr-monthly {
     margin-bottom:1%;
 }
 
-.phr-property-item > p.phr-category {
+.phr-property-item  > p.phr-category {
     color:#ccc;
     margin-bottom:1%;
 }
 
-.phr-property-item > p.phr-address {
+.phr-property-item  > p.phr-address {
     color:#808080;
     padding:0;
     font-size:0.8em;
 }
 
-.phr-property-item > ul {
+.phr-property-item  > ul {
+    color:#606060;
+    padding-left:0;
+    list-style: none;
+    font-size:0.9em;
+}
+
+/* Find property */
+
+.phr-property-find-item {
+    text-align: left;
+    float:left;
+    margin-right:1%;
+    width:32%;
+    height:580px;
+    position: relative;
+}
+
+.phr-property-find-item img {
+    width:100%;
+    height:250px;
+}
+
+.phr-property-find-item > img.phr-catalog-developer {
+    width:64px;
+    height:64px;
+    position: absolute;
+    top:10px;
+    right:10px;
+}
+
+.phr-property-find-item > img.phr-catalog-branding {
+    width:32px;
+    height:32px;
+    position: absolute;
+    top:84px;
+    right:10px;
+}
+
+.phr-property-find-item  h2 {
+    font-size:1.3em;
+    color: #27ae60;
+    padding-top:1rem;
+}
+
+.phr-property-find-item  > p.phr-monthly {
+    margin-bottom:1%;
+}
+
+.phr-property-find-item  > p.phr-category {
+    color:#ccc;
+    margin-bottom:1%;
+}
+
+.phr-property-find-item  > p.phr-address {
+    color:#808080;
+    padding:0;
+    font-size:0.8em;
+}
+
+.phr-property-find-item  > ul {
     color:#606060;
     padding-left:0;
     list-style: none;
@@ -553,6 +613,37 @@ table tbody tr td {
     display: inline-block;
     color:white;
 }
+
+/* Abode details */
+
+.phr-abode-wrapper {
+    width:85%;
+    margin:-20em auto;
+    margin-bottom: 5em;
+    z-index:99;
+    position:relative;
+}
+.phr-abode-title {
+    color:white;
+}
+.phr-abode-details {
+    background-color:white;
+    padding-bottom:5%;
+    padding-top:2%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.phr-abode-span > p > span {
+    color: #666;
+    font-weight: lighter;
+    font-size: 0.8em;
+}
+
+.phr-abode-span > p > strong > span {
+    color: #666;
+    font-size: 0.8em;
+}
+
 
 @media only screen and (max-width: 600px) {
 

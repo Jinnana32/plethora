@@ -167,6 +167,9 @@ bottom: .5em;
                           <span>Compensation details</span>
                         </div>
 
+                        @if (sizeof($compensations) < 1)
+                          <span style = "padding-left:1em;">No records found yet.</span>
+                        @else
                         <table class = "table" style = "font-size:0.7em;">
                             <thead>
                               <tr>
@@ -189,6 +192,7 @@ bottom: .5em;
                               @endforeach
                             </tbody>
                         </table>
+                        @endif
 
                   </div>
                 </div> <!-- Geneology -->
@@ -201,6 +205,9 @@ bottom: .5em;
                           <span>Incentives received</span>
                         </div>
 
+                        @if (sizeof($incentives) < 1)
+                        <span style = "padding-left:1em;">No records found yet.</span>
+                        @else
                         <table class = "table" style = "font-size:0.7em;">
                             <thead>
                               <tr>
@@ -219,6 +226,7 @@ bottom: .5em;
                               @endforeach
                             </tbody>
                         </table>
+                        @endif
                   </div>
                 </div> <!-- Geneology -->
 
@@ -241,6 +249,9 @@ bottom: .5em;
                           <span>My Ledger</span>
                         </div>
                         <div  style = "overflow-x: scroll">
+                            @if (sizeof($compensations) < 1)
+                            <span style = "padding-left:1em;">No records found yet.</span>
+                            @else
                         <table  id="dtHorizontalExample" class = "table" style = "font-size:0.7em;" width="100%">
                             <thead>
                               <tr>
@@ -284,6 +295,7 @@ bottom: .5em;
 
                             </tbody>
                         </table>
+                        @endif
                         </div>
                   </div>
                 </div> <!-- Geneology -->

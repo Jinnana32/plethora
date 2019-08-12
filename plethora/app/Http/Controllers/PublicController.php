@@ -285,11 +285,76 @@ class PublicController extends Controller
     }
 
     public function showAbodeDetail($abode_id){
-        $abode = Abode::find($abode_id);
-        $developer = DB::table('developers')->where("id", $abode->dev_id)->first();
-        $images = DB::table("abode_images")->where("abode_id", $abode->id)->get();
+        $abode = DB::table("abodes")->where("id", $abode_id)->first();
 
-        return view('public.pub_abode_detail', compact('abode', 'developer', "images"));
+            $features = array();
+            $tags = array();
+            $has_brand = 0;
+            $branding = null;
+            $filter_prompt = array();
+
+            $developer = DB::table("developers")->where("id", $abode->dev_id)
+                                                      ->where("archive", 1)
+                                                      ->first();
+
+            $project = DB::table("projects")->where("id", $abode->project)
+                                                      ->where("archive", 1)
+                                                      ->first();
+
+            if($abode->branding != 0){
+                $has_brand = 1;
+                $branding = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                                  ->where("archive", 1)
+                                                                  ->first();
+            }
+
+            $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                     ->where("archive", 1)
+                                                     ->first()->category;
+
+            $location = DB::table("abode_location")->where("id", $abode->location)
+                                                   ->where("archive", 1)
+                                                   ->first()->location;
+
+            $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+
+            foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first()->display_name;
+                array_push($features, array(
+                    "feature" => $temp_feature,
+                    "value" => $feature->value
+                ));
+            }
+
+            $abode_images = DB::table("abode_images")->where("abode_id", $abode_id)->get();
+
+            $temp_tags = DB::table("abode_tags")->where("abode_id", $abode->id)->get();
+            foreach($temp_tags as $tag){
+                $info = DB::table("personal_information")->where("user_id", $tag->agent_id)->first();
+                array_push($tags, array(
+                    "name" => $info->first_name . ' ' . $info->last_name,
+                    "link" => $info->referral_link
+                ));
+            }
+
+            $abodes = array(
+                "current" => $abode,
+                "category" => $category,
+                "location" => $location,
+                "features" => $features,
+                "tags" => $tags,
+                "developer" => $developer,
+                "project" => $project,
+                "has_brand" => $has_brand,
+                "branding" => $branding,
+                "images" => $abode_images
+            );
+
+        return view('public.pub_abode_detail', compact('abodes'));
     }
 
     public function showAbodes(){
@@ -301,13 +366,52 @@ class PublicController extends Controller
     public function showAgent(Request $request){
 
         $info = PersonalInformation::where("referral_link", $request->agent_name)->first();
-        $user = User::where("id", $info["user_id"])->first();
-        $tags = DB::table("abode_tags")->where("username", $user->username)->get();
+        $tags = DB::table("abode_tags")->where("agent_id", $info->user_id)->get();
 
         $abodes = array();
         foreach($tags as $tag){
             $abode = Abode::where("id", $tag->abode_id)->first();
-            array_push($abodes, $abode);
+            $features = array();
+            $has_brand = 0;
+            $branding_image = "";
+            $developer_image = DB::table("developers")->where("id", $abode->dev_id)
+                                                      ->where("archive", 1)
+                                                      ->first()->image;
+
+            if($abode->branding != 0){
+                $has_brand = 1;
+                $branding_image = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                                  ->where("archive", 1)
+                                                                  ->first()->image;
+            }
+            $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                     ->where("archive", 1)
+                                                     ->first()->category;
+            $location = DB::table("abode_location")->where("id", $abode->location)
+                                                   ->where("archive", 1)
+                                                   ->first()->location;
+            $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+            foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first()->display_name;
+                array_push($features, array(
+                    "feature" => $temp_feature,
+                    "value" => $feature->value
+                ));
+            }
+
+            array_push($abodes, array(
+                "current" => $abode,
+                "category" => $category,
+                "location" => $location,
+                "features" => $features,
+                "dev_image" => $developer_image,
+                "has_brand" => $has_brand,
+                "branding_image" => $branding_image
+            ));
         }
 
         $agent = array(

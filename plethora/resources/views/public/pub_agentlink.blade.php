@@ -38,13 +38,8 @@
 
 <body id="page-top">
 
-    <!-- Plethora headline -->
-    <div class = "phr-headline">
-        <div class="container text-right">
-            <span><i class="fa fa-inbox"></i> plethorahomes@gmail.com</span>
-            <span><i class="fa fa-phone"></i> 0921-7298-758</span>
-        </div>
-    </div>
+     <!-- Plethora Navigation -->
+     @include('landing.layouts.headline')
 
     <!-- Plethora Navigation -->
     @include('landing.layouts.navigation')
@@ -64,8 +59,6 @@
                     <p>{{ $agent["address"] }}</p>
                     <p><i class = "fa fa-phone"></i> {{ $agent["contact"] }}</p>
                     <p><i class = "fa fa-envelope"></i> {{ $agent["email"] }}</p>
-                    <p><a href= "{{ url("") }}/register/{{ $agent["referral_link"] }}"><h5 style = "font-size:0.8em!important;">Check my referral link</h5></a></p>
-
                 </div>
             </div>
         </div>
@@ -76,40 +69,47 @@
               <div class="row">
 
                 <div class="col-md-8">
-                    <h2>My listings</h2>
-                    <div class="phr-property-wrap">
+                    <h4>My listings</h4>
+                    <hr/>
+                    <div class="phr-property-wrap" style = "margin-top:2em;">
                         @foreach ($abodes as $abode)
-                               @if ($abode !== null)
-                               <div class="phr-property-item phr-catalog-item">
-                                    <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode->dev_image }}" />
-                                    @if ($abode->has_brand != 0)
-                                        <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode->branding_image }}" />
-                                    @endif
-                                    @if ($abode->image != "")
-                                    <img src="{{ url("") }}/plethora/storage/app/public/abode/{{ $abode->image }}">
-                                    @else
-                                    <img src="http://localhost/plethora/public/vendor/img/temp_image.png">
-                                    @endif
-                                        <div class = "phr-twin-header">
-                                            <h2 class = "twin-left">{{ $abode->display_name }}</h2>
-                                            <h2 class = "twin-right">{{ $abode->date }}</h2>
-                                        </div>
-                                        <div class = "clearfix"></div>
-                                        <p class = "phr-monthly">{{ $abode->monthly_payment }}/monthly</p>
-                                        <p class = "phr-category">({{ $abode["category"] }})</p>
-                                        <p class = "phr-address">{{ $abode["location"] }}, {{ $abode->address }}</p>
-                                        <ul>
+                        <div class="phr-property-find-item">
+                                <img class = "phr-catalog-developer" src = "{{ url("") }}/plethora/storage/app/public/developers/{{ $abode["dev_image"] }}" />
+                                @if ($abode["has_brand"] != 0)
+                                    <img class = "phr-catalog-branding" src = "{{ url("") }}/plethora/storage/app/public/brandings/{{ $abode["branding_image"] }}" />
+                                @endif
+                                @if ($abode["current"]->image != "")
+                                <img src="{{ url("") }}/plethora/storage/app/public/abode/{{ $abode["current"]->image }}">
+                                @else
+                                <img src="{{ url("") }}/vendor/img/temp_image.png">
+                                @endif
+                                    <div class = "phr-twin-header">
+                                        <a href = "{{ url("abode") }}/{{ $abode["current"]->id }}" target = "_blank"><h2 class = "twin-left">{{ $abode["current"]->display_name }}</h2></a>
+                                        <h2 class="twin-right">{{ date("M d, Y", strtotime($abode["current"]->date)) }}</h2>
+                                    </div>
+                                    <div class = "clearfix"></div>
+                                    <p class="phr-monthly">
+                                            @if ($abode["current"]->monthly_payment < 1) Price Not Indicated
+                                            @else
+                                                &#8369 {{ number_format($abode["current"]->monthly_payment) }}/monthly
+                                            @endif </p>
+                                            <p class="phr-category">({{ $abode["category"] }})</p>
+                                    <p class = "phr-category">({{ $abode["category"] }})</p>
+                                    <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->address }}</p>
+                                    <ul>
+                                        @foreach (array_slice($abode["features"], 0, 4) as $feature)
+                                            <li>{{ $feature["feature"] }}: {{ $feature["value"] }}</li>
+                                        @endforeach
+                                        <li><a style="padding:0;" href="{{ url("abode") }}/{{ $abode["current"]->id }}">More...</a>
+                                        </li>
+                                    </ul>
 
-                                        </ul>
-                                </div>
-                                <div style = "clear:both;"></div>
-                               @endif
+                            </div>
                         @endforeach
                     </div>
                 </div>
 
                 <div class="col-md-4">
-
                     <div class = "phr-card">
 
                         <h3>Contact</h3>
@@ -134,7 +134,6 @@
                         <button class = "btn btn-primary btn-block">Submit</button>
                         </form>
                     </div>
-
                 </div>
 
               </div>
