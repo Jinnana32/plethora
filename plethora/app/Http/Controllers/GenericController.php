@@ -200,6 +200,11 @@ class GenericController extends Controller
         return response()->json(compact("locations"), 200);
     }
 
+    public function getSubLocation(Request $request){
+        $sub_location = DB::select("SELECT DISTINCT `address` FROM abodes WHERE location = '{$request->loc_id}'");
+        return response()->json($sub_location, 200);
+    }
+
     public function agents(){
         $agents = array();
 

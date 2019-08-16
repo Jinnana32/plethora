@@ -1,12 +1,14 @@
 <!-- Plethora Hero -->
 <section style="background-color:#f3f3f3;padding-top:40px;padding-bottom:40px;" id="gallery">
+    <form action="{{ route("search_catalog.submit") }}" method = "POST" id = "searchAbode">
+        {{ csrf_field() }}
         <div class="container">
             <div class="row">
 
                 <div class="col-md-4">
                     <div class="form-group form-group-select">
                         <label for="exampleInputEmail1" style="color:#3d3d3d;">Category</label>
-                        <select class="form-control" name="dev_id" id="phrCategory">
+                        <select class="form-control" name="category_id" id="phrCategory">
                             <option value = "0">Any</option>
                             @foreach ($categories as $category)
                                 <option value = "{{ $category->id }}">{{ $category->category }}</option>
@@ -19,7 +21,7 @@
                 <div class="col-md-4">
                     <div class="form-group form-group-select">
                         <label for="exampleInputEmail1" style="color:#3d3d3d;">Location</label>
-                        <select class="form-control" name="dev_id" id="phrDevelopers">
+                        <select class="form-control" name="location_id" id="phrLocations">
                             <option value = "0">Any</option>
                             @foreach ($locations as $location)
                                 <option value = "{{ $location->id }}">{{ $location->location }}</option>
@@ -42,6 +44,16 @@
                     </div>
                 </div>
 
+                <div class="col-md-12" style = "display: none;" id = "subLocationWrapper">
+                        <div class="form-group form-group-select">
+                            <label for="exampleInputEmail1" style="color:#3d3d3d;">Sub location</label>
+                            <select class="form-control" name="sub_location" id="phrSubLocation">
+                                <option value = "0">Any</option>
+                            </select>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
                 <div class="col-md-6" style="padding-top:1%;">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Monthly Budget</label>
@@ -49,13 +61,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="exampleInputEmail1" style = "font-size:0.8em;color:gray;">Minimum</label>
-                                <input class="form-control" style="display: block;width: 100%;" type="number"
-                                    id="down-input-select" min="200" max="1000" step="1" id="down-input-number">
+                                <input class="form-control" style="display: block;width: 100%;" type="number" value = "0"  name = "min_budget">
                             </div>
                             <div class="col-md-6">
                                 <label for="exampleInputEmail1" style = "font-size:0.8em;color:gray;">Maximum</label>
-                                <input class="form-control" style="display: block;width: 100%;" type="number" min="200"
-                                    max="1000" step="1" id="down-input-number">
+                                <input class="form-control" style="display: block;width: 100%;" type="number" value = "0" name = "max_budget">
                             </div>
                         </div>
                     </div>
@@ -69,9 +79,10 @@
                 </div>
 
                 <div class="col-md-12" style="padding-top:1%;">
-                    <a href="{{ url("") }}/catalog"><button class="btn btn-primary">Find abode</button></a>
+                    <button class="btn btn-primary">Find abode</button>
                 </div>
 
             </div>
         </div>
+    </form>
     </section>

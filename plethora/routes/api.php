@@ -81,6 +81,7 @@ Route::group(['prefix' => '/v1/admin'], function() {
      Route::get('abode/options/{abode_id}', 'GenericController@abodeOptions');
      Route::get('agents', 'GenericController@agents');
      Route::get('location', 'GenericController@locations');
+     Route::get('sublocation/{loc_id}', 'GenericController@getSubLocation');
      Route::get('projects/{dev_id}/{brand_id}', 'GenericController@projects');
      Route::post('abode/options/update', 'AbodeController@updateOptions');
 

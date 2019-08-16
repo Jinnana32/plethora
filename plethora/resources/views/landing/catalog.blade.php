@@ -68,6 +68,24 @@
     <!-- Admin header -->
     @include('landing.layouts.abode_search_script')
 
+    <script>
+        $(document).ready(function(){
+            $(document).on("submit", "#searchAbode", function(e){
+                e.preventDefault()
+                var options = []
+                var searchQuery = $(this).serializeObject();
+                $(".cat_options").each(function(index) {
+                var feat_id = $(this).attr("id");
+                var opt_value = $(this).val();
+                options.push(feat_id + "," + opt_value)
+                });
+
+                searchQuery.options = options
+                console.log(searchQuery)
+                $("#searchAbode")[0].submit()
+            })
+        })
+    </script>
 
 </body>
 

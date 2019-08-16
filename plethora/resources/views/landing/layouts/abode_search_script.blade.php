@@ -2,6 +2,9 @@
 $(document).ready(function(){
     var CategoryOptionsWrapper = $(".phr-form-category-options")
 
+    var subLocations = $("#phrSubLocation")
+    var subLocationWrapper = $("#subLocationWrapper")
+
     $(document).on("change", "#phrCategory", function(){
         var catId = $(this).val()
         if(catId == "0"){
@@ -9,6 +12,16 @@ $(document).ready(function(){
             CategoryOptionsWrapper.html(optionContent)
         }else{
             getCategoryOption(catId);
+        }
+    })
+
+    $(document).on("change", "#phrLocations", function(){
+        var catId = $(this).val()
+        if(catId == "0"){
+            subLocationWrapper.css("display", "none")
+        }else{
+            subLocationWrapper.css("display", "block")
+            getSubLocation(catId);
         }
     })
 
@@ -36,6 +49,20 @@ $(document).ready(function(){
             CategoryOptionsWrapper.html(optionContent)
             })
         }
+    }
+
+
+    function getSubLocation(loc_id){
+                var url = "{{ url('/api/v1/admin/sublocation') }}/" + loc_id
+                PhrService.get(url, {}, function(resp){
+                   hideLoading()
+                   var options = ""
+                   for(var x = 0; x < resp.length; x++){
+                        options += "<option value = '" + resp[x].address + "'>"+ resp[x].address +"</option>"
+                   }
+
+                   subLocations.html(options)
+                })
     }
 
     function makeSelectableFields(id, label, options){
