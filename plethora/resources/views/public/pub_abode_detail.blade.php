@@ -78,18 +78,18 @@
                         <p><strong><span>Address:</span></strong> <span>{{ $abodes["current"]->address }} {{ $abodes["location"] }}</span></p>
                     </div>
                     <div class = "col-md-6 col-xs-12 phr-abode-span">
-                        <p><strong><span>Equity Price:</span></strong> <span>
+                        <p><strong><span>Monthly Amortization:</span></strong> <span>
                                 @if ($abodes["current"]->monthly_payment == 0)
                                 Price not indicated
                                 @else
                                 &#8369 {{ number_format($abodes["current"]->monthly_payment) }}
                                 @endif
                         </span></p>
-                        <p><strong><span>Selling Price:</span></strong> <span>
-                            @if ($abodes["current"]->net_selling_price == 0)
+                        <p><strong><span>Total Contract Price:</span></strong> <span>
+                            @if ($abodes["current"]->total_contract_price == 0)
                             Price not indicated
                             @else
-                            &#8369 {{ number_format($abodes["current"]->net_selling_price) }}
+                            &#8369 {{ number_format($abodes["current"]->total_contract_price) }}
                             @endif
                         </span></p>
                     </div>
