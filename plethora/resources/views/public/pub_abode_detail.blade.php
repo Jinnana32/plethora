@@ -78,7 +78,7 @@
                         <p><strong><span>Address:</span></strong> <span>{{ $abodes["current"]->address }} {{ $abodes["location"] }}</span></p>
                     </div>
                     <div class = "col-md-6 col-xs-12 phr-abode-span">
-                        <p><strong><span>Monthly Amortization:</span></strong> <span>
+                        <p><strong><span>Monthly equity:</span></strong> <span>
                                 @if ($abodes["current"]->monthly_payment == 0)
                                 Price not indicated
                                 @else
