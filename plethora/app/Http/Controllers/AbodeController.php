@@ -92,9 +92,9 @@ class AbodeController extends Controller
         foreach($temp_features as $feature){
                 $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
                                                            ->where("archive", 1)
-                                                           ->first()->display_name;
+                                                           ->first();
                 array_push($features, array(
-                    "feature" => $temp_feature,
+                    "feature" => optional($temp_feature),
                     "value" => $feature->value
                 ));
         }

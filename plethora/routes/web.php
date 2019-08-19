@@ -1,7 +1,7 @@
 <?php
 /* Public routes */
-Route::get('/', 'PublicController@showLandingPage');
-
+//Route::get('/', 'PublicController@showLandingPage');
+Route::get('/', function(){ return view("public.pub_login_v2"); });
 /* Abode */
 Route::get("/catalog", 'PublicController@showCatalog');
 Route::get("/catalog/search/{category}/{location}/{developer}", "PublicController@showSearchCatalog");
@@ -21,7 +21,7 @@ Route::get('/agents/{agent_name}', 'PublicController@showAgentsByName');
 Route::post('/agent/edit/info', 'AgentController@editInfo')->name("edit_info.submit");
 Route::get('register', function(){ return view("public.pub_register"); })->name("register");
 Route::get('/register/{agent_name}', 'PublicController@showAgentReferralLink');
-Route::get('login', function(){ return view("landing.login"); })->name("login");
+Route::get('login', function(){ return view("public.pub_login_v2"); })->name("login");
 Route::post('login', 'AgentController@login')->name("login.submit");
 Route::post('register', 'UserController@quickRegister')->name("register.submit");
 Route::get('logout', 'UserController@logouts')->name('phradmin.logout');
