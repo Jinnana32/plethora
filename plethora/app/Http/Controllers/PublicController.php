@@ -272,10 +272,31 @@ class PublicController extends Controller
             ));
         }
 
+        $showAbodes = 1;
+        $agent = $this->getAuthorizedUser();
         $developers = DB::table("developers")->where("archive", 1)->get();
         $locations = DB::table("abode_location")->where("archive", 1)->get();
         $categories = DB::table("abode_categories")->where("archive", 1)->get();
-        return view('landing.catalog', compact('developers', 'abodes', 'locations', 'categories'));
+        return view('agent.listings', compact('agent', 'developers', 'abodes', 'locations', 'categories', 'showAbodes'));
+    }
+
+    public function getAuthorizedUser(){
+        $user = Auth::user();
+        $info = PersonalInformation::where("user_id", $user->id)->first();
+        $agent = array(
+            "id" => $info->user_id,
+            "username" => $user->username,
+            "name" => $info["first_name"] . " " . $info["last_name"],
+            "address" => $info["permanent_address"],
+            "contact" => $info["contact_number"],
+            "email" => $info["email_address"],
+            "prc_license" => $info["prc_license"],
+            "facebook_account" => $info["facebook_account"],
+            "referral_link" => $info["referral_link"],
+            "image" => $info["image"],
+            "position" => DB::table("genealogies")->where("user_id", $info->user_id)->first()->position
+        );
+        return $agent;
     }
 
     public function showDevelopers(){
@@ -405,9 +426,9 @@ class PublicController extends Controller
             foreach($temp_features as $feature){
                 $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
                                                            ->where("archive", 1)
-                                                           ->first()->display_name;
+                                                           ->first();
                 array_push($features, array(
-                    "feature" => $temp_feature,
+                    "feature" => optional($temp_feature)->display_name,
                     "value" => $feature->value
                 ));
             }

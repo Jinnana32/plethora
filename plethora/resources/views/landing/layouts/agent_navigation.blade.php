@@ -10,7 +10,7 @@
                         <div class="col-md-8">
                                 <ul class = "phr-header-nav">
                                     <li><a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/progression">Dashboard</a></li>
-                                    <li><a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/listings">My Listing</a></li>
+                                    <li><a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/listings">Listing</a></li>
                                     <li><a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/learnings">Learnings</a></li>
                                     <li><a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/businesscard">Business Card</a></li>
                                     <li><a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/inbox">Inbox</a></li>

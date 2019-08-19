@@ -11,7 +11,7 @@ Route::get("/{location_id}/developers/{dev_id}/projects", 'PublicController@show
 Route::get('/abode', 'PublicController@showAbodes');
 Route::get('/abode/{abode_id}', 'PublicController@showAbodeDetail');
 
-Route::post('/catalog/search', 'PublicController@catalogSearch')->name("search_catalog.submit");
+Route::post('/catalog/search', 'AgentController@catalogSearch')->name("search_catalog.submit");
 
 /* Agent */
 Route::get("/agent/find", 'PublicController@showFindAgents');

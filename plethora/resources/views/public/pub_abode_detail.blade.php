@@ -46,8 +46,8 @@
     <!-- Plethora Navigation -->
     @include('landing.layouts.headline')
 
-    <!-- Plethora Navigation -->
-    @include('landing.layouts.navigation')
+   <!-- Plethora Navigation -->
+   @include('landing.layouts.agent_navigation')
 
   <!-- Header -->
   <header class="sub-masthead" style = "height:400px;">
@@ -78,8 +78,20 @@
                         <p><strong><span>Address:</span></strong> <span>{{ $abodes["current"]->address }} {{ $abodes["location"] }}</span></p>
                     </div>
                     <div class = "col-md-6 col-xs-12 phr-abode-span">
-                        <p><strong><span>Equity Price:</span></strong> <span>&#8369 {{ number_format($abodes["current"]->monthly_payment) }}</span></p>
-                        <p><strong><span>Selling Price:</span></strong> <span>&#8369 {{ number_format("30000") }}</span></p>
+                        <p><strong><span>Equity Price:</span></strong> <span>
+                                @if ($abodes["current"]->monthly_payment == 0)
+                                Price not indicated
+                                @else
+                                &#8369 {{ number_format($abodes["current"]->monthly_payment) }}
+                                @endif
+                        </span></p>
+                        <p><strong><span>Selling Price:</span></strong> <span>
+                            @if ($abodes["current"]->net_selling_price == 0)
+                            Price not indicated
+                            @else
+                            &#8369 {{ number_format($abodes["current"]->net_selling_price) }}
+                            @endif
+                        </span></p>
                     </div>
                 </div>
 

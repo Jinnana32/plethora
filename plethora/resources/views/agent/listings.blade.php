@@ -18,25 +18,19 @@
     <!-- Plethora Navigation -->
     @include('landing.layouts.agent_navigation')
 
- <!-- Header -->
- @include('public.layout.pub_agent_masthead')
+    <!-- Plethora Hero -->
+    @include('landing.layouts.abode_search')
 
- <section style = "background-color:#f3f3f3;padding-bottom:10em;" id="gallery">
+ <section style = "background-color:#fff;padding-bottom:10em;padding-top:2em;" id="gallery">
        <div class="container">
          <div class="row">
-
-           <div class="col-md-12">
-               <div class = "col-md-12  col-form-header">
-                 <div class="dot-header"></div>
-                 <span>My listings</span>
-               </div>
-               <hr/>
-
-               <div class="col-md-12 text-right" style = "margin-bottom:2rem;">
-                       <a href = "{{ url("") }}/agent/{{ Auth::user()->id }}/find_list"><button class = "btn btn-default create-agent-btn"> Find Abodes</button></a>
-               </div>
-
                <div class="col-md-12">
+                   @if ($showAbodes == 0)
+                   <div class = "empty_brand">
+                        <i class = "fa fa-inbox"></i>
+                        <p>This list feels empty. Please search for a abode<p>
+                    </div>
+                   @else
                     <div class="phr-property-wrap">
                             @foreach ($abodes as $abode)
                                 <div class="phr-property-find-item">
@@ -60,7 +54,6 @@
                                                         &#8369 {{ number_format($abode["current"]->monthly_payment) }}/monthly
                                                     @endif </p>
                                                     <p class="phr-category">({{ $abode["category"] }})</p>
-                                            <p class = "phr-category">({{ $abode["category"] }})</p>
                                             <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->address }}</p>
                                             <ul>
                                                 @foreach (array_slice($abode["features"], 0, 4) as $feature)
@@ -68,13 +61,11 @@
                                                 @endforeach
                                             </ul>
                                             <a class = "btn btn-info btn-sm" href="{{ url("abode") }}/{{ $abode["current"]->id }}" target="_blank"> View Details</a>
-                                            <a class = "btn btn-success btn-sm" href="{{ url("agent") }}/{{ $abode["current"]->id }}/untags">Remove Tag</a>
                                     </div>
                             @endforeach
                     </div>
+                    @endif
                </div>
-
-           </div>
 
          </div>
        </div>

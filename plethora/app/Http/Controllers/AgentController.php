@@ -21,12 +21,32 @@ class AgentController extends Controller
         return view('agent.dashboard', compact("agent", "status"));
     }
 
-    public function listings(Request $request){
-        $agent = $this->getAuthorizedUser();
-        $tags = DB::table("abode_tags")->where("agent_id", $agent["id"])->get();
+    public function catalogSearch(Request $request) {
+
         $abodes = array();
-        foreach($tags as $tag){
-        $temp_abodes = DB::table("abodes")->where("archive", 1)->where("id", $tag->abode_id)->get();
+        $abodex = Abode::query();
+
+        if($request->category_id != 0){
+            $abodex->where("category", $request->category_id);
+        }
+
+        if($request->location_id != 0){
+            $abodex->where("location", $request->location_id);
+        }
+
+        if($request->dev_id != 0){
+            $abodex->where("dev_id", $request->dev_id);
+        }
+
+        if($request->sub_location != 0){
+            $abodex->where("address", $request->sub_location);
+        }
+
+        if($request->max_budget > 0 && ($request->min_budget < $request->max_budget)){
+            $abodex->whereBetween("monthly_payment", [$request->min_budget, $request->max_budget]);
+        }
+
+        $temp_abodes = $abodex->get();
         foreach($temp_abodes as $abode){
             $features = array();
             $has_brand = 0;
@@ -53,9 +73,9 @@ class AgentController extends Controller
             foreach($temp_features as $feature){
                 $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
                                                            ->where("archive", 1)
-                                                           ->first()->display_name;
+                                                           ->first();
                 array_push($features, array(
-                    "feature" => $temp_feature,
+                    "feature" => optional($temp_feature)->display_name,
                     "value" => $feature->value
                 ));
             }
@@ -70,13 +90,73 @@ class AgentController extends Controller
                 "branding_image" => $branding_image
             ));
         }
+
+        $showAbodes = 1;
+        $agent = $this->getAuthorizedUser();
+        $developers = DB::table("developers")->where("archive", 1)->get();
+        $locations = DB::table("abode_location")->where("archive", 1)->get();
+        $categories = DB::table("abode_categories")->where("archive", 1)->get();
+        return view('agent.listings', compact('agent', 'developers', 'abodes', 'locations', 'categories', 'showAbodes'));
+    }
+
+    public function listings(Request $request){
+        $agent = $this->getAuthorizedUser();
+        $abodes = array();
+        $showAbodes = 0;
+
+        $temp_abodes = DB::table("abodes")->where("archive", 1)->get();
+        foreach($temp_abodes as $abode){
+            $features = array();
+            $has_brand = 0;
+            $branding_image = "";
+            $developer_image = DB::table("developers")->where("id", $abode->dev_id)
+                                                      ->where("archive", 1)
+                                                      ->first()->image;
+
+            if($abode->branding != 0){
+                $has_brand = 1;
+                $branding_image = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                                  ->where("archive", 1)
+                                                                  ->first()->image;
+            }
+            $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                     ->where("archive", 1)
+                                                     ->first()->category;
+            $location = DB::table("abode_location")->where("id", $abode->location)
+                                                   ->where("archive", 1)
+                                                   ->first()->location;
+            $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                                ->where("archive", 1)
+                                                                ->get();
+            foreach($temp_features as $feature){
+                $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                           ->where("archive", 1)
+                                                           ->first();
+                array_push($features, array(
+                    "feature" => optional($temp_feature)->display_name,
+                    "value" => $feature->value
+                ));
+            }
+
+            array_push($abodes, array(
+                "current" => $abode,
+                "category" => $category,
+                "location" => $location,
+                "features" => $features,
+                "dev_image" => $developer_image,
+                "has_brand" => $has_brand,
+                "branding_image" => $branding_image
+            ));
         }
 
-        return view('agent.listings', compact("agent", "abodes"));
+        $developers = DB::table("developers")->where("archive", 1)->get();
+        $locations = DB::table("abode_location")->where("archive", 1)->get();
+        $categories = DB::table("abode_categories")->where("archive", 1)->get();
+
+        return view('agent.listings', compact("agent", "abodes", "developers", "locations", "categories", "showAbodes"));
     }
 
     public function findList(){
-        $agent = $this->getAuthorizedUser();
         $agent = $this->getAuthorizedUser();
         $tags = DB::table("abode_tags")->where("agent_id", $agent["id"])->get();
         $abodes = array();
@@ -296,7 +376,7 @@ class AgentController extends Controller
                 " log's into the system at " . Date("M-d-Y h:i:s");
                 Logging::saveLogin($logMessage);
 
-                return redirect()->route("progression", [$agent_id]);
+                return redirect()->route("listings", [$agent_id]);
             }
         }
 
