@@ -122,19 +122,6 @@
                     @endif
                 </div>
 
-                <h5 style="margin-top:10%;">Tag Agents</h5>
-                <hr/>
-
-                <div class = "row">
-                        <!-- Detail row -->
-                        <div class = "col-md-6 col-xs-12 phr-abode-span">
-                                @foreach ($abodes["tags"] as $tag)
-                                <p><strong><span>{{ $tag["name"] }} </span></strong> <span><a href = "{{ url("") }}/agent/{{ $tag['link'] }}" style = "color:orange;cursor:pointer;text-decoration:underline;">Visit Agent Link</a></span></p>
-                                @endforeach
-                        </div>
-
-                    </div>
-
         </div>
 
             <!-- Contact & Calculator -->
