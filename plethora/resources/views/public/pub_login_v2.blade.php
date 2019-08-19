@@ -16,7 +16,7 @@
                     <img src = "{{ url("") }}/vendor/img/logs_2.png" style = "width: 500px;"/>
         </div>
 
-        <div class="login-box animated slideInUp delay-1s">
+        <div class="login-box animated jackInTheBox delay-1s">
 
     @if($errors->has('unauthorized'))
         <div class="alert alert-warning alert-dismissible">
