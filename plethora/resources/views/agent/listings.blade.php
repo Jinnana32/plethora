@@ -49,7 +49,7 @@
                                                         &#8369 {{ number_format($abode["current"]->monthly_payment) }}/monthly
                                                     @endif </p>
                                                     <p class="phr-category">({{ $abode["category"] }})</p>
-                                            <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->address }}</p>
+                                            <p class = "phr-address">{{ $abode["location"] }}, {{ $abode["current"]->sublocation }}, {{ $abode["current"]->street_barangay }}</p>
                                             <ul>
                                                 @foreach (array_slice($abode["features"], 0, 4) as $feature)
                                                     <li>{{ $feature["feature"] }}: {{ $feature["value"] }}</li>
