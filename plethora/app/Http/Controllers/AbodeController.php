@@ -238,7 +238,8 @@ class AbodeController extends Controller
                     "display_name" => $request->display_name,
                     "category" => $request->category,
                     "location" => $request->location,
-                    "address" => $request->address
+                    "sublocation" => $request->sublocation,
+                    "street_barangay" => $request->prefix . ". " .$request->street_barangay
                 ]
             );
         return redirect()->back()->with('success', 'Abode was successfully updated!');

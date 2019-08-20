@@ -205,6 +205,13 @@ class GenericController extends Controller
         return response()->json($sub_location, 200);
     }
 
+    public function getSubLocations(Request $request){
+        $location_id = $request->loc_id;
+        $sublocations = DB::table("abode_sublocations")->where("location_id", $location_id)->get();
+
+        return response()->json($sublocations, 200);
+    }
+
     public function agents(){
         $agents = array();
 

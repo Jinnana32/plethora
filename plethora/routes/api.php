@@ -83,6 +83,7 @@ Route::group(['prefix' => '/v1/admin'], function() {
      Route::get('location', 'GenericController@locations');
      Route::get('sublocation/{loc_id}', 'GenericController@getSubLocation');
      Route::get('projects/{dev_id}/{brand_id}', 'GenericController@projects');
+     Route::get('abodes/sublocation/{loc_id}', 'GenericController@getSubLocations');
      Route::post('abode/options/update', 'AbodeController@updateOptions');
 
      /* Verify Users */

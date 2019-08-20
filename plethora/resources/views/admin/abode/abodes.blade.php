@@ -161,7 +161,7 @@
                             <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Model/Unit</th>
                             <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Developer</th>
                             <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Category</th>
-                            <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Address</th>
+                            <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Address(Province, Sublocation, Brgy/St)</th>
                             <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Pricing</th>
                             <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Features</th>
                             <th class="sorting" tabindex="0" aria-controls="example2"  aria-label="Browser: activate to sort column ascending">Action</th>
@@ -192,7 +192,7 @@
                                         @endif
                                     </td>
                                     <td><span class = "label bg-green">{{ $abode["category"] }}</span></td>
-                                    <td>{{ $abode["location"] }}, {{ $abode["current"]->address }}</td>
+                                    <td>{{ $abode["location"] }}, {{ $abode["current"]->sublocation }}, {{ $abode["current"]->street_barangay }}</td>
                                     <td>
                                         <div class = "table-link" id = "{{ $abode["current"]->id }}" data-toggle="modal" data-target="#update_pricing"><i class = "fa fa-edit phr-edit-brand"></i> Quick Edit</div>
                                         <ul class = "phr-pricing">
@@ -245,7 +245,7 @@
                                         <div class="form-group form-group-select">
                                             <label for="propert_category">Category</label>
                                             <br/>
-                                            <select class = "search-form" id = "phrCategory" name = "filter_category">
+                                            <select class = "search-form" id = "phrCategorys" name = "filter_category">
                                                 <option value = "0">Any</option>
                                                 @foreach ($categories as $category)
                                                 <option value = "{{ $category->id }}">{{ $category->category }}</option>
@@ -490,9 +490,34 @@
                                     </div>
                                     </div>
                                     <div class="col-md-12">
+                                        <div class="form-group form-group-select">
+                                            <label for="exampleInputEmail1">Sub location</label>
+                                            <select class="form-control" name = "sublocation" id = "phrSubLocations">
+                                            </select>
+                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Address</label>
-                                            <input type="text" class="form-control" id="abode_address" name = "address"/>
+                                            <label for="exampleInputEmail1">Barangay/Street</label>
+                                            <div class = "row">
+                                                <div class="col-md-4">
+                                                            <div class="form-group form-group-select">
+                                                                    <label for="exampleInputEmail1">Prefix</label>
+                                                                    <select class="form-control" name = "prefix" id = "phrSubLocations">
+                                                                            <option>Brgy</option>
+                                                                            <option>St</option>
+                                                                    </select>
+                                                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                            </div>
+                                                </div>
+                                                <div class = "col-md-8">
+                                                        <label for="exampleInputEmail1">Area</label>
+                                                        <input type="text" class="form-control" id="abode_address" name = "street_barangay"/>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -576,6 +601,18 @@
             })
         })
 
+        function getSubLocations(locId){
+            var url = "{{ url('/api/v1/admin/abodes/sublocation') }}/" + locId
+            PhrService.get(url, {}, function(resp){
+                   hideLoading()
+                   var options = ""
+                   for(var x = 0; x < resp.length; x++){
+                        options += "<option value = '" + resp[x].name + "'>"+ resp[x].name +"</option>"
+                   }
+                   $("#phrSubLocations").html(options)
+            })
+        }
+
         $(document).on('click', '.table-link', function(){
             var abodeId = $(this).attr("id");
             var contractPrice = $(this).siblings(".phr-pricing").children(".contract_pricing").attr("name");
@@ -617,8 +654,12 @@
             PhrService.get(url, {}, function(resp){
                    hideLoading()
                    $("#abode_model").val(resp.display_name)
-                   $("#abode_address").val(resp.address)
+                   $("#abode_address").val(resp.street_barangay)
             })
+        })
+
+        $("#phrLocation").change(function(){
+            getSubLocations($(this).val())
         })
 
         function getLocations(){
@@ -626,10 +667,12 @@
                 var url = "{{ url('/api/v1/admin/location') }}"
                 PhrService.get(url, {}, function(resp){
                    hideLoading()
+                   $(".modal-backdrop").css("display", "none");
                    var options = ""
                    for(var x = 0; x < resp.locations.length; x++){
                         options += "<option value = '" + resp.locations[x].id + "'>"+ resp.locations[x].location +"</option>"
                    }
+                   getSubLocations(1)
                    agentOptions.html(options)
                 })
         }
@@ -639,7 +682,6 @@
                 var url = "{{ url('/api/v1/admin/category') }}"
                 PhrService.get(url, {}, function(resp){
                    hideLoading()
-                   console.log(resp)
                    var options = ""
                    for(var x = 0; x < resp.categories.length; x++){
                         options += "<option value = '" + resp.categories[x].id + "'>"+ resp.categories[x].category +"</option>"
