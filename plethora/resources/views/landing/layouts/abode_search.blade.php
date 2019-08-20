@@ -44,15 +44,25 @@
                     </div>
                 </div>
 
-                <div class="col-md-12" style = "display: none;" id = "subLocationWrapper">
-                        <div class="form-group form-group-select">
-                            <label for="exampleInputEmail1" style="color:#3d3d3d;">Sub location</label>
-                            <select class="form-control" name="sub_location" id="phrSubLocation">
-                                <option value = "0">Any</option>
-                            </select>
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </div>
+                <div class="col-md-6" id = "subLocationWrapper" style = "display: none">
+                    <div class="form-group form-group-select">
+                        <label for="exampleInputEmail1" style="color:#3d3d3d;">Sub location</label>
+                        <select class="form-control" name="sub_location" id="phrSubLocation">
+                            <option value = "0">Any</option>
+                        </select>
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </div>
+                </div>
+
+                <div class="col-md-6" id = "subUrbWrapper" style = "display: none">
+                    <div class="form-group form-group-select">
+                        <label for="exampleInputEmail1" style="color:#3d3d3d;">Brgy/Street</label>
+                        <select class="form-control" name="sub_urb" id="subUrb">
+                            <option value = "0">Any</option>
+                        </select>
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </div>
+                </div>
 
                 <div class="col-md-6" style="padding-top:1%;">
                     <div class="form-group">

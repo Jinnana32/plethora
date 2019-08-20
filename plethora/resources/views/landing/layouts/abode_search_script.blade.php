@@ -3,7 +3,9 @@ $(document).ready(function(){
     var CategoryOptionsWrapper = $(".phr-form-category-options")
 
     var subLocations = $("#phrSubLocation")
+    var subUrb = $("#subUrb")
     var subLocationWrapper = $("#subLocationWrapper")
+    var subUrbWrapper = $("#subUrbWrapper")
 
     $(document).on("change", "#phrCategory", function(){
         var catId = $(this).val()
@@ -51,17 +53,41 @@ $(document).ready(function(){
         }
     }
 
+    $("#phrSubLocation").change(function(){
+        getBrgyStreet($(this).val())
+    })
+
 
     function getSubLocation(loc_id){
-                var url = "{{ url('/api/v1/admin/sublocation') }}/" + loc_id
+                var url = "{{ url('/api/v1/admin/abodes/sublocation') }}/" + loc_id
                 PhrService.get(url, {}, function(resp){
                    hideLoading()
                    var options = ""
                    for(var x = 0; x < resp.length; x++){
-                        options += "<option value = '" + resp[x].address + "'>"+ resp[x].address +"</option>"
+                        options += "<option value = '" + resp[x].name + "'>"+ resp[x].name +"</option>"
                    }
 
                    subLocations.html(options)
+                   getBrgyStreet(resp[0])
+                })
+    }
+
+    function getBrgyStreet(sublocation){
+                var url = "{{ url('/api/v1/admin/abodes/sublocation/suburb') }}/" + sublocation
+                PhrService.get(url, {}, function(resp){
+                   hideLoading()
+                   var options = ""
+                   for(var x = 0; x < resp.length; x++){
+                        options += "<option value = '" + resp[x].street_barangay + "'>"+ resp[x].street_barangay +"</option>"
+                   }
+
+                   if(resp.length > 0){
+                    subUrbWrapper.css("display", "block")
+                    subUrb.html(options)
+                   }else{
+                    subUrbWrapper.css("display", "none")
+                   }
+
                 })
     }
 

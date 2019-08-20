@@ -212,6 +212,13 @@ class GenericController extends Controller
         return response()->json($sublocations, 200);
     }
 
+    public function getSubUrb(Request $request){
+        $sublocation = $request->sublocation;
+        $sub_urb = DB::select("SELECT DISTINCT `street_barangay` FROM abodes WHERE sublocation = '{$sublocation}'");
+
+        return response()->json($sub_urb, 200);
+    }
+
     public function agents(){
         $agents = array();
 

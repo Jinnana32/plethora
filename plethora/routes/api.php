@@ -84,6 +84,7 @@ Route::group(['prefix' => '/v1/admin'], function() {
      Route::get('sublocation/{loc_id}', 'GenericController@getSubLocation');
      Route::get('projects/{dev_id}/{brand_id}', 'GenericController@projects');
      Route::get('abodes/sublocation/{loc_id}', 'GenericController@getSubLocations');
+     Route::get('abodes/sublocation/suburb/{sublocation}', 'GenericController@getSubUrb');
      Route::post('abode/options/update', 'AbodeController@updateOptions');
 
      /* Verify Users */
@@ -96,7 +97,6 @@ Route::group(['prefix' => '/v1/admin'], function() {
      Route::get("releasing/{com_id}", "GenericController@getReleasing");
      Route::get("breakdown/milestone/list", "GenericController@getCompesationMilestoneBreakdown");
      Route::post('compensation', 'CompensationController@store');
-
      Route::get("abode/details/{abode_id}", "GenericController@getAbodeDetails");
      Route::get("/geneology/{agent_id}/list", "GenericController@getGeneology");
 

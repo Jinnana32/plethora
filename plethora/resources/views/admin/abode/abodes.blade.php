@@ -653,6 +653,7 @@
             var url = "{{ url('/api/v1/admin/abode/details') }}/" + abode_id
             PhrService.get(url, {}, function(resp){
                    hideLoading()
+                   $(".modal-backdrop").css("display", "none");
                    $("#abode_model").val(resp.display_name)
                    $("#abode_address").val(resp.street_barangay)
             })
