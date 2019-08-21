@@ -26,20 +26,36 @@ class AgentController extends Controller
         $abodes = array();
         $abodex = Abode::query();
 
+        /*if($request->sub_location != 0){
+            if($request->sub_urb != 0){
+                $abodex->where("street_barangay", $request->sub_urb);
+            }else{
+                $abodex->where("sublocation", $request->sub_location);
+            }
+        }else{
+            if($request->location_id != 0){
+                $abodex->where("location", $request->location_id);
+            }
+        }*/
+
+        if($request->sub_urb !== "0"){
+            $abodex->where("street_barangay", $request->sub_urb);
+        }else{
+            if($request->sub_location != "0"){
+                $abodex->where("sublocation", $request->sub_location);
+            }else{
+                if($request->location_id != "0"){
+                    $abodex->where("location", $request->location_id);
+                }
+            }
+        }
+
         if($request->category_id != 0){
             $abodex->where("category", $request->category_id);
         }
 
-        if($request->location_id != 0){
-            $abodex->where("location", $request->location_id);
-        }
-
         if($request->dev_id != 0){
             $abodex->where("dev_id", $request->dev_id);
-        }
-
-        if($request->sub_location != 0){
-            $abodex->where("address", $request->sub_location);
         }
 
         if($request->max_budget > 0 && ($request->min_budget < $request->max_budget)){

@@ -62,7 +62,7 @@ $(document).ready(function(){
                 var url = "{{ url('/api/v1/admin/abodes/sublocation') }}/" + loc_id
                 PhrService.get(url, {}, function(resp){
                    hideLoading()
-                   var options = ""
+                   var options = "<option value = '0'>Any</option>"
                    for(var x = 0; x < resp.length; x++){
                         options += "<option value = '" + resp[x].name + "'>"+ resp[x].name +"</option>"
                    }
@@ -76,7 +76,7 @@ $(document).ready(function(){
                 var url = "{{ url('/api/v1/admin/abodes/sublocation/suburb') }}/" + sublocation
                 PhrService.get(url, {}, function(resp){
                    hideLoading()
-                   var options = ""
+                   var options = "<option value = '0'>Any</option>"
                    for(var x = 0; x < resp.length; x++){
                         options += "<option value = '" + resp[x].street_barangay + "'>"+ resp[x].street_barangay +"</option>"
                    }

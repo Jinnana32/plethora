@@ -26,6 +26,12 @@
                         <p>This list feels empty. Please search for a abode<p>
                     </div>
                    @else
+                    @if(sizeof($abodes) < 1)
+                    <div class = "empty_brand">
+                        <i class = "fa fa-inbox"></i>
+                        <p>No record found<p>
+                    </div>
+                    @else
                     <div class="phr-property-wrap">
                             @foreach ($abodes as $abode)
                                 <div class="phr-property-find-item">
@@ -50,13 +56,13 @@
                                                     @endif </p>
                                                     <p class="phr-category">({{ $abode["category"] }})</p>
                                             <p class = "phr-address">
-                                                {{ $abode["location"] }}
-                                                @if($abode["current"]->sublocation != "")
-                                                ,{{ $abode["current"]->sublocation }}
-                                                @endif
                                                 @if($abode["current"]->street_barangay != "")
-                                                ,{{ $abode["current"]->street_barangay }}
+                                                {{ $abode["current"]->street_barangay }}
                                                 @endif
+                                                @if($abode["current"]->sublocation != "")
+                                                ,{{ $abode["current"]->sublocation }},
+                                                @endif
+                                                {{ $abode["location"] }}
                                             </p>
                                             <ul>
                                                 @foreach (array_slice($abode["features"], 0, 4) as $feature)
@@ -67,6 +73,7 @@
                                     </div>
                             @endforeach
                     </div>
+                        @endif
                     @endif
                </div>
 
