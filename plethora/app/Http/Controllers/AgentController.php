@@ -68,7 +68,7 @@ class AgentController extends Controller
             $canContinue = true;
             $pair;
 
-            if($request->has("has_options")){
+            if(!$request->has("has_options")){
                 foreach($request->options as $option){
                     $pair = explode(",", $option);
                     $abodeOption = DB::table("abode_category_options")
