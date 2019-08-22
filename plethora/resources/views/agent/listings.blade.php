@@ -96,6 +96,11 @@
                 e.preventDefault()
                 var options = []
                 var searchQuery = $(this).serializeObject();
+                if($("#linte_nga_checkbox").prop("checked") == false){
+                    $("#may_option").val("no")
+                }else{
+                    $("#may_option").val("yes")
+                }
                 console.log(searchQuery)
                 $("#searchAbode")[0].submit()
             })

@@ -90,7 +90,8 @@
 
                 <div class="col-md-12" style="padding-top:1%;">
                     <div>
-                    <input type="checkbox" name = "has_option"><span> include more options?</span>
+                    <input type="checkbox" id = "linte_nga_checkbox"><span> include more options?</span>
+                    <input type="hidden" id = "may_option" name = "has_option">
                     </div>
                     <br/>
                     <button class="btn btn-primary">Find abode</button>
