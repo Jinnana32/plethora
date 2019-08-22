@@ -126,7 +126,7 @@
 
             <!-- Contact & Calculator -->
             <div class = "col-md-4 col-xs-4" style = "padding-right:5%;">
-                            <hr style = "background-color:#27ae60;"/>
+                            <!-- hr style = "background-color:#27ae60;"/>
                             <h5>Contact</h5>
                             <form action="{{ route("inbox.message.submit") }}" method = "POST">
                                     {{ csrf_field() }}
@@ -152,9 +152,9 @@
                                     </div>
 
                                     <button class = "btn btn-info">Submit</button>
-                            </form>
+                            </form -->
 
-                            <hr style = "background-color:#27ae60;margin-top:3em;"/>
+                            <hr style = "background-color:#27ae60;"/>
                             <h5>Amortization Calculator</h5>
                                             <form id = "mortrage_calculator">
                                             <div class="form-group">

@@ -95,10 +95,10 @@ $(document).ready(function(){
         var selectableField = '<div class="col-md-4">' +
                 '<div class="form-group form-group-select">' +
                         '<label class = "cat_label" for="exampleInputEmail1">'+ label +'</label>'+
-                        '<select class="form-control cat_options" id = "'+ id +'">';
+                        '<select class="form-control cat_options" id = "'+ id +'" name = "options[]">';
 
                 for(var x = 0; x < options.length; x++){
-                        selectableField += '<option value = "'+ options[x].options +'">'+ options[x].options +'</option>';
+                        selectableField += '<option value = "' + id + ',' + options[x].options +'">'+ options[x].options +'</option>';
                 }
 
          selectableField += '</select>'+
