@@ -89,6 +89,10 @@
                 </div>
 
                 <div class="col-md-12" style="padding-top:1%;">
+                    <div>
+                    <input type="checkbox" name = "has_option"><span> include more options?</span>
+                    </div>
+                    <br/>
                     <button class="btn btn-primary">Find abode</button>
                 </div>
 

@@ -68,20 +68,23 @@ class AgentController extends Controller
             $canContinue = true;
             $pair;
 
-            foreach($request->options as $option){
-                $pair = explode(",", $option);
-                $abodeOption = DB::table("abode_category_options")
-                                    ->where("abode_id", $abode->id)
-                                    ->where("feature_id", $pair[0])
-                                    ->first();
-                if(!empty($abodeOption)){
-                    if($abodeOption->value != $pair[1]){
+            if($request->has("has_options")){
+                foreach($request->options as $option){
+                    $pair = explode(",", $option);
+                    $abodeOption = DB::table("abode_category_options")
+                                        ->where("abode_id", $abode->id)
+                                        ->where("feature_id", $pair[0])
+                                        ->first();
+                    if(!empty($abodeOption)){
+                        if($abodeOption->value != $pair[1]){
+                            $canContinue = false;
+                        }
+                    }else{
                         $canContinue = false;
                     }
-                }else{
-                    $canContinue = false;
                 }
             }
+
 
             if($canContinue){
             $features = array();
