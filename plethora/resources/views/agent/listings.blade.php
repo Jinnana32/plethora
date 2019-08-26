@@ -70,6 +70,10 @@
                                                 @endforeach
                                             </ul>
                                             <a class = "btn btn-info btn-sm" href="{{ url("abode") }}/{{ $abode["current"]->id }}" target="_blank"> View Details</a>
+                                            <a class = "btn btn-success btn-sm fappy" name = "{{ url("abode") }}/viewing/{{ $abode["current"]->id }}" style = "color:white;">
+                                                <i class = "fa fa-copy" style = "color:white;"></i>
+                                                Copy link
+                                            </a>
                                     </div>
                             @endforeach
                     </div>

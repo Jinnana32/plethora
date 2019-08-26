@@ -104,7 +104,7 @@
             }
         </style>
         <!-- The actual snackbar -->
-        <div id="snackbar">Copied to clipboard!</div>
+        <div id="snackbar">Link was copied, you can paste this now client</div>
 
         <style>
                 /* The snackbar - position it at the bottom and in the middle of the screen */
@@ -196,7 +196,7 @@
 
             $(".fappy").click(function(){
               copyTextToClipboard($(this).attr("name"));
-              console.log("Copied to clipboard");
+              console.log("Link was copied, you can paste this now client");
             })
 
         $(document).ready(function(){

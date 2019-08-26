@@ -387,6 +387,84 @@ class PublicController extends Controller
         return view('landing.agents');
     }
 
+    public function showAbodeForViewing($abode_id){
+        $abode = DB::table("abodes")->where("id", $abode_id)->first();
+
+        $features = array();
+        $tags = array();
+        $has_brand = 0;
+        $branding = null;
+        $filter_prompt = array();
+
+        $developer = DB::table("developers")->where("id", $abode->dev_id)
+                                                  ->where("archive", 1)
+                                                  ->first();
+
+        $project = DB::table("projects")->where("id", $abode->project)
+                                                  ->where("archive", 1)
+                                                  ->first();
+
+        if($abode->branding != 0){
+            $has_brand = 1;
+            $branding = DB::table("developer_brandings")->where("id", $abode->branding)
+                                                              ->where("archive", 1)
+                                                              ->first();
+        }
+
+        $category = DB::table("abode_categories")->where("id", $abode->category)
+                                                 ->where("archive", 1)
+                                                 ->first()->category;
+
+        $location = DB::table("abode_location")->where("id", $abode->location)
+                                               ->where("archive", 1)
+                                               ->first()->location;
+
+        $temp_features = DB::table("abode_category_options")->where("abode_id", $abode->id)
+                                                            ->where("archive", 1)
+                                                            ->get();
+
+        foreach($temp_features as $feature){
+            $temp_feature = DB::table("abode_features")->where("id", $feature->feature_id)
+                                                       ->where("archive", 1)
+                                                       ->first();
+            array_push($features, array(
+                "feature" => optional($temp_feature)->display_name,
+                "value" => $feature->value
+            ));
+        }
+
+        $abode_images = DB::table("abode_images")->where("abode_id", $abode_id)->get();
+
+        $temp_tags = DB::table("abode_tags")->where("abode_id", $abode->id)->get();
+        foreach($temp_tags as $tag){
+            $info = DB::table("personal_information")->where("user_id", $tag->agent_id)->first();
+            array_push($tags, array(
+                "name" => $info->first_name . ' ' . $info->last_name,
+                "link" => $info->referral_link
+            ));
+        }
+
+        $abodes = array(
+            "current" => $abode,
+            "category" => $category,
+            "location" => $location,
+            "features" => $features,
+            "tags" => $tags,
+            "developer" => $developer,
+            "project" => $project,
+            "has_brand" => $has_brand,
+            "branding" => $branding,
+            "images" => $abode_images
+        );
+
+    return view('public.pub_abode_viewing_detail', compact('abodes'));
+}
+
+public function showAbodes(){
+    $abodes = Abode::all();
+    return view('public.pub_abode', compact('abodes'));
+    }
+
     public function showAbodeDetail($abode_id){
         $abode = DB::table("abodes")->where("id", $abode_id)->first();
 
@@ -458,11 +536,6 @@ class PublicController extends Controller
             );
 
         return view('public.pub_abode_detail', compact('abodes'));
-    }
-
-    public function showAbodes(){
-        $abodes = Abode::all();
-        return view('public.pub_abode', compact('abodes'));
     }
 
     /* Agent functions */

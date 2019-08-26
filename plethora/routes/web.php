@@ -10,6 +10,7 @@ Route::get("/{location_id}/developers", 'PublicController@showDevelopersByLocati
 Route::get("/{location_id}/developers/{dev_id}/projects", 'PublicController@showDeveloperProjects');
 Route::get('/abode', 'PublicController@showAbodes');
 Route::get('/abode/{abode_id}', 'PublicController@showAbodeDetail');
+Route::get('/abode/viewing/{abode_id}', 'PublicController@showAbodeForViewing');
 
 Route::post('/catalog/search', 'AgentController@catalogSearch')->name("search_catalog.submit");
 
