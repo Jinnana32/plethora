@@ -182,6 +182,27 @@
         // After 3 seconds, remove the show class from DIV
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
+
+        function fallbackCopyTextToClipboard(text) {
+   var textArea = document.createElement("textarea");
+   textArea.value = text;
+   document.body.appendChild(textArea);
+   var y = $("html").scrollTop();
+   textArea.focus();
+   textArea.select();
+   $("html, body").scrollTop(y);
+
+   try {
+      var successful = document.execCommand('copy');
+      // var msg = successful ? 'successful' : 'unsuccessful';
+      // console.log('Fallbackpying text command was ' + msg);
+   } catch (err) {
+      // console.error('Fallbackps, unable to copy', err);
+   }
+
+   document.body.removeChild(textArea);
+}
+
             function copyTextToClipboard(text) {
               if (!navigator.clipboard) {
                 fallbackCopyTextToClipboard(text);
